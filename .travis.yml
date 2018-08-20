@@ -1,0 +1,26 @@
+---
+language: node_js
+node_js:
+  - "6"
+
+sudo: false
+dist: trusty
+
+addons:
+  chrome: stable
+
+cache: yarn
+
+env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+
+script:
+  - yarn lint:js
+  - yarn test
+
+# We build PRs, but don't trigger separate builds for the PR from the branch.
+branches:
+  only:
+    - master
