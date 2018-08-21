@@ -23,9 +23,12 @@ describe('Acceptance: ember generate and destroy in-repo-addon', function() {
       .then(function() {
         name = fs.readJsonSync('package.json')['name'];
         nameStar = [name, '*'].join('/');
-      })
-      .then(function() {
-        return emberGenerate(['ember-cli-typescript']);
+        fs.writeJsonSync('tsconfig.json', {
+          include: [],
+          compilerOptions: {
+            paths: {}
+          }
+        });
       })
       .then(function() {
         expect(fs.readJsonSync('package.json')['ember-addon']).to.be.undefined;

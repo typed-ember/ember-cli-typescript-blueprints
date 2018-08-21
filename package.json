@@ -1,13 +1,13 @@
 {
-  "name": "my-addon",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "name": "ember-cli-typescript-blueprints",
+  "version": "1.0.0",
+  "description": "TypeScript blueprints for generating ember-cli entities",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "typed-ember/ember-cli-typescript-blueprints",
   "license": "MIT",
-  "author": "",
+  "author": "The typed-ember team (https://github.com/typed-ember)",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -16,16 +16,30 @@
     "build": "ember build",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember test",
-    "test:all": "ember try:each"
+    "test": "mocha --recursive node-tests"
   },
   "dependencies": {
-    "ember-cli-babel": "^6.6.0"
+    "chalk": "^2.4.1",
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-get-component-path-option": "^1.0.0",
+    "ember-cli-is-package-missing": "^1.0.0",
+    "ember-cli-normalize-entity-name": "^1.0.0",
+    "ember-cli-path-utils": "^1.0.0",
+    "ember-cli-string-utils": "^1.1.0",
+    "ember-cli-test-info": "^1.0.0",
+    "ember-cli-valid-component-name": "^1.0.0",
+    "ember-cli-version-checker": "^2.1.2",
+    "ember-router-generator": "^1.2.3",
+    "exists-sync": "^0.1.0",
+    "fs-extra": "^7.0.0",
+    "inflection": "^1.12.0",
+    "silent-error": "^1.1.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.0.0",
     "ember-cli": "~3.3.0",
+    "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars": "^2.0.1",
@@ -46,12 +60,27 @@
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^6.0.1",
     "loader.js": "^4.2.3",
-    "qunit-dom": "^0.6.2"
+    "mocha": "^5.2.0",
+    "qunit-dom": "^0.6.2",
+    "testdouble": "^3.8.1"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "after": [
+      "ember-source",
+      "ember-data",
+      "ember-decorators"
+    ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "proseWrap": "never"
   }
 }

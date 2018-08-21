@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  name: 'my-addon'
+  name: 'ember-cli-typescript-blueprints'
 };
