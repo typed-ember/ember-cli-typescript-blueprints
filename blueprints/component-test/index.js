@@ -6,6 +6,7 @@ const isPackageMissing = require('ember-cli-is-package-missing');
 const getPathOption = require('ember-cli-get-component-path-option');
 
 const useTestFrameworkDetector = require('../test-framework-detector');
+const { isModuleUnificationProject } = require('../module-unification');
 
 module.exports = useTestFrameworkDetector({
   description: 'Generates a component integration or unit test.',
@@ -25,17 +26,46 @@ module.exports = useTestFrameworkDetector({
   ],
 
   fileMapTokens: function() {
-    return {
-      __testType__: function(options) {
-        return options.locals.testType || 'integration';
-      },
-      __path__: function(options) {
-        if (options.pod) {
-          return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+    if (isModuleUnificationProject(this.project)) {
+      return {
+        __test__() {
+          return 'component-test';
+        },
+        __root__(options) {
+          if (options.inRepoAddon) {
+            return path.join('packages', options.inRepoAddon, 'src');
+          }
+          return 'src';
+        },
+        __testType__(options) {
+          if (options.locals.testType === 'unit') {
+            throw new Error('The --unit flag isn\'t supported within a module unification app');
+          }
+          return '';
+        },
+        __path__(options) {
+          if (options.pod) {
+            throw new Error('Pods aren\'t supported within a module unification app');
+          }
+          return path.join('ui', 'components', options.dasherizedModuleName);
         }
-        return 'components';
-      }
-    };
+      };
+    } else {
+      return {
+        __root__() {
+          return 'tests';
+        },
+        __testType__(options) {
+          return options.locals.testType || 'integration';
+        },
+        __path__(options) {
+          if (options.pod) {
+            return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+          }
+          return 'components';
+        }
+      };
+    }
   },
   locals: function(options) {
     let dasherizedModuleName = stringUtil.dasherize(options.entity.name);

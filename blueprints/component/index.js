@@ -6,6 +6,7 @@ const pathUtil = require('ember-cli-path-utils');
 const validComponentName = require('ember-cli-valid-component-name');
 const getPathOption = require('ember-cli-get-component-path-option');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
+const isModuleUnificationProject = require('../module-unification').isModuleUnificationProject;
 
 module.exports = {
   description: 'Generates a component. Name must contain a hyphen.',
@@ -21,27 +22,54 @@ module.exports = {
     }
   ],
 
+  filesPath: function() {
+    let filesDirectory = 'files';
+
+    if (isModuleUnificationProject(this.project)) {
+      filesDirectory = 'module-unification-files';
+    }
+
+    return path.join(this.path, filesDirectory);
+  },
+
   fileMapTokens: function() {
-    return {
-      __path__: function(options) {
-        if (options.pod) {
-          return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+    if (isModuleUnificationProject(this.project)) {
+      return {
+        __root__(options) {
+          if (options.inRepoAddon) {
+            return path.join('packages', options.inRepoAddon, 'src');
+          }
+          if (options.inDummy) {
+            return path.join('tests', 'dummy', 'src');
+          }
+          return 'src';
+        },
+        __path__(options) {
+          return path.join('ui', 'components', options.dasherizedModuleName);
+        },
+      };
+    } else {
+      return {
+        __path__: function(options) {
+          if (options.pod) {
+            return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+          }
+          return 'components';
+        },
+        __templatepath__: function(options) {
+          if (options.pod) {
+            return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+          }
+          return 'templates/components';
+        },
+        __templatename__: function(options) {
+          if (options.pod) {
+            return 'template';
+          }
+          return options.dasherizedModuleName;
         }
-        return 'components';
-      },
-      __templatepath__: function(options) {
-        if (options.pod) {
-          return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
-        }
-        return 'templates/components';
-      },
-      __templatename__: function(options) {
-        if (options.pod) {
-          return 'template';
-        }
-        return options.dasherizedModuleName;
-      }
-    };
+      };
+    }
   },
 
   normalizeEntityName: function(entityName) {
@@ -51,19 +79,19 @@ module.exports = {
   },
 
   locals: function(options) {
-    let templatePath   = '';
+    let templatePath = '';
     let importTemplate = '';
-    let contents       = '';
+    let contents = '';
     // if we're in an addon, build import statement
     if (options.project.isEmberCLIAddon() || options.inRepoAddon && !options.inDummy) {
       if (options.pod) {
-        templatePath   = './template';
+        templatePath = './template';
       } else {
-        templatePath   = pathUtil.getRelativeParentPath(options.entity.name) +
+        templatePath = pathUtil.getRelativeParentPath(options.entity.name) +
           'templates/components/' + stringUtil.dasherize(options.entity.name);
       }
-      importTemplate   = '// @ts-ignore: Ignore import of compiled template\nimport layout from \'' + templatePath + '\';\n';
-      contents         = '\n  layout = layout;';
+      importTemplate = '// @ts-ignore: Ignore import of compiled template\nimport layout from \'' + templatePath + '\';\n';
+      contents = '\n  layout = layout;';
     }
 
     return {
