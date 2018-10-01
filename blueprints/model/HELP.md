@@ -23,8 +23,8 @@ export default class Taco extends DS.Model.extend({
   misc: DS.attr(),
 }) {}
 
-declare module 'ember-data' {
-  interface ModelRegistry {
+declare module 'ember-data/types/registries/model' {
+  export default interface ModelRegistry {
     taco: Taco;
   }
 }
