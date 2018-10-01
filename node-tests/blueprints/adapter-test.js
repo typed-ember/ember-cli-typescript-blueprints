@@ -34,8 +34,8 @@ describe('Acceptance: generate and destroy adapter blueprints', function() {
         .to.contain('  // normal class body')
         .to.contain('}')
         .to.contain('// DO NOT DELETE: this is how TypeScript knows how to look up your adapters.')
-        .to.contain("declare module 'ember-data' {")
-        .to.contain('  interface AdapterRegistry {')
+        .to.contain("declare module 'ember-data/types/registries/adapter' {")
+        .to.contain('  export default interface AdapterRegistry {')
         .to.contain("    'foo': Foo;")
         .to.contain('  }')
         .to.contain('}');
