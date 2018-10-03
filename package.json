@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-typescript-blueprints",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "TypeScript blueprints for generating ember-cli entities",
   "keywords": [
     "ember-addon"

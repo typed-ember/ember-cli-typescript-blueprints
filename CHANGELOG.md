@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.2.0] - 2018-10-03
+
+### Updated
+- Ember Data blueprints now align with the per-type registry files (#10)
+
 ## [1.1.0] - 2018-09-10
 
 ### Added
@@ -16,5 +21,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 This release was the initial import of all existing blueprints from [ember-cli-typescript].
 
 [ember-cli-typescript]: https://github.com/typed-ember/ember-cli-typescript
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/54697b4...v1.1.0
