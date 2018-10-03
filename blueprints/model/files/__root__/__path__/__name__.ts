@@ -7,7 +7,7 @@ export default class <%= classifiedModuleName %> extends DS.Model.extend({
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your models.
-declare module 'ember-data' {
+declare module 'ember-data/types/registries/model' {
   export default interface ModelRegistry {
     '<%= dasherizedModuleName %>': <%= classifiedModuleName %>;
   }
