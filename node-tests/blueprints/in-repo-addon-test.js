@@ -45,7 +45,8 @@ describe('Acceptance: ember generate and destroy in-repo-addon', function() {
           "keywords": [
             "ember-addon",
           ],
-          "devDependencies": {
+          "dependencies": {
+            "ember-cli-babel": "*",
             "ember-cli-typescript": "*"
           }
         });
