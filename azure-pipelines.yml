@@ -4,7 +4,8 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 pool:
   vmImage: 'vs2017-win2016'
- trigger:
+
+trigger:
   paths:
     exclude:
       - README.md
@@ -15,19 +16,23 @@ steps:
     inputs:
       versionSpec: '8.x'
     displayName: 'Install Node.js'
-   - script: |
+
+  - script: |
       npm install -g yarn ember-cli ts-node mocha
     displayName: 'Setup global tools'
-   - script: |
+
+  - script: |
       yarn install
     displayName: 'Build'
-   - script: |
+
+  - script: |
       mocha --recursive node-tests -R xunit > node-tests.xml
     displayName: 'Node Tests'
   - script: |
       echo " --- NODE TESTS --- " && cat node-tests.xml
     displayName: 'Log test output files'
-   - task: PublishTestResults@2
+
+  - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'jUnit'
-      testResultsFiles: '*-tests.xml' 
+      testResultsFiles: '*-tests.xml'
