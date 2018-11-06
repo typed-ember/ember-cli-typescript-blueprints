@@ -5,6 +5,7 @@ const path = require('path');
 const chalk = require('chalk');
 const stringUtil = require('ember-cli-string-utils');
 const EmberRouterGenerator = require('ember-router-generator');
+const isModuleUnificationProject = require('../module-unification').isModuleUnificationProject;
 
 module.exports = {
   description: 'Generates a route and a template, and registers the route with the router.',
@@ -26,48 +27,81 @@ module.exports = {
     },
   ],
 
+  filesPath: function() {
+    let filesDirectory = 'files';
+
+    if (isModuleUnificationProject(this.project)) {
+      filesDirectory = 'module-unification-files';
+    }
+
+    return path.join(this.path, filesDirectory);
+  },
+
   fileMapTokens: function() {
-    return {
-      __name__: function(options) {
-        if (options.pod) {
-          return 'route';
-        }
-        return options.locals.moduleName;
-      },
-      __path__: function(options) {
-        if (options.pod) {
-          return path.join(options.podPath, options.locals.moduleName);
-        }
-        return 'routes';
-      },
-      __templatepath__: function(options) {
-        if (options.pod) {
-          return path.join(options.podPath, options.locals.moduleName);
-        }
-        return 'templates';
-      },
-      __templatename__: function(options) {
-        if (options.pod) {
-          return 'template';
-        }
-        return options.locals.moduleName;
-      },
-      __root__: function(options) {
-        if (options.inRepoAddon) {
-          return path.join('lib', options.inRepoAddon, 'addon');
-        }
+    if (isModuleUnificationProject(this.project)) {
+      if (options.pod) {
+        throw new Error('Pods aren\'t supported within a module unification app');
+      }
+      return {
+        __name__: function(options) {
+          return options.locals.moduleName;
+        },
+        __path__: function(options) {
+          return path.join('ui', 'routes', options.dasherizedModuleName);;
+        },
+        __root__(options) {
+          if (options.inRepoAddon) {
+            return path.join('packages', options.inRepoAddon, 'src');
+          }
+          if (options.inDummy) {
+            return path.join('tests', 'dummy', 'src');
+          }
+          return 'src';
+        },
+      };
+    } else {
+      return {
+        __name__: function(options) {
+          if (options.pod) {
+            return 'route';
+          }
+          return options.locals.moduleName;
+        },
+        __path__: function(options) {
+          if (options.pod) {
+            return path.join(options.podPath, options.locals.moduleName);
+          }
+          return 'routes';
+        },
+        __templatepath__: function(options) {
+          if (options.pod) {
+            return path.join(options.podPath, options.locals.moduleName);
+          }
+          return 'templates';
+        },
+        __templatename__: function(options) {
+          if (options.pod) {
+            return 'template';
+          }
+          return options.locals.moduleName;
+        },
+        __root__: function(options) {
+          if (options.inRepoAddon) {
+            return path.join('lib', options.inRepoAddon, 'addon');
+          }
 
-        if (options.inDummy) {
-          return path.join('tests', 'dummy', 'app');
-        }
+          if (options.inDummy) {
+            return path.join('tests', 'dummy', 'app');
+          }
 
-        if (options.inAddon) {
-          return 'addon';
-        }
+          if (options.inAddon) {
+            return 'addon';
+          }
 
-        return 'app';
-      },
-    };
+          return 'app';
+        },
+      };
+    }
   },
 
   locals: function(options) {
