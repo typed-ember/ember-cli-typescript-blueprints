@@ -17,12 +17,18 @@ describe('Blueprint: route-test', function() {
 
   describe('in app', function() {
     beforeEach(function() {
-      return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+      return emberNew();
     });
 
-    it('route-test foo', function() {
-      return emberGenerateDestroy(['route-test', 'foo'], _file => {
-        expect(_file('tests/unit/routes/foo-test.ts')).to.equal(fixture('route-test/default.ts'));
+    describe('with ember-cli-qunit@4.1.0', function() {
+      beforeEach(function() {
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+
+      it('route-test foo', function() {
+        return emberGenerateDestroy(['route-test', 'foo'], _file => {
+          expect(_file('tests/unit/routes/foo-test.ts')).to.equal(fixture('route-test/default.ts'));
+        });
       });
     });
 
@@ -67,6 +73,24 @@ describe('Blueprint: route-test', function() {
         return emberGenerateDestroy(['route-test', 'foo'], _file => {
           expect(_file('tests/unit/routes/foo-test.ts')).to.equal(
             fixture('route-test/mocha-0.12.ts')
+          );
+        });
+      });
+    });
+
+    describe('with ember-mocha@0.14.0', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-cli-qunit', delete: true },
+          { name: 'ember-mocha', dev: true },
+        ]);
+        generateFakePackageManifest('ember-mocha', '0.14.0');
+      });
+
+      it('route-test foo', function() {
+        return emberGenerateDestroy(['route-test', 'foo'], _file => {
+          expect(_file('tests/unit/routes/foo-test.ts')).to.equal(
+            fixture('route-test/mocha-rfc232.ts')
           );
         });
       });
