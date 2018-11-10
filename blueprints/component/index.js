@@ -3,23 +3,20 @@
 const path = require('path');
 const stringUtil = require('ember-cli-string-utils');
 const pathUtil = require('ember-cli-path-utils');
-const validComponentName = require('ember-cli-valid-component-name');
 const getPathOption = require('ember-cli-get-component-path-option');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
 const isModuleUnificationProject = require('../module-unification').isModuleUnificationProject;
 
 module.exports = {
-  description: 'Generates a component. Name must contain a hyphen.',
+  description: 'Generates a component.',
 
   availableOptions: [
     {
       name: 'path',
       type: String,
       default: 'components',
-      aliases: [
-        { 'no-path': '' }
-      ]
-    }
+      aliases: [{ 'no-path': '' }],
+    },
   ],
 
   filesPath: function() {
@@ -53,8 +50,9 @@ module.exports = {
         __path__: function(options) {
           if (options.pod) {
             return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+          } else {
+            return 'components';
           }
-          return 'components';
         },
         __templatepath__: function(options) {
           if (options.pod) {
@@ -67,28 +65,29 @@ module.exports = {
             return 'template';
           }
           return options.dasherizedModuleName;
-        }
+        },
       };
     }
   },
 
   normalizeEntityName: function(entityName) {
-    entityName = normalizeEntityName(entityName);
-
-    return validComponentName(entityName);
+    return normalizeEntityName(entityName);
   },
 
   locals: function(options) {
     let templatePath = '';
     let importTemplate = '';
     let contents = '';
+
     // if we're in an addon, build import statement
-    if (options.project.isEmberCLIAddon() || options.inRepoAddon && !options.inDummy) {
+    if (options.project.isEmberCLIAddon() || (options.inRepoAddon && !options.inDummy)) {
       if (options.pod) {
         templatePath = './template';
       } else {
-        templatePath = pathUtil.getRelativeParentPath(options.entity.name) +
-          'templates/components/' + stringUtil.dasherize(options.entity.name);
+        templatePath =
+          pathUtil.getRelativeParentPath(options.entity.name) +
+          'templates/components/' +
+          stringUtil.dasherize(options.entity.name);
       }
       importTemplate = '// @ts-ignore: Ignore import of compiled template\nimport layout from \'' + templatePath + '\';\n';
       contents = '\n  layout = layout;';
@@ -97,7 +96,7 @@ module.exports = {
     return {
       importTemplate: importTemplate,
       contents: contents,
-      path: getPathOption(options)
+      path: getPathOption(options),
     };
-  }
+  },
 };
