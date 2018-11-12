@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import { describe, it, beforeEach, afterEach } from 'mocha';
 import { run } from '@ember/runloop';
 import Application from '@ember/application';
-import { initialize } from 'my-app/initializers/foo';
+import { initialize } from '<%= modulePrefix %>/initializers/<%= dasherizedModuleName %>';
+<% if (destroyAppExists) { %>import destroyApp from '../../helpers/destroy-app';<% } %>
 
-
-describe('Unit | Initializer | foo', function() {
+describe('<%= friendlyTestName %>', function() {
   let application;
 
   beforeEach(function() {
@@ -16,7 +16,7 @@ describe('Unit | Initializer | foo', function() {
   });
 
   afterEach(function() {
-    run(application, 'destroy');
+    <% if (destroyAppExists) { %>destroyApp(application);<% } else { %>run(application, 'destroy');<% } %>
   });
 
   // Replace this with your real tests.
