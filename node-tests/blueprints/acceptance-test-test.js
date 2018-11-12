@@ -17,14 +17,20 @@ describe('Blueprint: acceptance-test', function() {
 
   describe('in app', function() {
     beforeEach(function() {
-      return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+      return emberNew();
     });
 
-    it('acceptance-test foo', function() {
-      return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
-        expect(_file('tests/acceptance/foo-test.ts')).to.equal(
-          fixture('acceptance-test/default.ts')
-        );
+    describe('with ember-cli-qunit@4.1.0', function() {
+      beforeEach(function() {
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+
+      it('acceptance-test foo', function() {
+        return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
+          expect(_file('tests/acceptance/foo-test.ts')).to.equal(
+            fixture('acceptance-test/default.ts')
+          );
+        });
       });
     });
 
@@ -58,32 +64,54 @@ describe('Blueprint: acceptance-test', function() {
         });
       });
     });
+
+    describe('with ember-mocha@0.14.0', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-cli-qunit', delete: true },
+          { name: 'ember-mocha', dev: true },
+        ]);
+        generateFakePackageManifest('ember-mocha', '0.14.0');
+      });
+
+      it('acceptance-test foo', function() {
+        return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
+          expect(_file('tests/acceptance/foo-test.ts')).to.equal(
+            fixture('acceptance-test/mocha-rfc268.ts')
+          );
+        });
+      });
+    });
   });
 
   describe('in addon', function() {
     beforeEach(function() {
-      return emberNew({ target: 'addon' }).then(() =>
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0')
-      );
+      return emberNew({ target: 'addon' });
     });
 
-    it('acceptance-test foo', function() {
-      return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
-        expect(_file('tests/acceptance/foo-test.ts')).to.equal(
-          fixture('acceptance-test/addon-default.ts')
-        );
-
-        expect(_file('app/acceptance-tests/foo.ts')).to.not.exist;
+    describe('with ember-cli-qunit@4.1.0', function() {
+      beforeEach(function() {
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
       });
-    });
 
-    it('acceptance-test foo/bar', function() {
-      return emberGenerateDestroy(['acceptance-test', 'foo/bar'], _file => {
-        expect(_file('tests/acceptance/foo/bar-test.ts')).to.equal(
-          fixture('acceptance-test/addon-nested.ts')
-        );
+      it('acceptance-test foo', function() {
+        return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
+          expect(_file('tests/acceptance/foo-test.ts')).to.equal(
+            fixture('acceptance-test/addon-default.ts')
+          );
 
-        expect(_file('app/acceptance-tests/foo/bar.ts')).to.not.exist;
+          expect(_file('app/acceptance-tests/foo.ts')).to.not.exist;
+        });
+      });
+
+      it('acceptance-test foo/bar', function() {
+        return emberGenerateDestroy(['acceptance-test', 'foo/bar'], _file => {
+          expect(_file('tests/acceptance/foo/bar-test.ts')).to.equal(
+            fixture('acceptance-test/addon-nested.ts')
+          );
+
+          expect(_file('app/acceptance-tests/foo/bar.ts')).to.not.exist;
+        });
       });
     });
 
