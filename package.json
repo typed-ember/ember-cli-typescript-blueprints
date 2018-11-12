@@ -36,11 +36,11 @@
     "silent-error": "^1.1.0"
   },
   "devDependencies": {
-    "@typed-ember/renovate-config": "^1.1.0",
+    "@typed-ember/renovate-config": "1.1.0",
     "broccoli-asset-rev": "^2.7.0",
-    "ember-ajax": "^3.0.0",
+    "ember-ajax": "3.1.0",
     "ember-cli": "github:ember-cli/ember-cli#f724919b2d0455899411908531c9179240f5ef41",
-    "ember-cli-blueprint-test-helpers": "^0.18.3",
+    "ember-cli-blueprint-test-helpers": "0.18.3",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars": "^2.0.1",
@@ -53,17 +53,17 @@
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.1.0",
-    "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-maybe-import-regenerator": "0.1.6",
     "ember-resolver": "^4.0.0",
     "ember-source": "~3.3.0",
-    "ember-source-channel-url": "^1.0.1",
-    "ember-try": "^0.2.23",
+    "ember-source-channel-url": "1.1.0",
+    "ember-try": "0.2.23",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^6.0.1",
     "loader.js": "^4.2.3",
-    "mocha": "^5.2.0",
+    "mocha": "5.2.0",
     "qunit-dom": "^0.6.2",
-    "testdouble": "^3.8.1"
+    "testdouble": "3.8.1"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
