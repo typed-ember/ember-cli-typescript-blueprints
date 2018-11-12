@@ -36,6 +36,7 @@
     "silent-error": "^1.1.0"
   },
   "devDependencies": {
+    "@typed-ember/renovate-config": "^1.1.0",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.0.0",
     "ember-cli": "github:ember-cli/ember-cli#f724919b2d0455899411908531c9179240f5ef41",
