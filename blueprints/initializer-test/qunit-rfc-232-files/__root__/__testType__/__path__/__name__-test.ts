@@ -1,11 +1,11 @@
 import Application from '@ember/application';
 
-import { initialize } from 'my-app/initializers/foo';
+import { initialize } from '<%= modulePrefix %>/initializers/<%= dasherizedModuleName %>';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { run } from '@ember/runloop';
+<% if (destroyAppExists) { %>import destroyApp from '../../helpers/destroy-app';<% } else { %>import { run } from '@ember/runloop';<% } %>
 
-module('Unit | Initializer | foo', function(hooks) {
+module('<%= friendlyTestName %>', function(hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function() {
@@ -19,7 +19,7 @@ module('Unit | Initializer | foo', function(hooks) {
   });
 
   hooks.afterEach(function() {
-    run(this.application, 'destroy');
+    <% if (destroyAppExists) { %>destroyApp(this.application);<% } else { %>run(this.application, 'destroy');<% } %>
   });
 
   // Replace this with your real tests.

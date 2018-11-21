@@ -1,7 +1,7 @@
 import Application from '@ember/application';
 import { run } from '@ember/runloop';
 
-import { initialize } from 'my-app/initializers/foo';
+import { initialize } from 'my-app/init/initializers/foo';
 import { module, test } from 'qunit';
 
 
