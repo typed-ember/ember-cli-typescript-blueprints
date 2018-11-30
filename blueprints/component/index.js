@@ -6,6 +6,7 @@ const pathUtil = require('ember-cli-path-utils');
 const getPathOption = require('ember-cli-get-component-path-option');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
 const isModuleUnificationProject = require('../module-unification').isModuleUnificationProject;
+const EOL = require('os').EOL;
 
 module.exports = {
   description: 'Generates a component.',
@@ -89,8 +90,8 @@ module.exports = {
           'templates/components/' +
           stringUtil.dasherize(options.entity.name);
       }
-      importTemplate = '// @ts-ignore: Ignore import of compiled template\nimport layout from \'' + templatePath + '\';\n';
-      contents = '\n  layout = layout;';
+      importTemplate = '// @ts-ignore: Ignore import of compiled template' + EOL + 'import layout from \'' + templatePath + '\';' + EOL;
+      contents = EOL + '  layout = layout;';
     }
 
     return {
