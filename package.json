@@ -62,7 +62,7 @@
     "eslint-plugin-node": "8.0.0",
     "loader.js": "4.7.0",
     "mocha": "5.2.0",
-    "qunit-dom": "0.8.3",
+    "qunit-dom": "0.8.4",
     "testdouble": "3.9.2"
   },
   "engines": {
