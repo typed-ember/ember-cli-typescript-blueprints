@@ -6,7 +6,7 @@ const isPackageMissing = require('ember-cli-is-package-missing');
 const getPathOption = require('ember-cli-get-component-path-option');
 
 const useTestFrameworkDetector = require('../test-framework-detector');
-const { isModuleUnificationProject } = require('../module-unification');
+const isModuleUnificationProject = require('../module-unification').isModuleUnificationProject;
 
 module.exports = useTestFrameworkDetector({
   description: 'Generates a component integration or unit test.',
@@ -17,12 +17,12 @@ module.exports = useTestFrameworkDetector({
       type: ['integration', 'unit'],
       default: 'integration',
       aliases: [
-        { 'i': 'integration' },
-        { 'u': 'unit' },
-        { 'integration': 'integration' },
-        { 'unit': 'unit' }
-      ]
-    }
+        { i: 'integration' },
+        { u: 'unit' },
+        { integration: 'integration' },
+        { unit: 'unit' },
+      ],
+    },
   ],
 
   fileMapTokens: function() {
@@ -39,16 +39,17 @@ module.exports = useTestFrameworkDetector({
         },
         __testType__(options) {
           if (options.locals.testType === 'unit') {
-            throw new Error('The --unit flag isn\'t supported within a module unification app');
+            throw new Error("The --unit flag isn't supported within a module unification app");
           }
+
           return '';
         },
         __path__(options) {
           if (options.pod) {
-            throw new Error('Pods aren\'t supported within a module unification app');
+            throw new Error("Pods aren't supported within a module unification app");
           }
           return path.join('ui', 'components', options.dasherizedModuleName);
-        }
+        },
       };
     } else {
       return {
@@ -63,10 +64,11 @@ module.exports = useTestFrameworkDetector({
             return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
           }
           return 'components';
-        }
+        },
       };
     }
   },
+
   locals: function(options) {
     let dasherizedModuleName = stringUtil.dasherize(options.entity.name);
     let componentPathName = dasherizedModuleName;
@@ -80,20 +82,31 @@ module.exports = useTestFrameworkDetector({
 
     if (options.pod && options.path !== 'components' && options.path !== '') {
       componentPathName = [options.path, dasherizedModuleName].filter(Boolean).join('/');
+    } else if (isModuleUnificationProject(this.project)) {
+      if (options.inRepoAddon) {
+        componentPathName = `${options.inRepoAddon}::${dasherizedModuleName}`;
+      } else if (this.project.isEmberCLIAddon()) {
+        componentPathName = `${this.project.pkg.name}::${dasherizedModuleName}`;
+      }
     }
 
     return {
       path: getPathOption(options),
       testType: testType,
       componentPathName: componentPathName,
-      friendlyTestDescription: friendlyTestDescription
+      friendlyTestDescription: friendlyTestDescription,
     };
   },
+
   afterInstall: function(options) {
-    if (!options.dryRun && options.testType === 'integration' && isPackageMissing(this, 'ember-cli-htmlbars-inline-precompile')) {
+    if (
+      !options.dryRun &&
+      options.testType === 'integration' &&
+      isPackageMissing(this, 'ember-cli-htmlbars-inline-precompile')
+    ) {
       return this.addPackagesToProject([
-        { name: 'ember-cli-htmlbars-inline-precompile', target: '^0.3.1' }
+        { name: 'ember-cli-htmlbars-inline-precompile', target: '^0.3.1' },
       ]);
     }
-  }
+  },
 });
