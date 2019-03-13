@@ -487,7 +487,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('addon/templates/components/foo.hbs')).to.equal('{{yield}}');
 
-        expect(_file('app/components/foo.ts')).to.contain(
+        expect(_file('app/components/foo.js')).to.contain(
           "export { default } from 'my-addon/components/foo';"
         );
 
@@ -509,7 +509,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('addon/templates/components/x-foo.hbs')).to.equal('{{yield}}');
 
-        expect(_file('app/components/x-foo.ts')).to.contain(
+        expect(_file('app/components/x-foo.js')).to.contain(
           "export { default } from 'my-addon/components/x-foo';"
         );
 
@@ -531,7 +531,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('addon/templates/components/foo/x-foo.hbs')).to.equal('{{yield}}');
 
-        expect(_file('app/components/foo/x-foo.ts')).to.contain(
+        expect(_file('app/components/foo/x-foo.js')).to.contain(
           "export { default } from 'my-addon/components/foo/x-foo';"
         );
 
@@ -553,7 +553,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('tests/dummy/app/templates/components/x-foo.hbs')).to.equal('{{yield}}');
 
-        expect(_file('app/components/x-foo.ts')).to.not.exist;
+        expect(_file('app/components/x-foo.js')).to.not.exist;
 
         expect(_file('tests/unit/components/x-foo-test.ts')).to.not.exist;
       });
@@ -567,7 +567,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('tests/dummy/app/templates/components/foo/x-foo.hbs')).to.equal('{{yield}}');
 
-        expect(_file('app/components/foo/x-foo.ts')).to.not.exist;
+        expect(_file('app/components/foo/x-foo.js')).to.not.exist;
 
         expect(_file('tests/unit/components/foo/x-foo-test.ts')).to.not.exist;
       });
@@ -581,7 +581,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('addon/components/x-foo/template.hbs')).to.equal('{{yield}}');
 
-        expect(_file('app/components/x-foo/component.ts')).to.contain(
+        expect(_file('app/components/x-foo/component.js')).to.contain(
           "export { default } from 'my-addon/components/x-foo/component';"
         );
 
@@ -704,7 +704,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('lib/my-addon/addon/templates/components/foo.hbs')).to.equal('{{yield}}');
 
-        expect(_file('lib/my-addon/app/components/foo.ts')).to.contain(
+        expect(_file('lib/my-addon/app/components/foo.js')).to.contain(
           "export { default } from 'my-addon/components/foo';"
         );
 
@@ -726,7 +726,7 @@ describe('Blueprint: component', function() {
 
         expect(_file('lib/my-addon/addon/templates/components/x-foo.hbs')).to.equal('{{yield}}');
 
-        expect(_file('lib/my-addon/app/components/x-foo.ts')).to.contain(
+        expect(_file('lib/my-addon/app/components/x-foo.js')).to.contain(
           "export { default } from 'my-addon/components/x-foo';"
         );
 
@@ -750,7 +750,7 @@ describe('Blueprint: component', function() {
           '{{yield}}'
         );
 
-        expect(_file('lib/my-addon/app/components/foo/x-foo.ts')).to.contain(
+        expect(_file('lib/my-addon/app/components/foo/x-foo.js')).to.contain(
           "export { default } from 'my-addon/components/foo/x-foo';"
         );
 
@@ -774,7 +774,7 @@ describe('Blueprint: component', function() {
 
           expect(_file('lib/my-addon/addon/components/x-foo/template.hbs')).to.equal('{{yield}}');
 
-          expect(_file('lib/my-addon/app/components/x-foo/component.ts')).to.contain(
+          expect(_file('lib/my-addon/app/components/x-foo/component.js')).to.contain(
             "export { default } from 'my-addon/components/x-foo/component';"
           );
 
@@ -801,7 +801,7 @@ describe('Blueprint: component', function() {
             '{{yield}}'
           );
 
-          expect(_file('lib/my-addon/app/components/foo/x-foo/component.ts')).to.contain(
+          expect(_file('lib/my-addon/app/components/foo/x-foo/component.js')).to.contain(
             "export { default } from 'my-addon/components/foo/x-foo/component';"
           );
 
