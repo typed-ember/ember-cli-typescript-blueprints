@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-03-13
+
+This release formalizes the contents of `2.0.0-beta.1` as a stable release. It also includes refreshes to several blueprints by [@simonihmig](https://github.com/simonihmig) 👏
+
 ## [2.0.0-beta.1] - 2018-10-25
 
 ### Changed
@@ -27,7 +31,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 This release was the initial import of all existing blueprints from [ember-cli-typescript].
 
 [ember-cli-typescript]: https://github.com/typed-ember/ember-cli-typescript
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v2.0.0-beta.1...v2
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v2.0.0...master
+[2.0.0]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v2.0.0-beta.1...v2.0.0
 [2.0.0-beta.1]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v1.2.0...v2.0.0-beta.1
 [1.2.0]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/typed-ember/ember-cli-typescript-blueprints/compare/54697b4...v1.1.0
