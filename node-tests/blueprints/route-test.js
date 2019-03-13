@@ -222,11 +222,11 @@ describe('Blueprint: route', function() {
 
         expect(_file('addon/templates/foo.hbs')).to.equal('{{outlet}}');
 
-        expect(_file('app/routes/foo.ts')).to.contain(
+        expect(_file('app/routes/foo.js')).to.contain(
           "export { default } from 'my-addon/routes/foo';"
         );
 
-        expect(_file('app/templates/foo.ts')).to.contain(
+        expect(_file('app/templates/foo.js')).to.contain(
           "export { default } from 'my-addon/templates/foo';"
         );
 
@@ -244,11 +244,11 @@ describe('Blueprint: route', function() {
 
         expect(_file('addon/templates/foo/bar.hbs')).to.equal('{{outlet}}');
 
-        expect(_file('app/routes/foo/bar.ts')).to.contain(
+        expect(_file('app/routes/foo/bar.js')).to.contain(
           "export { default } from 'my-addon/routes/foo/bar';"
         );
 
-        expect(_file('app/templates/foo/bar.ts')).to.contain(
+        expect(_file('app/templates/foo/bar.js')).to.contain(
           "export { default } from 'my-addon/templates/foo/bar';"
         );
 
@@ -268,7 +268,7 @@ describe('Blueprint: route', function() {
 
         expect(_file('tests/dummy/app/templates/foo.hbs')).to.equal('{{outlet}}');
 
-        expect(_file('app/routes/foo.ts')).to.not.exist;
+        expect(_file('app/routes/foo.js')).to.not.exist;
         expect(_file('app/templates/foo.hbs')).to.not.exist;
         expect(_file('tests/unit/routes/foo-test.ts')).to.not.exist;
 
@@ -286,7 +286,7 @@ describe('Blueprint: route', function() {
 
         expect(_file('tests/dummy/app/templates/foo/bar.hbs')).to.equal('{{outlet}}');
 
-        expect(_file('app/routes/foo/bar.ts')).to.not.exist;
+        expect(_file('app/routes/foo/bar.js')).to.not.exist;
         expect(_file('app/templates/foo/bar.hbs')).to.not.exist;
         expect(_file('tests/unit/routes/foo/bar-test.ts')).to.not.exist;
 
@@ -304,11 +304,11 @@ describe('Blueprint: route', function() {
 
         expect(_file('addon/foo/template.hbs')).to.equal('{{outlet}}');
 
-        expect(_file('app/foo/route.ts')).to.contain(
+        expect(_file('app/foo/route.js')).to.contain(
           "export { default } from 'my-addon/foo/route';"
         );
 
-        expect(_file('app/foo/template.ts')).to.contain(
+        expect(_file('app/foo/template.js')).to.contain(
           "export { default } from 'my-addon/foo/template';"
         );
 
@@ -576,11 +576,11 @@ describe('Blueprint: route', function() {
 
         expect(_file('lib/my-addon/addon/templates/foo.hbs')).to.equal('{{outlet}}');
 
-        expect(_file('lib/my-addon/app/routes/foo.ts')).to.contain(
+        expect(_file('lib/my-addon/app/routes/foo.js')).to.contain(
           "export { default } from 'my-addon/routes/foo';"
         );
 
-        expect(_file('lib/my-addon/app/templates/foo.ts')).to.contain(
+        expect(_file('lib/my-addon/app/templates/foo.js')).to.contain(
           "export { default } from 'my-addon/templates/foo';"
         );
 
@@ -596,11 +596,11 @@ describe('Blueprint: route', function() {
 
         expect(_file('lib/my-addon/addon/templates/foo/bar.hbs')).to.equal('{{outlet}}');
 
-        expect(_file('lib/my-addon/app/routes/foo/bar.ts')).to.contain(
+        expect(_file('lib/my-addon/app/routes/foo/bar.js')).to.contain(
           "export { default } from 'my-addon/routes/foo/bar';"
         );
 
-        expect(_file('lib/my-addon/app/templates/foo/bar.ts')).to.contain(
+        expect(_file('lib/my-addon/app/templates/foo/bar.js')).to.contain(
           "export { default } from 'my-addon/templates/foo/bar';"
         );
 
