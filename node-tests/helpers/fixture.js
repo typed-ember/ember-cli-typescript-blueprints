@@ -9,7 +9,9 @@ module.exports = function(filePath, options) {
     return file(path.join(__dirname, '../fixtures', filePath));
   }
 
-  let content = fs.readFileSync(path.join(__dirname, '../fixtures', filePath), { encoding: 'utf-8' });
+  let content = fs.readFileSync(path.join(__dirname, '../fixtures', filePath), {
+    encoding: 'utf-8',
+  });
   if (options.replace) {
     content = content.replace(/<%= (\w+) =%>/g, (_match, key) => options.replace[key] || '');
   }

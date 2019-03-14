@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 
-export default class FooBar extends Controller.extend({
+export default class FooBarController extends Controller.extend({
   // anything which *must* be merged to prototype here
 }) {
   // normal class body definition here
@@ -9,6 +9,6 @@ export default class FooBar extends Controller.extend({
 // DO NOT DELETE: this is how TypeScript knows how to look up your controllers.
 declare module '@ember/controller' {
   interface Registry {
-    'foo/bar': FooBar;
+    'foo/bar': FooBarController;
   }
 }

@@ -9,15 +9,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{<%= path =%><%= component =%>}}`);
+  this.render(hbs`<<%= pathInvocation =%><%= componentInvocation =%> />`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#<%= path =%><%= component =%>}}
+    <<%= pathInvocation =%><%= componentInvocation =%>>
       template block text
-    {{/<%= path =%><%= component =%>}}
+    </<%= pathInvocation =%><%= componentInvocation =%>>
   `);
 
   assert.equal(this.$().text().trim(), 'template block text');
