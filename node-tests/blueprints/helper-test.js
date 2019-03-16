@@ -137,7 +137,7 @@ describe('Blueprint: helper', function() {
     it('helper foo/bar-baz', function() {
       return emberGenerateDestroy(['helper', 'foo/bar-baz'], _file => {
         expect(_file('addon/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
-        expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper-addon.js'));
+        expect(_file('app/helpers/foo/bar-baz.js')).to.contain('export { default, fooBarBaz } from \'my-addon/helpers/foo/bar-baz\';');
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
           fixture('helper-test/integration.ts')
         );
@@ -149,7 +149,7 @@ describe('Blueprint: helper', function() {
         expect(_file('tests/dummy/app/helpers/foo/bar-baz.ts')).to.equal(
           fixture('helper/helper.ts')
         );
-        expect(_file('app/helpers/foo/bar-baz.ts')).to.not.exist;
+        expect(_file('app/helpers/foo/bar-baz.js')).to.not.exist;
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.not.exist;
       });
     });
@@ -212,8 +212,8 @@ describe('Blueprint: helper', function() {
         expect(_file('lib/my-addon/addon/helpers/foo/bar-baz.ts')).to.equal(
           fixture('helper/helper.ts')
         );
-        expect(_file('lib/my-addon/app/helpers/foo/bar-baz.js')).to.equal(
-          fixture('helper/helper-addon.js')
+        expect(_file('lib/my-addon/app/helpers/foo/bar-baz.js')).to.contain(
+          'export { default, fooBarBaz } from \'my-addon/helpers/foo/bar-baz\';'
         );
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
           fixture('helper-test/integration.ts')
