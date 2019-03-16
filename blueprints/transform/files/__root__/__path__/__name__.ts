@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 
-const <%= classifiedModuleName %> = DS.Transform.extend({
+export default class <%= classifiedModuleName %>Transform extends Transform {
   deserialize(serialized) {
     return serialized;
   },
@@ -12,8 +12,6 @@ const <%= classifiedModuleName %> = DS.Transform.extend({
 
 declare module 'ember-data/types/registries/transform' {
   export default interface TransformRegistry {
-    '<%= dasherizedModuleName %>': <%= classifiedModuleName %>;
+    '<%= dasherizedModuleName %>': <%= classifiedModuleName %>Transform;
   }
 }
-
-export default <%= classifiedModuleName %>;

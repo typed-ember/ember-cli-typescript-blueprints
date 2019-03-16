@@ -12,123 +12,526 @@ const expect = chai.expect;
 const generateFakePackageManifest = require('../helpers/generate-fake-package-manifest');
 const fixture = require('../helpers/fixture');
 
+const setupTestEnvironment = require('../helpers/setup-test-environment');
+const enableOctane = setupTestEnvironment.enableOctane;
+
 describe('Acceptance: generate and destroy model blueprints', function() {
   setupTestHooks(this);
 
-  beforeEach(function() {
-    return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
-  });
-
-  it('model', function() {
-    let args = ['model', 'foo'];
-
-    return emberGenerateDestroy(args, _file => {
-      expect(_file('app/models/foo.ts'))
-        .to.contain("import DS from 'ember-data';")
-        .to.contain('export default class Foo extends DS.Model.extend(');
-
-      expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/foo-default.ts'));
-    });
-  });
-
-  it('model with attrs', function() {
-    let args = [
-      'model',
-      'foo',
-      'misc',
-      'skills:array',
-      'isActive:boolean',
-      'birthday:date',
-      'someObject:object',
-      'age:number',
-      'name:string',
-      'customAttr:custom-transform',
-    ];
-
-    return emberGenerateDestroy(args, _file => {
-      expect(_file('app/models/foo.ts'))
-        .to.contain("import DS from 'ember-data';")
-        .to.contain('export default class Foo extends DS.Model.extend(')
-        .to.contain('misc: DS.attr()')
-        .to.contain("skills: DS.attr('array')")
-        .to.contain("isActive: DS.attr('boolean')")
-        .to.contain("birthday: DS.attr('date')")
-        .to.contain("someObject: DS.attr('object')")
-        .to.contain("age: DS.attr('number')")
-        .to.contain("name: DS.attr('string')")
-        .to.contain("customAttr: DS.attr('custom-transform')");
-
-      expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/foo-default.ts'));
-    });
-  });
-
-  it('model with belongsTo', function() {
-    let args = ['model', 'comment', 'post:belongs-to', 'author:belongs-to:user'];
-
-    return emberGenerateDestroy(args, _file => {
-      expect(_file('app/models/comment.ts'))
-        .to.contain("import DS from 'ember-data';")
-        .to.contain('export default class Comment extends DS.Model.extend(')
-        .to.contain("post: DS.belongsTo('post')")
-        .to.contain("author: DS.belongsTo('user')");
-
-      expect(_file('tests/unit/models/comment-test.ts')).to.equal(
-        fixture('model-test/comment-default.ts')
-      );
-    });
-  });
-
-  it('model with hasMany', function() {
-    let args = ['model', 'post', 'comments:has-many', 'otherComments:has-many:comment'];
-
-    return emberGenerateDestroy(args, _file => {
-      expect(_file('app/models/post.ts'))
-        .to.contain("import DS from 'ember-data';")
-        .to.contain('export default class Post extends DS.Model.extend(')
-        .to.contain("comments: DS.hasMany('comment')")
-        .to.contain("otherComments: DS.hasMany('comment')");
-
-      expect(_file('tests/unit/models/post-test.ts')).to.equal(
-        fixture('model-test/post-default.ts')
-      );
-    });
-  });
-
-  it('model-test', function() {
-    let args = ['model-test', 'foo'];
-
-    return emberGenerateDestroy(args, _file => {
-      expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/foo-default.ts'));
-    });
-  });
-
-  describe('model-test with ember-cli-qunit@4.2.0', function() {
+  describe('classic', function() {
     beforeEach(function() {
-      generateFakePackageManifest('ember-cli-qunit', '4.2.0');
+      return emberNew();
     });
 
-    it('model-test-test foo', function() {
-      return emberGenerateDestroy(['model-test', 'foo'], _file => {
+    it('model', function() {
+      let args = ['model', 'foo'];
+
+      return emberGenerateDestroy(args, _file => {
+        expect(_file('app/models/foo.ts'))
+          .to.contain("import DS from 'ember-data';")
+          .to.contain('export default class FooModel extends Model.extend(');
+
         expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/rfc232.ts'));
+      });
+    });
+
+    it('model with attrs', function() {
+      let args = [
+        'model',
+        'foo',
+        'misc',
+        'skills:array',
+        'isActive:boolean',
+        'birthday:date',
+        'someObject:object',
+        'age:number',
+        'name:string',
+        'customAttr:custom-transform',
+      ];
+
+      return emberGenerateDestroy(args, _file => {
+        expect(_file('app/models/foo.ts'))
+          .to.contain("import DS from 'ember-data';")
+          .to.contain('const { Model, attr } = DS;')
+          .to.contain('export default class FooModel extends Model.extend(')
+          .to.contain('  misc: attr(),')
+          .to.contain("  skills: attr('array'),")
+          .to.contain("  isActive: attr('boolean'),")
+          .to.contain("  birthday: attr('date'),")
+          .to.contain("  someObject: attr('object'),")
+          .to.contain("  age: attr('number'),")
+          .to.contain("  name: attr('string'),")
+          .to.contain("  customAttr: attr('custom-transform')");
+
+        expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/rfc232.ts'));
+      });
+    });
+
+    it('model with belongsTo', function() {
+      let args = ['model', 'comment', 'post:belongs-to', 'author:belongs-to:user'];
+
+      return emberGenerateDestroy(args, _file => {
+        expect(_file('app/models/comment.ts'))
+          .to.contain("import DS from 'ember-data';")
+          .to.contain('const { Model, belongsTo } = DS;')
+          .to.contain('export default class CommentModel extends Model.extend(')
+          .to.contain("  post: belongsTo('post'),")
+          .to.contain("  author: belongsTo('user')");
+
+        expect(_file('tests/unit/models/comment-test.ts')).to.equal(
+          fixture('model-test/comment-default.ts')
+        );
+      });
+    });
+
+    it('model with hasMany', function() {
+      let args = ['model', 'post', 'comments:has-many', 'otherComments:has-many:comment'];
+
+      return emberGenerateDestroy(args, _file => {
+        expect(_file('app/models/post.ts'))
+          .to.contain("import DS from 'ember-data';")
+          .to.contain('const { Model, hasMany } = DS;')
+          .to.contain('export default class PostModel extends Model.extend(')
+          .to.contain("  comments: hasMany('comment')")
+          .to.contain("  otherComments: hasMany('comment')");
+
+        expect(_file('tests/unit/models/post-test.ts')).to.equal(
+          fixture('model-test/post-default.ts')
+        );
+      });
+    });
+
+    it('model-test', function() {
+      let args = ['model-test', 'foo'];
+
+      return emberGenerateDestroy(args, _file => {
+        expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/rfc232.ts'));
+      });
+    });
+
+    describe('model-test with ember-cli-qunit@4.1.0', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-qunit', delete: true },
+        ]);
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+
+      it('model-test-test foo', function() {
+        return emberGenerateDestroy(['model-test', 'foo'], _file => {
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/foo-default.ts')
+          );
+        });
+      });
+    });
+
+    describe('with ember-cli-mocha v0.12+', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-mocha', dev: true },
+        ]);
+        generateFakePackageManifest('ember-cli-mocha', '0.12.0');
+      });
+
+      it('model-test for mocha v0.12+', function() {
+        let args = ['model-test', 'foo'];
+
+        return emberGenerateDestroy(args, _file => {
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/foo-mocha-0.12.ts')
+          );
+        });
+      });
+    });
+
+    describe('with ember-mocha v0.14+', function() {
+      beforeEach(function() {
+        modifyPackages([{ name: 'ember-qunit', delete: true }, { name: 'ember-mocha', dev: true }]);
+        generateFakePackageManifest('ember-mocha', '0.14.0');
+      });
+
+      it('model-test for mocha v0.14+', function() {
+        let args = ['model-test', 'foo'];
+
+        return emberGenerateDestroy(args, _file => {
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/mocha-rfc232.ts')
+          );
+        });
       });
     });
   });
 
-  describe('with ember-cli-mocha v0.12+', function() {
+  describe('module unification', function() {
     beforeEach(function() {
-      modifyPackages([
-        { name: 'ember-cli-qunit', delete: true },
-        { name: 'ember-cli-mocha', dev: true },
-      ]);
-      generateFakePackageManifest('ember-cli-mocha', '0.12.0');
+      return emberNew({ isModuleUnification: true });
     });
 
-    it('model-test for mocha v0.12+', function() {
+    it('model', function() {
+      let args = ['model', 'foo'];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/foo/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('const { Model } = DS;')
+            .to.contain('export default class FooModel extends Model.extend(');
+
+          expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+            fixture('model-test/rfc232.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model with attrs', function() {
+      let args = [
+        'model',
+        'foo',
+        'misc',
+        'skills:array',
+        'isActive:boolean',
+        'birthday:date',
+        'someObject:object',
+        'age:number',
+        'name:string',
+        'customAttr:custom-transform',
+      ];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/foo/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('const { Model, attr } = DS;')
+            .to.contain('export default class FooModel extends Model.extend(')
+            .to.contain('  misc: attr(),')
+            .to.contain("  skills: attr('array'),")
+            .to.contain("  isActive: attr('boolean'),")
+            .to.contain("  birthday: attr('date'),")
+            .to.contain("  someObject: attr('object'),")
+            .to.contain("  age: attr('number'),")
+            .to.contain("  name: attr('string'),")
+            .to.contain("  customAttr: attr('custom-transform')");
+
+          expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+            fixture('model-test/rfc232.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model with belongsTo', function() {
+      let args = ['model', 'comment', 'post:belongs-to', 'author:belongs-to:user'];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/comment/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('const { Model, belongsTo } = DS;')
+            .to.contain('export default class CommentModel extends Model.extend(')
+            .to.contain("  post: belongsTo('post'),")
+            .to.contain("  author: belongsTo('user')");
+
+          expect(_file('src/data/models/comment/model-test.ts')).to.equal(
+            fixture('model-test/comment-default.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model with hasMany', function() {
+      let args = ['model', 'post', 'comments:has-many', 'otherComments:has-many:comment'];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/post/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('const { Model, hasMany } = DS;')
+            .to.contain('export default class PostModel extends Model.extend(')
+            .to.contain("  comments: hasMany('comment'),")
+            .to.contain("  otherComments: hasMany('comment')");
+
+          expect(_file('src/data/models/post/model-test.ts')).to.equal(
+            fixture('model-test/post-default.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model-test', function() {
       let args = ['model-test', 'foo'];
 
-      return emberGenerateDestroy(args, _file => {
-        expect(_file('tests/unit/models/foo-test.ts')).to.equal(
-          fixture('model-test/foo-mocha-0.12.ts')
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+            fixture('model-test/rfc232.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    describe('model-test with ember-cli-qunit@4.1.0', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-qunit', delete: true },
+        ]);
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+
+      it('model-test-test foo', function() {
+        return emberGenerateDestroy(
+          ['model-test', 'foo'],
+          _file => {
+            expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+              fixture('model-test/foo-default.ts')
+            );
+          },
+          { isModuleUnification: true }
+        );
+      });
+    });
+
+    describe('with ember-cli-mocha v0.12+', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-mocha', dev: true },
+        ]);
+        generateFakePackageManifest('ember-cli-mocha', '0.12.0');
+      });
+
+      it('model-test for mocha v0.12+', function() {
+        let args = ['model-test', 'foo'];
+
+        return emberGenerateDestroy(
+          args,
+          _file => {
+            expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+              fixture('model-test/foo-mocha-0.12.ts')
+            );
+          },
+          { isModuleUnification: true }
+        );
+      });
+    });
+
+    describe('with ember-mocha v0.14+', function() {
+      beforeEach(function() {
+        modifyPackages([{ name: 'ember-qunit', delete: true }, { name: 'ember-mocha', dev: true }]);
+        generateFakePackageManifest('ember-mocha', '0.14.0');
+      });
+
+      it('model-test for mocha v0.14+', function() {
+        let args = ['model-test', 'foo'];
+
+        return emberGenerateDestroy(
+          args,
+          _file => {
+            expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+              fixture('model-test/mocha-rfc232.ts')
+            );
+          },
+          { isModuleUnification: true }
+        );
+      });
+    });
+  });
+
+  describe('octane', function() {
+    enableOctane();
+    beforeEach(function() {
+      return emberNew({ isModuleUnification: true });
+    });
+
+    it('model', function() {
+      let args = ['model', 'foo'];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/foo/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('export default class FooModel extends Model {');
+
+          expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+            fixture('model-test/rfc232.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model with attrs', function() {
+      let args = [
+        'model',
+        'foo',
+        'misc',
+        'skills:array',
+        'isActive:boolean',
+        'birthday:date',
+        'someObject:object',
+        'age:number',
+        'name:string',
+        'customAttr:custom-transform',
+      ];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/foo/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('const { Model, attr } = DS;')
+            .to.contain('export default class FooModel extends Model {')
+            .to.contain('  @attr misc;')
+            .to.contain("  @attr('array') skills;")
+            .to.contain("  @attr('boolean') isActive;")
+            .to.contain("  @attr('date') birthday;")
+            .to.contain("  @attr('object') someObject;")
+            .to.contain("  @attr('number') age;")
+            .to.contain("  @attr('string') name;")
+            .to.contain("  @attr('custom-transform') customAttr;");
+
+          expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+            fixture('model-test/rfc232.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model with belongsTo', function() {
+      let args = ['model', 'comment', 'post:belongs-to', 'author:belongs-to:user'];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/comment/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('const { Model, belongsTo } = DS;')
+            .to.contain('export default class CommentModel extends Model {')
+            .to.contain('  @belongsTo post;')
+            .to.contain("  @belongsTo('user') author;");
+
+          expect(_file('src/data/models/comment/model-test.ts')).to.equal(
+            fixture('model-test/comment-default.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model with hasMany', function() {
+      let args = ['model', 'post', 'comments:has-many', 'otherComments:has-many:comment'];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/post/model.ts'))
+            .to.contain("import DS from 'ember-data';")
+            .to.contain('const { Model, hasMany } = DS;')
+            .to.contain('export default class PostModel extends Model {')
+            .to.contain('  @hasMany comments;')
+            .to.contain("  @hasMany('comment') otherComments;");
+
+          expect(_file('src/data/models/post/model-test.ts')).to.equal(
+            fixture('model-test/post-default.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    it('model-test', function() {
+      let args = ['model-test', 'foo'];
+
+      return emberGenerateDestroy(
+        args,
+        _file => {
+          expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+            fixture('model-test/rfc232.ts')
+          );
+        },
+        { isModuleUnification: true }
+      );
+    });
+
+    describe('model-test with ember-cli-qunit@4.1.0', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-qunit', delete: true },
+        ]);
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+
+      it('model-test-test foo', function() {
+        return emberGenerateDestroy(
+          ['model-test', 'foo'],
+          _file => {
+            expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+              fixture('model-test/foo-default.ts')
+            );
+          },
+          { isModuleUnification: true }
+        );
+      });
+    });
+
+    describe('with ember-cli-mocha v0.12+', function() {
+      beforeEach(function() {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-mocha', dev: true },
+        ]);
+        generateFakePackageManifest('ember-cli-mocha', '0.12.0');
+      });
+
+      it('model-test for mocha v0.12+', function() {
+        let args = ['model-test', 'foo'];
+
+        return emberGenerateDestroy(
+          args,
+          _file => {
+            expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+              fixture('model-test/foo-mocha-0.12.ts')
+            );
+          },
+          { isModuleUnification: true }
+        );
+      });
+    });
+
+    describe('with ember-mocha v0.14+', function() {
+      beforeEach(function() {
+        modifyPackages([{ name: 'ember-qunit', delete: true }, { name: 'ember-mocha', dev: true }]);
+        generateFakePackageManifest('ember-mocha', '0.14.0');
+      });
+
+      it('model-test for mocha v0.14+', function() {
+        let args = ['model-test', 'foo'];
+
+        return emberGenerateDestroy(
+          args,
+          _file => {
+            expect(_file('src/data/models/foo/model-test.ts')).to.equal(
+              fixture('model-test/mocha-rfc232.ts')
+            );
+          },
+          { isModuleUnification: true }
         );
       });
     });
