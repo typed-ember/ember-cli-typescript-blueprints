@@ -7,7 +7,7 @@ const path = require('path');
 module.exports = useTestFrameworkDetector({
   description: 'Generates an ember-data adapter unit test',
 
-  fileMapTokens(options) {
+  fileMapTokens() {
     if (isModuleUnificationProject(this.project)) {
       return {
         __root__() {

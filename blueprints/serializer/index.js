@@ -9,7 +9,7 @@ module.exports = useEditionDetector({
 
   availableOptions: [{ name: 'base-class', type: String }],
 
-  fileMapTokens(options) {
+  fileMapTokens() {
     if (isModuleUnificationProject(this.project)) {
       return {
         __root__() {

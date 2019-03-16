@@ -8,7 +8,7 @@ const path = require('path');
 module.exports = useTestFrameworkDetector({
   description: 'Generates a model unit test.',
 
-  fileMapTokens(options) {
+  fileMapTokens() {
     if (isModuleUnificationProject(this.project)) {
       return {
         __root__() {

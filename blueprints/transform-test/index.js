@@ -13,7 +13,7 @@ module.exports = useTestFrameworkDetector({
         __root__() {
           return 'src';
         },
-        __path__(options) {
+        __path__() {
           return path.join('data', 'transforms');
         },
         __test__() {

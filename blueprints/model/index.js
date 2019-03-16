@@ -11,7 +11,7 @@ module.exports = useEditionDetector({
 
   anonymousOptions: ['name', 'attr:type'],
 
-  fileMapTokens(options) {
+  fileMapTokens() {
     if (isModuleUnificationProject(this.project)) {
       return {
         __root__() {

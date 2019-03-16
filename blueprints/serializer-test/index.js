@@ -7,7 +7,7 @@ const path = require('path');
 module.exports = useTestFrameworkDetector({
   description: 'Generates a serializer unit test.',
 
-  fileMapTokens(options) {
+  fileMapTokens() {
     if (isModuleUnificationProject(this.project)) {
       return {
         __root__() {

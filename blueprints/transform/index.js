@@ -12,7 +12,7 @@ module.exports = useEditionDetector({
         __root__() {
           return 'src';
         },
-        __path__(options) {
+        __path__() {
           return path.join('data', 'transforms');
         },
         __name__() {

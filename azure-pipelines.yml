@@ -26,7 +26,7 @@ steps:
     displayName: 'Build'
 
   - script: |
-      mocha --recursive node-tests -R xunit > node-tests.xml
+      mocha node-tests/blueprints/**/*-test.js -R xunit > node-tests.xml
     displayName: 'Node Tests'
   - script: |
       echo " --- NODE TESTS --- " && cat node-tests.xml

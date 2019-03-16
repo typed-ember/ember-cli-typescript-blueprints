@@ -1,6 +1,6 @@
 # unconventional js
-/blueprints/*/files/
-/vendor/
+blueprints/*/*files/**/*.js
+node-tests/fixtures/**/*.js
 
 # compiled output
 /dist/
