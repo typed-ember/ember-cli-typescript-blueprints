@@ -19,6 +19,8 @@ jobs:
 
       - run: yarn install --frozen-lockfile --non-interactive
       - run: yarn lint:js
+      - run: yarn lint:blueprints
+        continue-on-error: true
 
   tests:
     name: 'Tests: ${{ matrix.os }}'
