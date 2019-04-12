@@ -1,0 +1,16 @@
+declare module "dummy/utils/foo-bar";
+declare module "dummy/utils/foo/bar-baz";
+declare module "dummy/initializers/foo";
+declare module "dummy/instance-initializers/foo";
+declare module "my-addon/helpers/foo/bar-baz";
+declare module "my-addon/mixins/foo";
+declare module "my-app/helpers/foo/bar-baz";
+declare module "my-app/initializers/foo";
+declare module "my-app/init/initializers/foo";
+declare module "my-app/instance-initializers/foo";
+declare module "my-app/init/instance-initializers/foo";
+declare module "my-app/mixins/foo";
+declare module "my-app/tests/helpers/module-for-acceptance";
+declare module "my-app/tests/helpers/start-app";
+declare module "my-app/utils/foo-bar";
+declare module "my-app/utils/foo/bar-baz";

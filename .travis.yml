@@ -15,6 +15,7 @@ cache: yarn
 
 script:
   - yarn lint:js
+  - yarn lint:blueprints
   - yarn test
 
 # We build PRs, but don't trigger separate builds for the PR from the branch.
