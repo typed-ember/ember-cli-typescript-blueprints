@@ -821,23 +821,17 @@ describe('Blueprint: component', function() {
     });
   });
 
-  describe('glimmer component - module unitication', function() {
+  describe('in app - module unification', function() {
     beforeEach(function() {
       return emberNew()
         .then(() => fs.ensureDirSync('src'))
-        .then(() => {
-          modifyPackages([
-            { name: '@glimmer/component', dev: true },
-          ])
-        })
-        .then(() => generateFakePackageManifest('@glimmer/component', '^0.14.0-alpha.9'))
         .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
     it('component foo', function() {
       return emberGenerateDestroy(['component', 'foo'], _file => {
         expect(_file('src/ui/components/foo/component.ts')).to.equal(
-          fixture('component/glimmer-component.ts')
+          fixture('component/component.ts')
         );
 
         expect(_file('src/ui/components/foo/template.hbs')).to.equal('{{yield}}');
@@ -855,7 +849,7 @@ describe('Blueprint: component', function() {
     it('component x-foo', function() {
       return emberGenerateDestroy(['component', 'x-foo'], _file => {
         expect(_file('src/ui/components/x-foo/component.ts')).to.equal(
-          fixture('component/glimmer-component-dash.ts')
+          fixture('component/component-dash.ts')
         );
 
         expect(_file('src/ui/components/x-foo/template.hbs')).to.equal('{{yield}}');
@@ -873,7 +867,7 @@ describe('Blueprint: component', function() {
     it('component foo/x-foo', function() {
       return emberGenerateDestroy(['component', 'foo/x-foo'], _file => {
         expect(_file('src/ui/components/foo/x-foo/component.ts')).to.equal(
-          fixture('component/glimmer-component-nested.ts')
+          fixture('component/component-nested.ts')
         );
 
         expect(_file('src/ui/components/foo/x-foo/template.hbs')).to.equal('{{yield}}');
@@ -888,7 +882,6 @@ describe('Blueprint: component', function() {
       });
     });
   });
-
 
   describe('in addon', function() {
     beforeEach(function() {

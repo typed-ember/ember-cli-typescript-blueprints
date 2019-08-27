@@ -21,9 +21,8 @@ module.exports = {
 
   filesPath: function() {
     let filesDirectory = 'files';
-
-
     let dependencies = this.project.dependencies();
+
     if ('@glimmer/component' in dependencies) {
       filesDirectory = 'glimmer-files';
     }
