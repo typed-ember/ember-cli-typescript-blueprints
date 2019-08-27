@@ -91,39 +91,6 @@ describe('Blueprint: service', function() {
     });
   });
 
-  describe('in app - module unification', function() {
-    beforeEach(function() {
-      return emberNew()
-        .then(() => fs.ensureDirSync('src'))
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
-    });
-
-    it('service foo', function() {
-      return emberGenerateDestroy(['service', 'foo'], _file => {
-        expect(_file('src/services/foo.ts')).to.equal(fixture('service/service.ts'));
-
-        expect(_file('src/services/foo-test.ts')).to.equal(fixture('service-test/default.ts'));
-      });
-    });
-
-    it('service foo/bar', function() {
-      return emberGenerateDestroy(['service', 'foo/bar'], _file => {
-        expect(_file('src/services/foo/bar.ts')).to.equal(fixture('service/service-nested.ts'));
-
-        expect(_file('src/services/foo/bar-test.ts')).to.equal(
-          fixture('service-test/default-nested.ts')
-        );
-      });
-    });
-
-    it('service foo --pod', function() {
-      return expectError(
-        emberGenerateDestroy(['service', 'foo', '--pod']),
-        "Pods aren't supported within a module unification app"
-      );
-    });
-  });
-
   describe('in addon', function() {
     beforeEach(function() {
       return emberNew({ target: 'addon' }).then(() =>
@@ -156,36 +123,6 @@ describe('Blueprint: service', function() {
         expect(_file('tests/unit/services/foo/bar-test.ts')).to.equal(
           fixture('service-test/default-nested.ts')
         );
-      });
-    });
-  });
-
-  describe('in addon - module unification', function() {
-    beforeEach(function() {
-      return emberNew({ target: 'addon' })
-        .then(() => fs.ensureDirSync('src'))
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
-    });
-
-    it('service foo', function() {
-      return emberGenerateDestroy(['service', 'foo'], _file => {
-        expect(_file('src/services/foo.ts')).to.equal(fixture('service/service.ts'));
-
-        expect(_file('src/services/foo-test.ts')).to.equal(fixture('service-test/default.ts'));
-
-        expect(_file('app/services/foo.ts')).to.not.exist;
-      });
-    });
-
-    it('service foo/bar', function() {
-      return emberGenerateDestroy(['service', 'foo/bar'], _file => {
-        expect(_file('src/services/foo/bar.ts')).to.equal(fixture('service/service-nested.ts'));
-
-        expect(_file('src/services/foo/bar-test.ts')).to.equal(
-          fixture('service-test/default-nested.ts')
-        );
-
-        expect(_file('app/services/foo/bar.ts')).to.not.exist;
       });
     });
   });

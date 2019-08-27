@@ -5,7 +5,6 @@ const stringUtil = require('ember-cli-string-utils');
 const pathUtil = require('ember-cli-path-utils');
 const getPathOption = require('ember-cli-get-component-path-option');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
-const isModuleUnificationProject = require('../module-unification').isModuleUnificationProject;
 const EOL = require('os').EOL;
 
 module.exports = {
@@ -21,54 +20,31 @@ module.exports = {
   ],
 
   filesPath: function() {
-    let filesDirectory = 'files';
-
-    if (isModuleUnificationProject(this.project)) {
-      filesDirectory = 'module-unification-files';
-    }
-
-    return path.join(this.path, filesDirectory);
+    return path.join(this.path, 'files');
   },
 
   fileMapTokens: function() {
-    if (isModuleUnificationProject(this.project)) {
-      return {
-        __root__(options) {
-          if (options.inRepoAddon) {
-            return path.join('packages', options.inRepoAddon, 'src');
-          }
-          if (options.inDummy) {
-            return path.join('tests', 'dummy', 'src');
-          }
-          return 'src';
-        },
-        __path__(options) {
-          return path.join('ui', 'components', options.dasherizedModuleName);
-        },
-      };
-    } else {
-      return {
-        __path__: function(options) {
-          if (options.pod) {
-            return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
-          } else {
-            return 'components';
-          }
-        },
-        __templatepath__: function(options) {
-          if (options.pod) {
-            return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
-          }
-          return 'templates/components';
-        },
-        __templatename__: function(options) {
-          if (options.pod) {
-            return 'template';
-          }
-          return options.dasherizedModuleName;
-        },
-      };
-    }
+    return {
+      __path__: function(options) {
+        if (options.pod) {
+          return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+        } else {
+          return 'components';
+        }
+      },
+      __templatepath__: function(options) {
+        if (options.pod) {
+          return path.join(options.podPath, options.locals.path, options.dasherizedModuleName);
+        }
+        return 'templates/components';
+      },
+      __templatename__: function(options) {
+        if (options.pod) {
+          return 'template';
+        }
+        return options.dasherizedModuleName;
+      },
+    };
   },
 
   normalizeEntityName: function(entityName) {
