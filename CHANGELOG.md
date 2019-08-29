@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+### 💥 Breaking
+
+- Removes support for Module Unification, in line with [its removal][MU] from Ember's roadmap in favor of other directions.
+
+[MU]: https://blog.emberjs.com/2019/03/11/update-on-module-unification-and-octane.html
+
 ## [2.0.0] - 2019-03-13
 
 This release formalizes the contents of `2.0.0-beta.1` as a stable release. It also includes refreshes to several blueprints by [@simonihmig](https://github.com/simonihmig) 👏
