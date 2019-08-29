@@ -821,68 +821,6 @@ describe('Blueprint: component', function() {
     });
   });
 
-  describe('in app - module unification', function() {
-    beforeEach(function() {
-      return emberNew()
-        .then(() => fs.ensureDirSync('src'))
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
-    });
-
-    it('component foo', function() {
-      return emberGenerateDestroy(['component', 'foo'], _file => {
-        expect(_file('src/ui/components/foo/component.ts')).to.equal(
-          fixture('component/component.ts')
-        );
-
-        expect(_file('src/ui/components/foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('src/ui/components/foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo', function() {
-      return emberGenerateDestroy(['component', 'x-foo'], _file => {
-        expect(_file('src/ui/components/x-foo/component.ts')).to.equal(
-          fixture('component/component-dash.ts')
-        );
-
-        expect(_file('src/ui/components/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('src/ui/components/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component foo/x-foo', function() {
-      return emberGenerateDestroy(['component', 'foo/x-foo'], _file => {
-        expect(_file('src/ui/components/foo/x-foo/component.ts')).to.equal(
-          fixture('component/component-nested.ts')
-        );
-
-        expect(_file('src/ui/components/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('src/ui/components/foo/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo/x-foo',
-            },
-          })
-        );
-      });
-    });
-  });
-
   describe('in addon', function() {
     beforeEach(function() {
       return emberNew({ target: 'addon' }).then(() =>
