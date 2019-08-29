@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
 
-interface Args {}
+interface <%= classifiedModuleName %>Args {}
 
-export default class <%= classifiedModuleName %> extends Component<Args> {}
+export default class <%= classifiedModuleName %> extends Component<<%= classifiedModuleName %>Args> {}
