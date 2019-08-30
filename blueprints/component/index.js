@@ -20,7 +20,14 @@ module.exports = {
   ],
 
   filesPath: function() {
-    return path.join(this.path, 'files');
+    let filesDirectory = 'files';
+    let dependencies = this.project.dependencies();
+
+    if ('@glimmer/component' in dependencies) {
+      filesDirectory = 'glimmer-files';
+    }
+
+    return path.join(this.path, filesDirectory);
   },
 
   fileMapTokens: function() {

@@ -11,7 +11,6 @@ const expect = chai.expect;
 
 const generateFakePackageManifest = require('../helpers/generate-fake-package-manifest');
 const fixture = require('../helpers/fixture');
-const fs = require('fs-extra');
 
 describe('Blueprint: initializer-test', function() {
   setupTestHooks(this);
