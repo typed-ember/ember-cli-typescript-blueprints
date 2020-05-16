@@ -61,7 +61,7 @@
     "loader.js": "4.7.0",
     "mocha": "6.2.2",
     "qunit-dom": "0.9.2",
-    "testdouble": "3.13.1"
+    "testdouble": "3.14.0"
   },
   "engines": {
     "node": "8.* || >= 10.*"
