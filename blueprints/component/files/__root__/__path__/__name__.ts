@@ -1,7 +1,5 @@
-import Component from '@ember/component';
+<%= importComponent %>
 <%= importTemplate %>
-export default class <%= classifiedModuleName %> extends Component.extend({
-  // anything which *must* be merged to prototype here
-}) {<%= contents %>
-  // normal class body definition here
-};
+interface <%= classifiedModuleName %>ComponentArgs {}
+
+export default class <%= classifiedModuleName %>Component extends Component<<%= classifiedModuleName %>ComponentArgs> {}
