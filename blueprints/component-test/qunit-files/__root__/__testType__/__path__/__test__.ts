@@ -3,7 +3,6 @@ import { moduleForComponent, test } from 'ember-qunit';<% if (testType === 'inte
   import { TestContext } from 'ember-test-helpers';
   
   type Context = TestContext & {
-    <% if (testType === 'integration') { %>element: HTMLElement<% } %>
     // add your test properties here
   }
   
