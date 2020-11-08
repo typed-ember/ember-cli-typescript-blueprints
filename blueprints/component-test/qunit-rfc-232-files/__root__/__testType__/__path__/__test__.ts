@@ -5,7 +5,6 @@ import { render } from '@ember/test-helpers';
 <%= hbsImportStatement %>
 
 type Context = TestContext & {
-  <% if (testType === 'integration') { %>element: HTMLElement<% } %>
   // add your test properties here
 }
 
