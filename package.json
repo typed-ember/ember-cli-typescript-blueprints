@@ -64,7 +64,7 @@
     "testdouble": "3.16.0"
   },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": "10.* || 12.* || >= 14.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
