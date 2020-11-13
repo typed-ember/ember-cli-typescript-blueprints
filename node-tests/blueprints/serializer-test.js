@@ -19,7 +19,7 @@ describe('Acceptance: generate and destroy serializer blueprints', function() {
   setupTestHooks(this);
 
   beforeEach(function() {
-    return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+    return emberNew().then(() => generateFakePackageManifest('ember-qunit', '4.6.0'));
   });
 
   it('serializer', function() {
@@ -101,35 +101,21 @@ describe('Acceptance: generate and destroy serializer blueprints', function() {
     });
   });
 
-  describe('serializer-test with ember-cli-qunit@4.2.0', function() {
-    beforeEach(function() {
-      generateFakePackageManifest('ember-cli-qunit', '4.2.0');
-    });
-
-    it('serializer-test-test foo', function() {
-      return emberGenerateDestroy(['serializer-test', 'foo'], _file => {
-        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
-          fixture('serializer-test/rfc232.ts')
-        );
-      });
-    });
-  });
-
-  describe('with ember-cli-mocha v0.12+', function() {
+  describe('with ember-mocha', function() {
     beforeEach(function() {
       modifyPackages([
-        { name: 'ember-cli-qunit', delete: true },
-        { name: 'ember-cli-mocha', dev: true },
+        { name: 'ember-qunit', delete: true },
+        { name: 'ember-mocha', dev: true },
       ]);
-      generateFakePackageManifest('ember-cli-mocha', '0.12.0');
+      generateFakePackageManifest('ember-mocha', '0.16.0');
     });
 
-    it('serializer-test for mocha v0.12+', function() {
+    it('serializer-test for mocha', function() {
       let args = ['serializer-test', 'foo'];
 
       return emberGenerateDestroy(args, _file => {
         expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
-          fixture('serializer-test/foo-mocha-0.12.ts')
+          fixture('serializer-test/foo-mocha.ts')
         );
       });
     });

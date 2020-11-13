@@ -20,9 +20,9 @@ describe('Blueprint: initializer-test', function() {
       return emberNew();
     });
 
-    describe('with ember-cli-qunit@4.1.0', function() {
+    describe('with ember-qunit@4.6.0', function() {
       beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+        generateFakePackageManifest('ember-qunit', '4.6.0');
       });
 
       it('initializer-test foo', function() {
@@ -34,25 +34,11 @@ describe('Blueprint: initializer-test', function() {
       });
     });
 
-    describe('with ember-cli-qunit@4.2.0', function() {
-      beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
-      });
-
-      it('initializer-test foo', function() {
-        return emberGenerateDestroy(['initializer-test', 'foo'], _file => {
-          expect(_file('tests/unit/initializers/foo-test.ts')).to.equal(
-            fixture('initializer-test/rfc232.ts')
-          );
-        });
-      });
-    });
-
-    describe('with ember-cli-mocha', function() {
+    describe('with ember-mocha', function() {
       beforeEach(function() {
         modifyPackages([
-          { name: 'ember-cli-qunit', delete: true },
-          { name: 'ember-cli-mocha', dev: true },
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-mocha', dev: true },
         ]);
       });
 
@@ -60,26 +46,6 @@ describe('Blueprint: initializer-test', function() {
         return emberGenerateDestroy(['initializer-test', 'foo'], _file => {
           expect(_file('tests/unit/initializers/foo-test.ts')).to.equal(
             fixture('initializer-test/mocha.ts')
-          );
-        });
-      });
-    });
-  });
-
-  describe('in addon', function() {
-    beforeEach(function() {
-      return emberNew({ target: 'addon' });
-    });
-
-    describe('with ember-cli-qunit@4.1.0', function() {
-      beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('initializer-test foo', function() {
-        return emberGenerateDestroy(['initializer-test', 'foo'], _file => {
-          expect(_file('tests/unit/initializers/foo-test.ts')).to.equal(
-            fixture('initializer-test/dummy.ts')
           );
         });
       });

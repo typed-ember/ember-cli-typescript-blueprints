@@ -1,15 +1,12 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleForModel('<%= dasherizedModuleName %>', '<%= friendlyTestDescription %>', {
-  // Specify the other units that are required for this test.
-  needs: ['serializer:<%= dasherizedModuleName %>']
-});
+module('<%= friendlyTestDescription %>', function(hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it serializes records', function(assert) {
-  let record = this.subject();
-
-  let serializedRecord = record.serialize();
-
-  assert.ok(serializedRecord);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    let adapter = this.owner.lookup('adapter:<%= dasherizedModuleName %>');
+    assert.ok(adapter);
+  });
 });

@@ -20,9 +20,9 @@ describe('Blueprint: acceptance-test', function() {
       return emberNew();
     });
 
-    describe('with ember-cli-qunit@4.1.0', function() {
+    describe('with ember-qunit@4.6.0', function() {
       beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+        generateFakePackageManifest('ember-qunit', '4.6.0');
       });
 
       it('acceptance-test foo', function() {
@@ -34,50 +34,19 @@ describe('Blueprint: acceptance-test', function() {
       });
     });
 
-    describe('with ember-cli-qunit@4.2.0', function() {
+    describe('with ember-mocha@0.16.0', function() {
       beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
-      });
-
-      it('acceptance-test foo', function() {
-        return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
-          expect(_file('tests/acceptance/foo-test.ts')).to.equal(
-            fixture('acceptance-test/qunit-rfc268.ts')
-          );
-        });
-      });
-    });
-
-    describe('with ember-cli-mocha', function() {
-      beforeEach(function() {
-        return modifyPackages([
-          { name: 'ember-cli-qunit', delete: true },
-          { name: 'ember-cli-mocha', dev: true },
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-mocha', dev: true },
         ]);
+        generateFakePackageManifest('ember-mocha', '0.16.0');
       });
 
       it('acceptance-test foo', function() {
         return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
           expect(_file('tests/acceptance/foo-test.ts')).to.equal(
             fixture('acceptance-test/mocha.ts')
-          );
-        });
-      });
-    });
-
-    describe('with ember-mocha@0.14.0', function() {
-      beforeEach(function() {
-        modifyPackages([
-          { name: 'ember-cli-qunit', delete: true },
-          { name: 'ember-mocha', dev: true },
-        ]);
-        generateFakePackageManifest('ember-mocha', '0.14.0');
-      });
-
-      it('acceptance-test foo', function() {
-        return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
-          expect(_file('tests/acceptance/foo-test.ts')).to.equal(
-            fixture('acceptance-test/mocha-rfc268.ts')
           );
         });
       });
@@ -89,9 +58,9 @@ describe('Blueprint: acceptance-test', function() {
       return emberNew({ target: 'addon' });
     });
 
-    describe('with ember-cli-qunit@4.1.0', function() {
+    describe('with ember-qunit@4.6.0', function() {
       beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+        generateFakePackageManifest('ember-qunit', '4.6.0');
       });
 
       it('acceptance-test foo', function() {
@@ -111,20 +80,6 @@ describe('Blueprint: acceptance-test', function() {
           );
 
           expect(_file('app/acceptance-tests/foo/bar.ts')).to.not.exist;
-        });
-      });
-    });
-
-    describe('with ember-cli-qunit@4.2.0', function() {
-      beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
-      });
-
-      it('acceptance-test foo', function() {
-        return emberGenerateDestroy(['acceptance-test', 'foo'], _file => {
-          expect(_file('tests/acceptance/foo-test.ts')).to.equal(
-            fixture('acceptance-test/qunit-rfc268.ts')
-          );
         });
       });
     });
