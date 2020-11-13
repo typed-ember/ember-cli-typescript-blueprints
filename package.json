@@ -81,5 +81,8 @@
     "trailingComma": "es5",
     "tabWidth": 2,
     "proseWrap": "never"
+  },
+  "volta": {
+    "node": "10.23.0"
   }
 }
