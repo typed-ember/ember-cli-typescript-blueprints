@@ -10,4 +10,3 @@ describe('Unit | Helper | foo/bar-baz', function() {
     expect(result).to.be.ok;
   });
 });
-

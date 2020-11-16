@@ -17,7 +17,7 @@ describe('Blueprint: mixin-test', function() {
 
   describe('in app', function() {
     beforeEach(function() {
-      return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+      return emberNew().then(() => generateFakePackageManifest('ember-qunit', '4.6.0'));
     });
 
     it('mixin-test foo', function() {
@@ -26,11 +26,11 @@ describe('Blueprint: mixin-test', function() {
       });
     });
 
-    describe('with ember-cli-mocha', function() {
+    describe('with ember-mocha', function() {
       beforeEach(function() {
         modifyPackages([
-          { name: 'ember-cli-qunit', delete: true },
-          { name: 'ember-cli-mocha', dev: true },
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-mocha', dev: true },
         ]);
       });
 
@@ -40,24 +40,12 @@ describe('Blueprint: mixin-test', function() {
         });
       });
     });
-
-    describe('with ember-cli-qunit@4.2.0', function() {
-      beforeEach(function() {
-        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
-      });
-
-      it('mixin-test foo', function() {
-        return emberGenerateDestroy(['mixin-test', 'foo'], _file => {
-          expect(_file('tests/unit/mixins/foo-test.ts')).to.equal(fixture('mixin-test/rfc232.ts'));
-        });
-      });
-    });
   });
 
   describe('in addon', function() {
     beforeEach(function() {
       return emberNew({ target: 'addon' }).then(() =>
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0')
+        generateFakePackageManifest('ember-qunit', '4.6.0')
       );
     });
 
