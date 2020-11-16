@@ -1,15 +1,17 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('foo/bar-baz', 'helper:foo/bar-baz', {
-  integration: true
-});
+module('Integration | Helper | foo/bar-baz', function(hooks) {
+  setupRenderingTest(hooks);
 
-// Replace this with your real tests.
-test('it renders', function(assert) {
-  this.set('inputValue', '1234');
+  // Replace this with your real tests.
+  test('it renders', async function(assert) {
+    this.set('inputValue', '1234');
 
-  this.render(hbs`{{foo/bar-baz inputValue}}`);
+    await render(hbs`{{foo/bar-baz inputValue}}`);
 
-  assert.equal(this.$().text().trim(), '1234');
+    assert.equal(this.element.textContent.trim(), '1234');
+  });
 });

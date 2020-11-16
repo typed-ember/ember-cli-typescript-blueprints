@@ -3,14 +3,11 @@ import { describe, it } from 'mocha';
 import { setupTest } from 'ember-mocha';
 
 describe('<%= friendlyTestDescription %>', function() {
-  setupTest('transform:<%= dasherizedModuleName %>', {
-    // Specify the other units that are required for this test.
-    // needs: ['transform:foo']
-  });
+  setupTest();
 
   // Replace this with your real tests.
   it('exists', function() {
-    let transform = this.subject();
+    let transform = this.owner.lookup('transform:<%= dasherizedModuleName %>');
     expect(transform).to.be.ok;
   });
 });

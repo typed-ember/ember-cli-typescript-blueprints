@@ -16,7 +16,7 @@ describe('Acceptance: generate and destroy model blueprints', function() {
   setupTestHooks(this);
 
   beforeEach(function() {
-    return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+    return emberNew().then(() => generateFakePackageManifest('ember-qunit', '4.6.0'));
   });
 
   it('model', function() {
@@ -102,33 +102,21 @@ describe('Acceptance: generate and destroy model blueprints', function() {
     });
   });
 
-  describe('model-test with ember-cli-qunit@4.2.0', function() {
-    beforeEach(function() {
-      generateFakePackageManifest('ember-cli-qunit', '4.2.0');
-    });
-
-    it('model-test-test foo', function() {
-      return emberGenerateDestroy(['model-test', 'foo'], _file => {
-        expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/rfc232.ts'));
-      });
-    });
-  });
-
-  describe('with ember-cli-mocha v0.12+', function() {
+  describe('with ember-mocha', function() {
     beforeEach(function() {
       modifyPackages([
-        { name: 'ember-cli-qunit', delete: true },
-        { name: 'ember-cli-mocha', dev: true },
+        { name: 'ember-qunit', delete: true },
+        { name: 'ember-mocha', dev: true },
       ]);
-      generateFakePackageManifest('ember-cli-mocha', '0.12.0');
+      generateFakePackageManifest('ember-mocha', '0.12.0');
     });
 
-    it('model-test for mocha v0.12+', function() {
+    it('model-test for mocha', function() {
       let args = ['model-test', 'foo'];
 
       return emberGenerateDestroy(args, _file => {
         expect(_file('tests/unit/models/foo-test.ts')).to.equal(
-          fixture('model-test/foo-mocha-0.12.ts')
+          fixture('model-test/foo-mocha.ts')
         );
       });
     });

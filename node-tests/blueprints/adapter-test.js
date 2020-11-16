@@ -111,35 +111,21 @@ describe('Acceptance: generate and destroy adapter blueprints', function() {
     });
   });
 
-  describe('adapter-test with ember-cli-qunit@4.2.0', function() {
-    beforeEach(function() {
-      generateFakePackageManifest('ember-cli-qunit', '4.2.0');
-    });
-
-    it('adapter-test-test foo', function() {
-      return emberGenerateDestroy(['adapter-test', 'foo'], _file => {
-        expect(_file('tests/unit/adapters/foo-test.ts')).to.equal(
-          fixture('adapter-test/rfc232.ts')
-        );
-      });
-    });
-  });
-
-  describe('with ember-cli-mocha v0.12+', function() {
+  describe('with ember-mocha v0.16.0', function() {
     beforeEach(function() {
       modifyPackages([
-        { name: 'ember-cli-qunit', delete: true },
-        { name: 'ember-cli-mocha', dev: true },
+        { name: 'ember-qunit', delete: true },
+        { name: 'ember-mocha', dev: true },
       ]);
-      generateFakePackageManifest('ember-cli-mocha', '0.12.0');
+      generateFakePackageManifest('ember-mocha', '0.16.0');
     });
 
-    it('adapter-test for mocha v0.12+', function() {
+    it('adapter-test for mocha', function() {
       let args = ['adapter-test', 'foo'];
 
       return emberGenerateDestroy(args, _file => {
         expect(_file('tests/unit/adapters/foo-test.ts')).to.equal(
-          fixture('adapter-test/foo-mocha-0.12.ts')
+          fixture('adapter-test/foo-mocha.ts')
         );
       });
     });

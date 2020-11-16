@@ -1,12 +1,13 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '<%= testFolderRoot %>/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { visit, currentURL } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('<%= friendlyTestName %>');
+module('<%= friendlyTestName %>', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /<%= dasherizedModuleName %>', function(assert) {
-  visit('/<%= dasherizedModuleName %>');
+  test('visiting /<%= dasherizedModuleName %>', async function(assert) {
+    await visit('/<%= dasherizedModuleName %>');
 
-  andThen(function() {
     assert.equal(currentURL(), '/<%= dasherizedModuleName %>');
   });
 });
