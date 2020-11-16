@@ -27,7 +27,7 @@
     "ember-cli-string-utils": "^1.1.0",
     "ember-cli-test-info": "^1.0.0",
     "ember-cli-valid-component-name": "^1.0.0",
-    "ember-cli-version-checker": "^3.0.0",
+    "ember-cli-version-checker": "^5.0.0",
     "ember-router-generator": "^2.0.0",
     "exists-sync": "^0.1.0",
     "fs-extra": "^8.0.0",
