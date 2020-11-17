@@ -12,5 +12,5 @@ test('it renders', function(assert) {
   /*let component =*/ this.subject();
   // Renders the component to the page
   this.render();
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.element.text().trim(), '');
 });

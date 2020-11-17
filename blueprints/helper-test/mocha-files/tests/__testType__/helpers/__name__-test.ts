@@ -21,7 +21,7 @@ describe('<%= friendlyTestName %>', function() {
 
     this.render(hbs`{{<%= dasherizedModuleName %> inputValue}}`);
 
-    expect(this.$().text().trim()).to.equal('1234');
+    expect(this.element.text().trim()).to.equal('1234');
   });
 });
 <% } else if (testType == 'unit') { %>import { describe, it } from 'mocha';

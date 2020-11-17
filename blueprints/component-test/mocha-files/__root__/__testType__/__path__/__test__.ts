@@ -14,7 +14,7 @@ describeComponent('<%= componentPathName %>', '<%= friendlyTestDescription %>',
       // Handle any actions with this.on('myAction', function(val) { ... });
 
       this.render(hbs`<%= selfCloseComponent(componentName) %>`);
-      expect(this.$()).to.have.length(1);
+      expect(this.element).to.not.be.null;
 
       // Template block usage:
       this.render(hbs`
@@ -23,12 +23,12 @@ describeComponent('<%= componentPathName %>', '<%= friendlyTestDescription %>',
         <%= closeComponent(componentName) %>
       `);
 
-      expect(this.$().text().trim()).to.equal('template block text');<% } else if(testType === 'unit') { %>// creates the component instance
+      expect(this.element.text().trim()).to.equal('template block text');<% } else if(testType === 'unit') { %>// creates the component instance
       let component = this.subject();
       // renders the component on the page
       this.render();
       expect(component).to.be.ok;
-      expect(this.$()).to.have.length(1);<% } %>
+      expect(this.element).to.not.be.null;<% } %>
     });
   }
 );

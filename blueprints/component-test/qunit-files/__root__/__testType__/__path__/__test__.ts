@@ -18,7 +18,7 @@ import { moduleForComponent, test } from 'ember-qunit';<% if (testType === 'inte
   
     this.render(hbs`<%= selfCloseComponent(componentName) %>`);
   
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(this.element.text().trim(), '');
   
     // Template block usage:
     this.render(hbs`
@@ -27,10 +27,10 @@ import { moduleForComponent, test } from 'ember-qunit';<% if (testType === 'inte
       <%= closeComponent(componentName) %>
     `);
   
-    assert.equal(this.$().text().trim(), 'template block text');<% } else if(testType === 'unit') { %>
+    assert.equal(this.element.text().trim(), 'template block text');<% } else if(testType === 'unit') { %>
     // Creates the component instance
     /*let component =*/ this.subject();
     // Renders the component to the page
     this.render();
-    assert.equal(this.$().text().trim(), '');<% } %>
+    assert.equal(this.element.text().trim(), '');<% } %>
   });

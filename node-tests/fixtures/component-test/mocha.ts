@@ -18,7 +18,7 @@ describeComponent('x-foo', 'Integration | Component | x-foo',
       // `);
 
       this.render(hbs`{{x-foo}}`);
-      expect(this.$()).to.have.length(1);
+      expect(this.element).to.not.be.null;
     });
   }
 );

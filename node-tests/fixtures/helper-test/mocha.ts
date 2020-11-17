@@ -21,6 +21,6 @@ describe('Integration | Helper | foo/bar-baz', function() {
 
     this.render(hbs`{{foo/bar-baz inputValue}}`);
 
-    expect(this.$().text().trim()).to.equal('1234');
+    expect(this.element.text().trim()).to.equal('1234');
   });
 });

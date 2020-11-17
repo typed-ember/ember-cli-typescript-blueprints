@@ -14,7 +14,7 @@ describeComponent('x-foo', 'Unit | Component | x-foo',
       // renders the component on the page
       this.render();
       expect(component).to.be.ok;
-      expect(this.$()).to.have.length(1);
+      expect(this.element).to.not.be.null;
     });
   }
 );
