@@ -2,9 +2,7 @@
 
 const path = require('path');
 const stringUtil = require('ember-cli-string-utils');
-const isPackageMissing = require('ember-cli-is-package-missing');
 const getPathOption = require('ember-cli-get-component-path-option');
-const semver = require('semver');
 
 const useTestFrameworkDetector = require('../test-framework-detector');
 

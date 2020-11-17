@@ -16,7 +16,6 @@ const fixture = require('../helpers/fixture');
 describe('Blueprint: component', function() {
   setupTestHooks(this);
 
-
   describe('classic ember component', function() {
     describe('in app', function() {
       beforeEach(function() {
