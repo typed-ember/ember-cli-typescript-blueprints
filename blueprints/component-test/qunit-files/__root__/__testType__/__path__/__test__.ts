@@ -1,36 +1,40 @@
-import { moduleForComponent, test } from 'ember-qunit';<% if (testType === 'integration') { %>
-  import hbs from 'htmlbars-inline-precompile';<% } %>
-  import { TestContext } from 'ember-test-helpers';
-  
-  type Context = TestContext & {
-    // add your test properties here
-  }
-  
-  moduleForComponent('<%= componentPathName %>', '<%= friendlyTestDescription %>', {
-    <% if (testType === 'integration' ) { %>integration: true<% } else if(testType === 'unit') { %>// Specify the other units that are required for this test
-    // needs: ['component:foo', 'helper:bar'],
-    unit: true<% } %>
-  });
-  
-  test('it renders', function(this: Context, assert: Assert) {
-    <% if (testType === 'integration' ) { %>// Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.on('myAction', function(val) { ... });
-  
-    this.render(hbs`<%= selfCloseComponent(componentName) %>`);
-  
-    assert.equal(this.element.text().trim(), '');
-  
+<% if (testType == 'integration') { %>
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
+
+module('Integration | Component | <%= dasherizedModuleName %>', function(hooks) {
+  setupRenderingTest(hooks);
+
+  test('it renders', async function(assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.set('myAction', function(val) { ... });
+
+    await render(hbs`<<%= templateInvocation %> />`);
+
+    assert.equal(this.element.textContent.trim(), '');
+
     // Template block usage:
-    this.render(hbs`
-      <%= openComponent(componentName) %>
+    await render(hbs`
+      <<%= templateInvocation %>>
         template block text
-      <%= closeComponent(componentName) %>
+      </<%= templateInvocation %>>
     `);
-  
-    assert.equal(this.element.text().trim(), 'template block text');<% } else if(testType === 'unit') { %>
-    // Creates the component instance
-    /*let component =*/ this.subject();
-    // Renders the component to the page
-    this.render();
-    assert.equal(this.element.text().trim(), '');<% } %>
+
+    assert.equal(this.element.textContent.trim(), 'template block text');
   });
+});
+<% } else if (testType == 'unit') { %>
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
+
+module('Unit | Component | <%= dasherizedModuleName %>', function(hooks) {
+  setupTest(hooks);
+
+  test('it exists', function(assert) {
+    let component = this.owner.factoryFor('component:<%= dasherizedModuleName %>').create();
+    assert.ok(component);
+  });
+});
+<% } >

@@ -20,7 +20,7 @@ describe('Blueprint: component', function() {
   describe('classic ember component', function() {
     describe('in app', function() {
       beforeEach(function() {
-        return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        return emberNew().then(() => generateFakePackageManifest('ember-qunit', '4.6.0'));
       });
 
       it('component foo', function() {
@@ -424,8 +424,8 @@ describe('Blueprint: component', function() {
             { name: '@glimmer/component', dev: true },
           ])
         })
-        .then(() => generateFakePackageManifest('@glimmer/component', '^0.14.0-alpha.9'))
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('@glimmer/component', '^0.16'))
+        .then(() => generateFakePackageManifest('ember-qunit', '4.6.0'));
       });
 
       it('component foo', function() {
@@ -823,7 +823,7 @@ describe('Blueprint: component', function() {
   describe('in addon', function() {
     beforeEach(function() {
       return emberNew({ target: 'addon' }).then(() =>
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0')
+        generateFakePackageManifest('ember-qunit', '4.6.0')
       );
     });
 
@@ -945,7 +945,7 @@ describe('Blueprint: component', function() {
   describe('in in-repo-addon', function() {
     beforeEach(function() {
       return emberNew({ target: 'in-repo-addon' }).then(() =>
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0')
+        generateFakePackageManifest('ember-qunit', '4.6.0')
       );
     });
 

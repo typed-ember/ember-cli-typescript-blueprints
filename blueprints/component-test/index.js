@@ -62,10 +62,6 @@ module.exports = useTestFrameworkDetector({
       componentPathName = [options.path, dasherizedModuleName].filter(Boolean).join('/');
     }
 
-    let hbsImportStatement = this._useNamedHbsImport()
-      ? "import { hbs } from 'ember-cli-htmlbars';"
-      : "import hbs from 'htmlbars-inline-precompile';";
-
     let templateInvocation = invocationFor(options);
     let componentName = templateInvocation;
     let openComponent = (descriptor) => `<${descriptor}>`;
@@ -82,30 +78,6 @@ module.exports = useTestFrameworkDetector({
       closeComponent,
       selfCloseComponent,
       friendlyTestDescription,
-      hbsImportStatement,
     };
-  },
-
-  _useNamedHbsImport() {
-    let htmlbarsAddon = this.project.addons.find((a) => a.name === 'ember-cli-htmlbars');
-
-    if (htmlbarsAddon && semver.gte(htmlbarsAddon.pkg.version, '4.0.0-alpha.1')) {
-      return true;
-    }
-
-    return false;
-  },
-
-  afterInstall: function (options) {
-    if (
-      !options.dryRun &&
-      options.testType === 'integration' &&
-      !this._useNamedHbsImport() &&
-      isPackageMissing(this, 'ember-cli-htmlbars-inline-precompile')
-    ) {
-      return this.addPackagesToProject([
-        { name: 'ember-cli-htmlbars-inline-precompile', target: '^0.3.1' },
-      ]);
-    }
-  },
+  }
 });

@@ -63,6 +63,8 @@ module.exports = {
     let importTemplate = '';
     let contents = '';
 
+    let classifiedModuleName = stringUtil.dasherize(options.entity.name);
+
     // if we're in an addon, build import statement
     if (options.project.isEmberCLIAddon() || (options.inRepoAddon && !options.inDummy)) {
       if (options.pod) {
@@ -71,7 +73,7 @@ module.exports = {
         templatePath =
           pathUtil.getRelativeParentPath(options.entity.name) +
           'templates/components/' +
-          stringUtil.dasherize(options.entity.name);
+          classifiedModuleName;
       }
       importTemplate = '// @ts-ignore: Ignore import of compiled template' + EOL + 'import layout from \'' + templatePath + '\';' + EOL;
       contents = EOL + '  layout = layout;';
@@ -81,6 +83,7 @@ module.exports = {
       importTemplate: importTemplate,
       contents: contents,
       path: getPathOption(options),
+      classifiedModuleName
     };
   },
 };
