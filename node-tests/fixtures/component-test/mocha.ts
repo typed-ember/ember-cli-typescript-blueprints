@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describeComponent, it } from 'ember-mocha';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 describeComponent('x-foo', 'Integration | Component | x-foo',
   {
