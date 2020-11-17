@@ -1,7 +1,4 @@
 import Component from '@ember/component';
 
-export default class FooXFoo extends Component.extend({
-  // anything which *must* be merged to prototype here
-}) {
-  // normal class body definition here
-};
+export default class FooXFoo extends Component {
+}
