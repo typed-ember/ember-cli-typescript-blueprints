@@ -7,9 +7,9 @@ const getPathOption = require('ember-cli-get-component-path-option');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
 const EOL = require('os').EOL;
 
-function invocationFor(options) {
+function componentNameFor(options) {
   let parts = options.entity.name.split('/');
-  return parts.map((p) => stringUtil.classify(p)).join('::');
+  return parts.map((p) => stringUtil.classify(p)).join();
 }
 
 module.exports = {
@@ -70,8 +70,7 @@ module.exports = {
 
     let classifiedModuleName = stringUtil.dasherize(options.entity.name);
 
-    let templateInvocation = invocationFor(options);
-    let componentName = templateInvocation;
+    let componentName = componentNameFor(options);
     
     // if we're in an addon, build import statement
     if (options.project.isEmberCLIAddon() || (options.inRepoAddon && !options.inDummy)) {
