@@ -33,13 +33,6 @@ describe('Blueprint: component-test', function() {
         });
       });
 
-      it('component-test x-foo --unit', function() {
-        return emberGenerateDestroy(['component-test', 'x-foo', '--unit'], _file => {
-          expect(_file('tests/unit/components/x-foo-test.ts')).to.equal(
-            fixture('component-test/qunit-unit.ts')
-          );
-        });
-      });
     });
 
     describe('with ember-mocha@0.16.0', function() {
@@ -58,14 +51,6 @@ describe('Blueprint: component-test', function() {
           );
         });
       });
-
-      it('component-test x-foo --unit', function() {
-        return emberGenerateDestroy(['component-test', 'x-foo', '--unit'], _file => {
-          expect(_file('tests/unit/components/x-foo-test.ts')).to.equal(
-            fixture('component-test/mocha-unit.ts')
-          );
-        });
-      });
     });
   });
 
@@ -80,16 +65,6 @@ describe('Blueprint: component-test', function() {
       return emberGenerateDestroy(['component-test', 'x-foo'], _file => {
         expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
           fixture('component-test/qunit.ts')
-        );
-
-        expect(_file('app/component-test/x-foo.ts')).to.not.exist;
-      });
-    });
-
-    it('component-test x-foo --unit', function() {
-      return emberGenerateDestroy(['component-test', 'x-foo', '--unit'], _file => {
-        expect(_file('tests/unit/components/x-foo-test.ts')).to.equal(
-          fixture('component-test/qunit-unit.ts')
         );
 
         expect(_file('app/component-test/x-foo.ts')).to.not.exist;
@@ -120,17 +95,6 @@ describe('Blueprint: component-test', function() {
         _file => {
           expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
             fixture('component-test/qunit.ts')
-          );
-        }
-      );
-    });
-
-    it('component-test x-foo --in-repo-addon=my-addon --unit', function() {
-      return emberGenerateDestroy(
-        ['component-test', 'x-foo', '--in-repo-addon=my-addon', '--unit'],
-        _file => {
-          expect(_file('tests/unit/components/x-foo-test.ts')).to.equal(
-            fixture('component-test/qunit-unit.ts')
           );
         }
       );
