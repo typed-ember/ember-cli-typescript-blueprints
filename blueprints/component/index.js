@@ -7,6 +7,11 @@ const getPathOption = require('ember-cli-get-component-path-option');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
 const EOL = require('os').EOL;
 
+function invocationFor(options) {
+  let parts = options.entity.name.split('/');
+  return parts.map((p) => stringUtil.classify(p)).join('::');
+}
+
 module.exports = {
   description: 'Generates a component.',
 
@@ -65,6 +70,9 @@ module.exports = {
 
     let classifiedModuleName = stringUtil.dasherize(options.entity.name);
 
+    let templateInvocation = invocationFor(options);
+    let componentName = templateInvocation;
+    
     // if we're in an addon, build import statement
     if (options.project.isEmberCLIAddon() || (options.inRepoAddon && !options.inDummy)) {
       if (options.pod) {
@@ -83,7 +91,8 @@ module.exports = {
       importTemplate: importTemplate,
       contents: contents,
       path: getPathOption(options),
-      classifiedModuleName
+      classifiedModuleName,
+      componentName
     };
   },
 };
