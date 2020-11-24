@@ -3,6 +3,5 @@ import Component from '@ember/component';
 import layout from './template';
 
 export default class XFoo extends Component {
-}) {
   layout = layout;
 };
