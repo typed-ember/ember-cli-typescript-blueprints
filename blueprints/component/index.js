@@ -9,7 +9,7 @@ const EOL = require('os').EOL;
 
 function componentNameFor(options) {
   let parts = options.entity.name.split('/');
-  return parts.map((p) => stringUtil.classify(p)).join();
+  return parts.map((p) => stringUtil.classify(p)).join("");
 }
 
 module.exports = {
