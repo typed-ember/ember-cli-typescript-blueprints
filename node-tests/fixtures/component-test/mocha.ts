@@ -1,24 +1,27 @@
 import { expect } from 'chai';
-import { describeComponent, it } from 'ember-mocha';
+import { describe, it } from 'mocha';
+import { setupRenderingTest } from 'ember-mocha';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-describeComponent('x-foo', 'Integration | Component | x-foo',
-  {
-    integration: true
-  },
-  function() {
-    it('renders', function() {
-      // Set any properties with this.set('myProperty', 'value');
-      // Handle any actions with this.on('myAction', function(val) { ... });
-      // Template block usage:
-      // this.render(hbs`
-      //   {{#x-foo}}
-      //     template content
-      //   {{/x-foo}}
-      // `);
+describe('x-foo', 'Integration | Component | x-foo', function() {
+  setupRenderingTest();
 
-      this.render(hbs`{{x-foo}}`);
-      expect(this.element).to.not.be.null;
-    });
-  }
-);
+  it('renders', async function() {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.set('myAction', function(val) { ... });
+
+    await render(hbs`<XFoo/>`);
+
+    expect(this.element.textContent.trim()).to.equal('');
+
+    // Template block usage:
+    await render(hbs`
+      <XFoo>
+        template block text
+      </XFoo>
+    `);
+
+    expect(this.element.textContent.trim()).to.equal('template block text');
+  });
+});
