@@ -1,4 +1,3 @@
-<% if (testType == 'integration') { %>
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -25,16 +24,3 @@ module('Integration | Component | <%= dasherizedModuleName %>', function(hooks) 
     assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
-<% } else if (testType == 'unit') { %>
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
-
-module('Unit | Component | <%= dasherizedModuleName %>', function(hooks) {
-  setupTest(hooks);
-
-  test('it exists', function(assert) {
-    let component = this.owner.factoryFor('component:<%= dasherizedModuleName %>').create();
-    assert.ok(component);
-  });
-});
-<% } >
