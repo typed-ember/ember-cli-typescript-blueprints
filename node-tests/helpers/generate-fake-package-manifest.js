@@ -1,22 +1,16 @@
-// @ts-check
-const { writeFileSync } = require('fs');
-const { ensureDirSync } = require('fs-extra');
-const path = require('path');
+const fs = require('fs');
 
-/**
- * Create fake package manifests on the file system to use in ensuring that the
- * blueprint generator is well-behaved with different test environments (e.g.
- * qunit and mocha).
- *
- * @param {string} name
- * @param {string} version
- */
-function generateFakePackageManifest(name, version) {
-  const targetDir = path.join('node_modules', name);
-  ensureDirSync(targetDir);
-
-  const pkgFilePath = path.join(targetDir, 'package.json');
-  writeFileSync(pkgFilePath, JSON.stringify({ version }));
-}
-
-module.exports = generateFakePackageManifest;
+module.exports = function generateFakePackageManifest(name, version) {
+  if (!fs.existsSync('node_modules')) {
+    fs.mkdirSync('node_modules');
+  }
+  if (!fs.existsSync('node_modules/' + name)) {
+    fs.mkdirSync('node_modules/' + name);
+  }
+  fs.writeFileSync(
+    'node_modules/' + name + '/package.json',
+    JSON.stringify({
+      version: version,
+    })
+  );
+};
