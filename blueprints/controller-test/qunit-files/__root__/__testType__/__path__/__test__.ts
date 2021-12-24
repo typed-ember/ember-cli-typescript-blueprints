@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { moduleFor, test } from 'ember-qunit';
 
-module('<%= friendlyTestDescription %>', function(hooks) {
-  setupTest(hooks);
+moduleFor('controller:<%= dasherizedModuleName %>', '<%= friendlyTestDescription %>', {
+  // Specify the other units that are required for this test.
+  // needs: ['controller:foo']
+});
 
-  // Replace this with your real tests.
-  test('it exists', function(assert) {
-    let controller = this.owner.lookup('controller:<%= controllerPathName %>');
-    assert.ok(controller);
-  });
+// TODO: Replace this with your real tests.
+test('it exists', function(assert) {
+  let controller = this.subject();
+  assert.ok(controller);
 });
