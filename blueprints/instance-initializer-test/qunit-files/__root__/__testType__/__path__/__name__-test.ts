@@ -1,9 +1,10 @@
 import Application from '@ember/application';
 import { run } from '@ember/runloop';
-import { initialize } from 'dummy/instance-initializers/foo';
-import { module, test } from 'qunit';
+import { initialize } from '<%= modulePrefix %>/instance-initializers/<%= dasherizedModuleName %>';
+import { module, test } from 'qunit';<% if (destroyAppExists) { %>
+import destroyApp from '../../helpers/destroy-app';<% } %>
 
-module('Unit | Instance Initializer | foo', {
+module('<%= friendlyTestName %>', {
   beforeEach() {
     run(() => {
       this.application = Application.create();
@@ -12,7 +13,7 @@ module('Unit | Instance Initializer | foo', {
   },
   afterEach() {
     run(this.appInstance, 'destroy');
-    run(this.application, 'destroy');
+    <% if (destroyAppExists) { %>destroyApp(this.application);<% } else { %>run(this.application, 'destroy');<% } %>
   }
 });
 

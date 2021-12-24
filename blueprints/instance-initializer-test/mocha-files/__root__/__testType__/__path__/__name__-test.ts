@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { describe, it, beforeEach } from 'mocha';
+import { describe, it, afterEach, beforeEach } from 'mocha';
 import Application from '@ember/application';
 import { run } from '@ember/runloop';
-import { initialize } from '<%= dasherizedModulePrefix %>/instance-initializers/<%= dasherizedModuleName %>';
+import { initialize } from '<%= modulePrefix %>/instance-initializers/<%= dasherizedModuleName %>';
 import destroyApp from '../../helpers/destroy-app';
 
 describe('<%= friendlyTestName %>', function() {
@@ -20,7 +20,7 @@ describe('<%= friendlyTestName %>', function() {
     destroyApp(application);
   });
 
-  // Replace this with your real tests.
+  // TODO: Replace this with your real tests.
   it('works', function() {
     initialize(appInstance);
 
