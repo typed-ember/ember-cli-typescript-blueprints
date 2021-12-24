@@ -1,14 +1,14 @@
 import Service from '@ember/service';
 
-export default class Foo extends Service.extend({
-  // anything which *must* be merged to prototype here
+export default class FooService extends Service.extend({
+  // Anything which *must* be merged to prototype here
 }) {
-  // normal class body definition here
+  // Normal class body definition here
 }
 
-// DO NOT DELETE: this is how TypeScript knows how to look up your services.
+// DO NOT DELETE. Required for TypeScript to look up this service.
 declare module '@ember/service' {
   interface Registry {
-    'foo': Foo;
+    'foo': FooService;
   }
 }
