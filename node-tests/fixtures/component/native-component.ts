@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
 
-interface FooArgs {}
+interface FooComponentArgs {
+}
 
-export default class Foo extends Component<FooArgs> {}
+export default class FooComponent extends Component<FooComponentArgs> {
+}

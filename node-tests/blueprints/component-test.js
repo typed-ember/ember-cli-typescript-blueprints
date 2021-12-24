@@ -20,7 +20,8 @@ const { EMBER_SET_COMPONENT_TEMPLATE } = require('../../blueprints/component');
 
 const glimmerComponentContents = `import Component from '@glimmer/component';
 
-interface FooComponentArgs {};
+interface FooComponentArgs {
+}
 
 export default class FooComponent extends Component<FooComponentArgs> {
 }
@@ -793,9 +794,7 @@ describe('Blueprint: component', function () {
       return emberGenerateDestroy(
         ['component', 'foo/x-foo', '--component-class', '@glimmer/component'],
         (_file) => {
-          expect(_file('app/components/foo/x-foo.ts')).to.equal(
-            glimmerComponentContents.replace(/FooComponent/g, 'FooXFooComponent')
-          );
+          expect(_file('app/components/foo/x-foo.ts')).to.equal(fixture('component/native-component-nested.ts'));
           expect(_file('app/components/foo/x-foo.hbs')).to.equal('{{yield}}');
 
           expect(_file('tests/integration/components/foo/x-foo-test.ts')).to.equal(

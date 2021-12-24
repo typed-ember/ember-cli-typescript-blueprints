@@ -259,7 +259,7 @@ module.exports = {
         break;
       case '@glimmer/component':
         importComponent = `import Component from '@glimmer/component';`;
-        argsInterface = `${EOL}interface ${classifiedModuleName}ComponentArgs {};`;
+        argsInterface = `${EOL}interface ${classifiedModuleName}ComponentArgs {${EOL}}${EOL}`;
         defaultExport = `class ${classifiedModuleName}Component extends Component<${classifiedModuleName}ComponentArgs> {${EOL}}`;
         break;
       case '@ember/component/template-only':
