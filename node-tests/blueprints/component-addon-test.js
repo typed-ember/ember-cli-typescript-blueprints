@@ -18,14 +18,14 @@ describe('Blueprint: component-addon', function () {
 
     it('component-addon foo', function () {
       return emberGenerateDestroy(['component-addon', 'foo'], (_file) => {
-        expect(_file('app/components/foo.js')).to.contain(
+        expect(_file('app/components/foo.ts')).to.contain(
           "export { default } from 'my-addon/components/foo';"
         );
       });
     });
     it('component-addon foo-bar', function () {
       return emberGenerateDestroy(['component-addon', 'foo-bar'], (_file) => {
-        expect(_file('app/components/foo-bar.js')).to.contain(
+        expect(_file('app/components/foo-bar.ts')).to.contain(
           "export { default } from 'my-addon/components/foo-bar';"
         );
       });

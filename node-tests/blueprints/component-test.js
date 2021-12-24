@@ -20,7 +20,9 @@ const { EMBER_SET_COMPONENT_TEMPLATE } = require('../../blueprints/component');
 
 const glimmerComponentContents = `import Component from '@glimmer/component';
 
-export default class FooComponent extends Component {
+interface FooComponentArgs {};
+
+export default class FooComponent extends Component<FooComponentArgs> {
 }
 `;
 
@@ -754,9 +756,9 @@ describe('Blueprint: component', function () {
     it('component x-foo.ts', function () {
       return emberGenerateDestroy(['component', 'x-foo.ts'], (_file) => {
         expect(_file('app/components/x-foo.ts')).to.not.exist;
-        expect(_file('app/components/x-foo.js.ts')).to.not.exist;
-        expect(_file('app/templates/components/x-foo.js.hbs')).to.not.exist;
-        expect(_file('tests/integration/components/x-foo-test.ts')).to.not.exist;
+        expect(_file('app/components/x-foo.ts.ts')).to.not.exist;
+        expect(_file('app/templates/components/x-foo.ts.hbs')).to.not.exist;
+        expect(_file('tests/integration/components/x-foo-test.ts.ts')).to.not.exist;
 
         expect(_file('app/components/x-foo.hbs')).to.equal('{{yield}}');
 
@@ -792,7 +794,7 @@ describe('Blueprint: component', function () {
         ['component', 'foo/x-foo', '--component-class', '@glimmer/component'],
         (_file) => {
           expect(_file('app/components/foo/x-foo.ts')).to.equal(
-            glimmerComponentContents.replace('FooComponent', 'FooXFooComponent')
+            glimmerComponentContents.replace(/FooComponent/g, 'FooXFooComponent')
           );
           expect(_file('app/components/foo/x-foo.hbs')).to.equal('{{yield}}');
 
@@ -1159,14 +1161,14 @@ describe('Blueprint: component', function () {
       });
     });
 
-    it('component x-foo.js --in-repo-addon=my-addon', function () {
+    it('component x-foo.ts --in-repo-addon=my-addon', function () {
       return emberGenerateDestroy(
         ['component', 'x-foo.ts', '--in-repo-addon=my-addon'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo.js.ts')).to.not.exist;
-          expect(_file('lib/my-addon/addon/templates/components/x-foo.js.hbs')).to.not.exist;
-          expect(_file('lib/my-addon/app/components/x-foo.js.ts')).to.not.exist;
-          expect(_file('tests/integration/components/x-foo-test.ts')).to.not.exist;
+          expect(_file('lib/my-addon/addon/components/x-foo.ts.ts')).to.not.exist;
+          expect(_file('lib/my-addon/addon/templates/components/x-foo.ts.hbs')).to.not.exist;
+          expect(_file('lib/my-addon/app/components/x-foo.ts.ts')).to.not.exist;
+          expect(_file('tests/integration/components/x-foo-test.ts.ts')).to.not.exist;
 
           expect(_file('lib/my-addon/addon/components/x-foo.ts')).to.equal(
             fixture('component/component-addon-dash.ts')
@@ -1244,14 +1246,14 @@ describe('Blueprint: component', function () {
       );
     });
 
-    it('component x-foo.js --in-repo-addon=my-addon --pod', function () {
+    it('component x-foo.ts --in-repo-addon=my-addon --pod', function () {
       return emberGenerateDestroy(
         ['component', 'x-foo.ts', '--in-repo-addon=my-addon', '--pod'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo/component.js.ts')).to.not.exist;
-          expect(_file('lib/my-addon/addon/components/x-foo/template.js.hbs')).to.not.exist;
-          expect(_file('lib/my-addon/app/components/x-foo/component.js.ts')).to.not.exist;
-          expect(_file('tests/integration/components/x-foo/component-test.ts')).to.not.exist;
+          expect(_file('lib/my-addon/addon/components/x-foo/component.ts.ts')).to.not.exist;
+          expect(_file('lib/my-addon/addon/components/x-foo/template.ts.hbs')).to.not.exist;
+          expect(_file('lib/my-addon/app/components/x-foo/component.ts.ts')).to.not.exist;
+          expect(_file('tests/integration/components/x-foo/component-test.ts.ts')).to.not.exist;
 
           expect(_file('lib/my-addon/addon/components/x-foo/component.ts')).to.equal(
             fixture('component/component-addon-dash-pod.ts')

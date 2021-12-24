@@ -20,30 +20,29 @@
   },
   "dependencies": {
     "chalk": "^4.0.0",
-    "ember-cli-babel": "^7.0.0",
+    "ember-cli-babel": "^7.23.0",
     "ember-cli-get-component-path-option": "^1.0.0",
     "ember-cli-normalize-entity-name": "^1.0.0",
     "ember-cli-path-utils": "^1.0.0",
     "ember-cli-string-utils": "^1.1.0",
     "ember-cli-test-info": "^1.0.0",
     "ember-cli-valid-component-name": "^1.0.0",
-    "ember-cli-version-checker": "^5.0.0",
+    "ember-cli-version-checker": "^5.1.1",
     "ember-router-generator": "^2.0.0",
-    "exists-sync": "^0.1.0",
-    "fs-extra": "^8.0.0",
+    "exists-sync": "^0.1.0", 
     "inflection": "^1.12.0",
-    "silent-error": "^1.1.0"
+    "semver": "^7.3.4",
+    "silent-error": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@typed-ember/renovate-config": "1.2.1",
     "broccoli-asset-rev": "3.0.0",
     "ember-ajax": "5.0.0",
-    "ember-cli": "3.22.0",
+    "ember-cli": "3.12.0",
     "ember-cli-blueprint-test-helpers": "0.19.2",
     "ember-cli-dependency-checker": "3.2.0",
     "ember-cli-eslint": "5.1.0",
-    "ember-cli-htmlbars": "5.3.1",
     "ember-cli-inject-live-reload": "2.0.2",
     "ember-cli-shims": "1.2.0",
     "ember-cli-sri": "2.1.1",
@@ -52,21 +51,21 @@
     "ember-export-application-global": "2.0.1",
     "ember-load-initializers": "2.1.2",
     "ember-maybe-import-regenerator": "0.1.6",
-    "ember-qunit": "4.6.0",
     "ember-resolver": "8.0.2",
-    "ember-source": "3.23.0",
+    "ember-source": "3.28.8",
     "ember-source-channel-url": "3.0.0",
     "ember-try": "1.4.0",
     "eslint": "^7.13.0",
     "eslint-plugin-ember": "9.6.0",
     "eslint-plugin-node": "11.1.0",
+    "fs-extra": "^9.0.1",
     "loader.js": "4.7.0",
-    "mocha": "8.2.1",
+    "mocha": "7.1.2",
     "qunit-dom": "1.6.0",
     "testdouble": "3.16.1"
   },
   "engines": {
-    "node": "10.* || 12.* || >= 14.*"
+    "node": "12.* || 14.* || >= 16"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
@@ -85,6 +84,6 @@
     "proseWrap": "never"
   },
   "volta": {
-    "node": "10.23.0"
+    "node": "14.18.0"
   }
 }

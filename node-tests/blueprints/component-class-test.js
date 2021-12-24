@@ -52,7 +52,7 @@ describe('Blueprint: component-class', function () {
 
     it('component-class foo', function () {
       return emberGenerateDestroy(['component-class', 'foo'], (_file) => {
-        expect(_file('app/components/foo.js')).to.equal(emberComponentContents);
+        expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
       });
     });
 
@@ -69,7 +69,7 @@ describe('Blueprint: component-class', function () {
             '@ember/component',
           ],
           (_file) => {
-            expect(_file('app/components/foo.js')).to.equal(emberComponentContents);
+            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
           }
         );
       });
@@ -86,7 +86,7 @@ describe('Blueprint: component-class', function () {
             'foo',
           ],
           (_file) => {
-            expect(_file('app/components/foo.js')).to.equal(glimmerComponentContents);
+            expect(_file('app/components/foo.ts')).to.equal(glimmerComponentContents);
           }
         );
       });
@@ -95,7 +95,7 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', '--component-structure', 'flat', 'foo'],
           (_file) => {
-            expect(_file('app/components/foo.js')).to.equal(emberComponentContents);
+            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
           }
         );
       });
@@ -104,7 +104,7 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', '--component-structure', 'nested', 'foo'],
           (_file) => {
-            expect(_file('app/components/foo/index.js')).to.equal(emberComponentContents);
+            expect(_file('app/components/foo/index.ts')).to.equal(emberComponentContents);
           }
         );
       });
@@ -113,7 +113,7 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', '--component-structure', 'classic', 'foo'],
           (_file) => {
-            expect(_file('app/components/foo.js')).to.equal(emberComponentContents);
+            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
           }
         );
       });
@@ -122,7 +122,7 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', '--component-class', '@ember/component', 'foo'],
           (_file) => {
-            expect(_file('app/components/foo.js')).to.equal(emberComponentContents);
+            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
           }
         );
       });
@@ -131,7 +131,7 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', '--component-class', '@glimmer/component', 'foo'],
           (_file) => {
-            expect(_file('app/components/foo.js')).to.equal(glimmerComponentContents);
+            expect(_file('app/components/foo.ts')).to.equal(glimmerComponentContents);
           }
         );
       });
@@ -140,7 +140,7 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', '--component-class', '@ember/component/template-only', 'foo'],
           (_file) => {
-            expect(_file('app/components/foo.js')).to.equal(templateOnlyContents);
+            expect(_file('app/components/foo.ts')).to.equal(templateOnlyContents);
           }
         );
       });
@@ -148,43 +148,43 @@ describe('Blueprint: component-class', function () {
 
     it('component-class x-foo', function () {
       return emberGenerateDestroy(['component-class', 'x-foo'], (_file) => {
-        expect(_file('app/components/x-foo.js')).to.equal(fixture('component/component-dash.js'));
+        expect(_file('app/components/x-foo.ts')).to.equal(fixture('component/component-dash.ts'));
       });
     });
 
     it('component-class foo/x-foo', function () {
       return emberGenerateDestroy(['component-class', 'foo/x-foo'], (_file) => {
-        expect(_file('app/components/foo/x-foo.js')).to.equal(
-          fixture('component/component-nested.js')
+        expect(_file('app/components/foo/x-foo.ts')).to.equal(
+          fixture('component/component-nested.ts')
         );
       });
     });
 
     it('component-class x-foo --path foo', function () {
       return emberGenerateDestroy(['component-class', 'x-foo', '--path', 'foo'], (_file) => {
-        expect(_file('app/components/x-foo.js')).to.equal(fixture('component/component-dash.js'));
+        expect(_file('app/components/x-foo.ts')).to.equal(fixture('component/component-dash.ts'));
       });
     });
 
-    it('component-class foo.js', function () {
-      return emberGenerateDestroy(['component-class', 'foo.js'], (_file) => {
-        expect(_file('app/components/foo.js.js')).to.not.exist;
-        expect(_file('app/components/foo.js')).to.equal(fixture('component/component.js'));
+    it('component-class foo.ts', function () {
+      return emberGenerateDestroy(['component-class', 'foo.ts'], (_file) => {
+        expect(_file('app/components/foo.ts.ts')).to.not.exist;
+        expect(_file('app/components/foo.ts')).to.equal(fixture('component/component.ts'));
       });
     });
 
     it('component-class x-foo --pod', function () {
       return emberGenerateDestroy(['component-class', 'x-foo', '--pod'], (_file) => {
-        expect(_file('app/components/x-foo/component.js')).to.equal(
-          fixture('component/component-dash.js')
+        expect(_file('app/components/x-foo/component.ts')).to.equal(
+          fixture('component/component-dash.ts')
         );
       });
     });
 
     it('component-class foo/x-foo --pod', function () {
       return emberGenerateDestroy(['component-class', 'foo/x-foo', '--pod'], (_file) => {
-        expect(_file('app/components/foo/x-foo/component.js')).to.equal(
-          fixture('component/component-nested.js')
+        expect(_file('app/components/foo/x-foo/component.ts')).to.equal(
+          fixture('component/component-nested.ts')
         );
       });
     });
@@ -193,8 +193,8 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'x-foo', '--pod', '--path', 'foo'],
         (_file) => {
-          expect(_file('app/foo/x-foo/component.js')).to.equal(
-            fixture('component/component-dash.js')
+          expect(_file('app/foo/x-foo/component.ts')).to.equal(
+            fixture('component/component-dash.ts')
           );
         }
       );
@@ -204,8 +204,8 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo/x-foo', '--pod', '--path', 'bar'],
         (_file) => {
-          expect(_file('app/bar/foo/x-foo/component.js')).to.equal(
-            fixture('component/component-nested.js')
+          expect(_file('app/bar/foo/x-foo/component.ts')).to.equal(
+            fixture('component/component-nested.ts')
           );
         }
       );
@@ -215,8 +215,8 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'x-foo', '--pod', '--path', 'bar/foo'],
         (_file) => {
-          expect(_file('app/bar/foo/x-foo/component.js')).to.equal(
-            fixture('component/component-dash.js')
+          expect(_file('app/bar/foo/x-foo/component.ts')).to.equal(
+            fixture('component/component-dash.ts')
           );
         }
       );
@@ -226,8 +226,8 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo/x-foo', '--pod', '--path', 'bar/baz'],
         (_file) => {
-          expect(_file('app/bar/baz/foo/x-foo/component.js')).to.equal(
-            fixture('component/component-nested.js')
+          expect(_file('app/bar/baz/foo/x-foo/component.ts')).to.equal(
+            fixture('component/component-nested.ts')
           );
         }
       );
@@ -235,7 +235,7 @@ describe('Blueprint: component-class', function () {
 
     it('component-class x-foo --pod -no-path', function () {
       return emberGenerateDestroy(['component-class', 'x-foo', '--pod', '-no-path'], (_file) => {
-        expect(_file('app/x-foo/component.js')).to.equal(fixture('component/component-dash.js'));
+        expect(_file('app/x-foo/component.ts')).to.equal(fixture('component/component-dash.ts'));
       });
     });
 
@@ -243,18 +243,18 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo/x-foo', '--pod', '-no-path'],
         (_file) => {
-          expect(_file('app/foo/x-foo/component.js')).to.equal(
-            fixture('component/component-nested.js')
+          expect(_file('app/foo/x-foo/component.ts')).to.equal(
+            fixture('component/component-nested.ts')
           );
         }
       );
     });
 
-    it('component-class x-foo.js --pod', function () {
-      return emberGenerateDestroy(['component-class', 'x-foo.js', '--pod'], (_file) => {
-        expect(_file('app/components/x-foo.js/component.js')).to.not.exist;
-        expect(_file('app/components/x-foo/component.js')).to.equal(
-          fixture('component/component-dash.js')
+    it('component-class x-foo.ts --pod', function () {
+      return emberGenerateDestroy(['component-class', 'x-foo.ts', '--pod'], (_file) => {
+        expect(_file('app/components/x-foo.ts/component.ts')).to.not.exist;
+        expect(_file('app/components/x-foo/component.ts')).to.equal(
+          fixture('component/component-dash.ts')
         );
       });
     });
@@ -266,24 +266,24 @@ describe('Blueprint: component-class', function () {
 
       it('component-class foo --pod', function () {
         return emberGenerateDestroy(['component-class', 'foo', '--pod'], (_file) => {
-          expect(_file('app/pods/components/foo/component.js')).to.equal(
-            fixture('component/component.js')
+          expect(_file('app/pods/components/foo/component.ts')).to.equal(
+            fixture('component/component.ts')
           );
         });
       });
 
       it('component-class x-foo --pod', function () {
         return emberGenerateDestroy(['component-class', 'x-foo', '--pod'], (_file) => {
-          expect(_file('app/pods/components/x-foo/component.js')).to.equal(
-            fixture('component/component-dash.js')
+          expect(_file('app/pods/components/x-foo/component.ts')).to.equal(
+            fixture('component/component-dash.ts')
           );
         });
       });
 
       it('component-class foo/x-foo --pod', function () {
         return emberGenerateDestroy(['component-class', 'foo/x-foo', '--pod'], (_file) => {
-          expect(_file('app/pods/components/foo/x-foo/component.js')).to.equal(
-            fixture('component/component-nested.js')
+          expect(_file('app/pods/components/foo/x-foo/component.ts')).to.equal(
+            fixture('component/component-nested.ts')
           );
         });
       });
@@ -292,8 +292,8 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', 'x-foo', '--pod', '--path', 'foo'],
           (_file) => {
-            expect(_file('app/pods/foo/x-foo/component.js')).to.equal(
-              fixture('component/component-dash.js')
+            expect(_file('app/pods/foo/x-foo/component.ts')).to.equal(
+              fixture('component/component-dash.ts')
             );
           }
         );
@@ -303,8 +303,8 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', 'foo/x-foo', '--pod', '--path', 'bar'],
           (_file) => {
-            expect(_file('app/pods/bar/foo/x-foo/component.js')).to.equal(
-              fixture('component/component-nested.js')
+            expect(_file('app/pods/bar/foo/x-foo/component.ts')).to.equal(
+              fixture('component/component-nested.ts')
             );
           }
         );
@@ -314,8 +314,8 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', 'x-foo', '--pod', '--path', 'bar/foo'],
           (_file) => {
-            expect(_file('app/pods/bar/foo/x-foo/component.js')).to.equal(
-              fixture('component/component-dash.js')
+            expect(_file('app/pods/bar/foo/x-foo/component.ts')).to.equal(
+              fixture('component/component-dash.ts')
             );
           }
         );
@@ -325,8 +325,8 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', 'foo/x-foo', '--pod', '--path', 'bar/baz'],
           (_file) => {
-            expect(_file('app/pods/bar/baz/foo/x-foo/component.js')).to.equal(
-              fixture('component/component-nested.js')
+            expect(_file('app/pods/bar/baz/foo/x-foo/component.ts')).to.equal(
+              fixture('component/component-nested.ts')
             );
           }
         );
@@ -334,8 +334,8 @@ describe('Blueprint: component-class', function () {
 
       it('component-class x-foo --pod -no-path', function () {
         return emberGenerateDestroy(['component-class', 'x-foo', '--pod', '-no-path'], (_file) => {
-          expect(_file('app/pods/x-foo/component.js')).to.equal(
-            fixture('component/component-dash.js')
+          expect(_file('app/pods/x-foo/component.ts')).to.equal(
+            fixture('component/component-dash.ts')
           );
         });
       });
@@ -344,8 +344,8 @@ describe('Blueprint: component-class', function () {
         return emberGenerateDestroy(
           ['component-class', 'foo/x-foo', '--pod', '-no-path'],
           (_file) => {
-            expect(_file('app/pods/foo/x-foo/component.js')).to.equal(
-              fixture('component/component-nested.js')
+            expect(_file('app/pods/foo/x-foo/component.ts')).to.equal(
+              fixture('component/component-nested.ts')
             );
           }
         );
@@ -369,22 +369,22 @@ describe('Blueprint: component-class', function () {
 
     it('component-class foo', function () {
       return emberGenerateDestroy(['component-class', 'foo'], (_file) => {
-        expect(_file('app/components/foo.js')).to.equal(glimmerComponentContents);
+        expect(_file('app/components/foo.ts')).to.equal(glimmerComponentContents);
       });
     });
 
     it('component-class x-foo', function () {
       return emberGenerateDestroy(['component-class', 'x-foo'], (_file) => {
-        expect(_file('app/components/x-foo.js')).to.equal(
+        expect(_file('app/components/x-foo.ts')).to.equal(
           glimmerComponentContents.replace('FooComponent', 'XFooComponent')
         );
       });
     });
 
-    it('component-class x-foo.js', function () {
-      return emberGenerateDestroy(['component-class', 'x-foo.js'], (_file) => {
-        expect(_file('app/components/x-foo.js.js')).to.not.exist;
-        expect(_file('app/components/x-foo.js')).to.equal(
+    it('component-class x-foo.ts', function () {
+      return emberGenerateDestroy(['component-class', 'x-foo.ts'], (_file) => {
+        expect(_file('app/components/x-foo.ts.ts')).to.not.exist;
+        expect(_file('app/components/x-foo.ts')).to.equal(
           glimmerComponentContents.replace('FooComponent', 'XFooComponent')
         );
       });
@@ -392,7 +392,7 @@ describe('Blueprint: component-class', function () {
 
     it('component-class foo/x-foo', function () {
       return emberGenerateDestroy(['component-class', 'foo/x-foo'], (_file) => {
-        expect(_file('app/components/foo/x-foo.js')).to.equal(
+        expect(_file('app/components/foo/x-foo.ts')).to.equal(
           glimmerComponentContents.replace('FooComponent', 'FooXFooComponent')
         );
       });
@@ -402,7 +402,7 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo/x-foo', '--component-class', '@glimmer/component'],
         (_file) => {
-          expect(_file('app/components/foo/x-foo.js')).to.equal(
+          expect(_file('app/components/foo/x-foo.ts')).to.equal(
             glimmerComponentContents.replace('FooComponent', 'FooXFooComponent')
           );
         }
@@ -424,8 +424,8 @@ describe('Blueprint: component-class', function () {
 
     it('component-class foo', function () {
       return emberGenerateDestroy(['component-class', 'foo'], (_file) => {
-        expect(_file('addon/components/foo.js')).to.equal(fixture('component/component-addon.js'));
-        expect(_file('app/components/foo.js')).to.contain(
+        expect(_file('addon/components/foo.ts')).to.equal(fixture('component/component-addon.ts'));
+        expect(_file('app/components/foo.ts')).to.contain(
           "export { default } from 'my-addon/components/foo';"
         );
       });
@@ -433,23 +433,23 @@ describe('Blueprint: component-class', function () {
 
     it('component-class x-foo', function () {
       return emberGenerateDestroy(['component-class', 'x-foo'], (_file) => {
-        expect(_file('addon/components/x-foo.js')).to.equal(
-          fixture('component/component-addon-dash.js')
+        expect(_file('addon/components/x-foo.ts')).to.equal(
+          fixture('component/component-addon-dash.ts')
         );
-        expect(_file('app/components/x-foo.js')).to.contain(
+        expect(_file('app/components/x-foo.ts')).to.contain(
           "export { default } from 'my-addon/components/x-foo';"
         );
       });
     });
 
-    it('component-class x-foo.js', function () {
-      return emberGenerateDestroy(['component-class', 'x-foo.js'], (_file) => {
-        expect(_file('addon/components/x-foo.js.js')).to.not.exist;
-        expect(_file('app/components/x-foo.js.js')).to.not.exist;
-        expect(_file('addon/components/x-foo.js')).to.equal(
-          fixture('component/component-addon-dash.js')
+    it('component-class x-foo.ts', function () {
+      return emberGenerateDestroy(['component-class', 'x-foo.ts'], (_file) => {
+        expect(_file('addon/components/x-foo.ts.ts')).to.not.exist;
+        expect(_file('app/components/x-foo.ts.ts')).to.not.exist;
+        expect(_file('addon/components/x-foo.ts')).to.equal(
+          fixture('component/component-addon-dash.ts')
         );
-        expect(_file('app/components/x-foo.js')).to.contain(
+        expect(_file('app/components/x-foo.ts')).to.contain(
           "export { default } from 'my-addon/components/x-foo';"
         );
       });
@@ -457,10 +457,10 @@ describe('Blueprint: component-class', function () {
 
     it('component-class foo/x-foo', function () {
       return emberGenerateDestroy(['component-class', 'foo/x-foo'], (_file) => {
-        expect(_file('addon/components/foo/x-foo.js')).to.equal(
-          fixture('component/component-addon-nested.js')
+        expect(_file('addon/components/foo/x-foo.ts')).to.equal(
+          fixture('component/component-addon-nested.ts')
         );
-        expect(_file('app/components/foo/x-foo.js')).to.contain(
+        expect(_file('app/components/foo/x-foo.ts')).to.contain(
           "export { default } from 'my-addon/components/foo/x-foo';"
         );
       });
@@ -468,39 +468,39 @@ describe('Blueprint: component-class', function () {
 
     it('component-class x-foo --dummy', function () {
       return emberGenerateDestroy(['component-class', 'x-foo', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/x-foo.js')).to.equal(
-          fixture('component/component-addon-dash.js')
+        expect(_file('tests/dummy/app/components/x-foo.ts')).to.equal(
+          fixture('component/component-addon-dash.ts')
         );
-        expect(_file('app/components/x-foo.js')).to.not.exist;
+        expect(_file('app/components/x-foo.ts')).to.not.exist;
       });
     });
 
     it('component-class foo/x-foo --dummy', function () {
       return emberGenerateDestroy(['component-class', 'foo/x-foo', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/foo/x-foo.js')).to.equal(
-          fixture('component/component-addon-nested.js')
+        expect(_file('tests/dummy/app/components/foo/x-foo.ts')).to.equal(
+          fixture('component/component-addon-nested.ts')
         );
-        expect(_file('app/components/foo/x-foo.js')).to.not.exist;
+        expect(_file('app/components/foo/x-foo.ts')).to.not.exist;
       });
     });
 
-    it('component-class x-foo.js --dummy', function () {
-      return emberGenerateDestroy(['component-class', 'x-foo.js', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/x-foo.js.js')).to.not.exist;
-        expect(_file('app/components/x-foo.js.js')).to.not.exist;
-        expect(_file('tests/dummy/app/components/x-foo.js')).to.equal(
-          fixture('component/component-addon-dash.js')
+    it('component-class x-foo.ts --dummy', function () {
+      return emberGenerateDestroy(['component-class', 'x-foo.ts', '--dummy'], (_file) => {
+        expect(_file('tests/dummy/app/components/x-foo.ts.ts')).to.not.exist;
+        expect(_file('app/components/x-foo.ts.ts')).to.not.exist;
+        expect(_file('tests/dummy/app/components/x-foo.ts')).to.equal(
+          fixture('component/component-addon-dash.ts')
         );
-        expect(_file('app/components/x-foo.js')).to.not.exist;
+        expect(_file('app/components/x-foo.ts')).to.not.exist;
       });
     });
 
     it('component-class x-foo --pod', function () {
       return emberGenerateDestroy(['component-class', 'x-foo', '--pod'], (_file) => {
-        expect(_file('addon/components/x-foo/component.js')).to.equal(
+        expect(_file('addon/components/x-foo/component.ts')).to.equal(
           fixture('component/component-addon-dash-pod.ts')
         );
-        expect(_file('app/components/x-foo/component.js')).to.contain(
+        expect(_file('app/components/x-foo/component.ts')).to.contain(
           "export { default } from 'my-addon/components/x-foo/component';"
         );
       });
@@ -523,8 +523,8 @@ describe('Blueprint: component-class', function () {
 
     it('component-class foo', function () {
       return emberGenerateDestroy(['component-class', 'foo'], (_file) => {
-        expect(_file('addon/components/foo.js')).to.equal(glimmerComponentContents);
-        expect(_file('app/components/foo.js')).to.contain(
+        expect(_file('addon/components/foo.ts')).to.equal(glimmerComponentContents);
+        expect(_file('app/components/foo.ts')).to.contain(
           "export { default } from 'my-addon/components/foo';"
         );
       });
@@ -532,10 +532,10 @@ describe('Blueprint: component-class', function () {
 
     it('component-class x-foo', function () {
       return emberGenerateDestroy(['component-class', 'x-foo'], (_file) => {
-        expect(_file('addon/components/x-foo.js')).to.equal(
+        expect(_file('addon/components/x-foo.ts')).to.equal(
           glimmerComponentContents.replace('FooComponent', 'XFooComponent')
         );
-        expect(_file('app/components/x-foo.js')).to.contain(
+        expect(_file('app/components/x-foo.ts')).to.contain(
           "export { default } from 'my-addon/components/x-foo';"
         );
       });
@@ -543,10 +543,10 @@ describe('Blueprint: component-class', function () {
 
     it('component-class foo/x-foo', function () {
       return emberGenerateDestroy(['component-class', 'foo/x-foo'], (_file) => {
-        expect(_file('addon/components/foo/x-foo.js')).to.equal(
+        expect(_file('addon/components/foo/x-foo.ts')).to.equal(
           glimmerComponentContents.replace('FooComponent', 'FooXFooComponent')
         );
-        expect(_file('app/components/foo/x-foo.js')).to.contain(
+        expect(_file('app/components/foo/x-foo.ts')).to.contain(
           "export { default } from 'my-addon/components/foo/x-foo';"
         );
       });
@@ -554,16 +554,16 @@ describe('Blueprint: component-class', function () {
 
     it('component-class x-foo --dummy', function () {
       return emberGenerateDestroy(['component-class', 'x-foo', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/x-foo.js')).equal(
+        expect(_file('tests/dummy/app/components/x-foo.ts')).equal(
           glimmerComponentContents.replace('FooComponent', 'XFooComponent')
         );
-        expect(_file('app/components/x-foo.js')).to.not.exist;
+        expect(_file('app/components/x-foo.ts')).to.not.exist;
       });
     });
 
     it('component-class foo/x-foo --dummy', function () {
       return emberGenerateDestroy(['component-class', 'foo/x-foo', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/foo/x-foo.js')).to.equal(
+        expect(_file('tests/dummy/app/components/foo/x-foo.ts')).to.equal(
           glimmerComponentContents.replace('FooComponent', 'FooXFooComponent')
         );
         expect(_file('app/components/foo/x-foo.hbs')).to.not.exist;
@@ -587,10 +587,10 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo', '--in-repo-addon=my-addon'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/foo.js')).to.equal(
-            fixture('component/component-addon.js')
+          expect(_file('lib/my-addon/addon/components/foo.ts')).to.equal(
+            fixture('component/component-addon.ts')
           );
-          expect(_file('lib/my-addon/app/components/foo.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/foo.ts')).to.contain(
             "export { default } from 'my-addon/components/foo';"
           );
         }
@@ -601,27 +601,27 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'x-foo', '--in-repo-addon=my-addon'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo.js')).to.equal(
-            fixture('component/component-addon-dash.js')
+          expect(_file('lib/my-addon/addon/components/x-foo.ts')).to.equal(
+            fixture('component/component-addon-dash.ts')
           );
-          expect(_file('lib/my-addon/app/components/x-foo.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/x-foo.ts')).to.contain(
             "export { default } from 'my-addon/components/x-foo';"
           );
         }
       );
     });
 
-    it('component-class x-foo.js --in-repo-addon=my-addon', function () {
+    it('component-class x-foo.ts --in-repo-addon=my-addon', function () {
       return emberGenerateDestroy(
-        ['component-class', 'x-foo.js', '--in-repo-addon=my-addon'],
+        ['component-class', 'x-foo.ts', '--in-repo-addon=my-addon'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo.js.js')).to.not.exist;
-          expect(_file('lib/my-addon/app/components/x-foo.js.js')).to.not.exist;
+          expect(_file('lib/my-addon/addon/components/x-foo.ts.ts')).to.not.exist;
+          expect(_file('lib/my-addon/app/components/x-foo.ts.ts')).to.not.exist;
 
-          expect(_file('lib/my-addon/addon/components/x-foo.js')).to.equal(
-            fixture('component/component-addon-dash.js')
+          expect(_file('lib/my-addon/addon/components/x-foo.ts')).to.equal(
+            fixture('component/component-addon-dash.ts')
           );
-          expect(_file('lib/my-addon/app/components/x-foo.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/x-foo.ts')).to.contain(
             "export { default } from 'my-addon/components/x-foo';"
           );
         }
@@ -632,10 +632,10 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo/x-foo', '--in-repo-addon=my-addon'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/foo/x-foo.js')).to.equal(
-            fixture('component/component-addon-nested.js')
+          expect(_file('lib/my-addon/addon/components/foo/x-foo.ts')).to.equal(
+            fixture('component/component-addon-nested.ts')
           );
-          expect(_file('lib/my-addon/app/components/foo/x-foo.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/foo/x-foo.ts')).to.contain(
             "export { default } from 'my-addon/components/foo/x-foo';"
           );
         }
@@ -646,26 +646,26 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'x-foo', '--in-repo-addon=my-addon', '--pod'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo/component.js')).to.equal(
+          expect(_file('lib/my-addon/addon/components/x-foo/component.ts')).to.equal(
             fixture('component/component-addon-dash-pod.ts')
           );
-          expect(_file('lib/my-addon/app/components/x-foo/component.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/x-foo/component.ts')).to.contain(
             "export { default } from 'my-addon/components/x-foo/component';"
           );
         }
       );
     });
 
-    it('component-class x-foo.js --in-repo-addon=my-addon --pod', function () {
+    it('component-class x-foo.ts --in-repo-addon=my-addon --pod', function () {
       return emberGenerateDestroy(
-        ['component-class', 'x-foo.js', '--in-repo-addon=my-addon', '--pod'],
+        ['component-class', 'x-foo.ts', '--in-repo-addon=my-addon', '--pod'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo/component.js.js')).to.not.exist;
-          expect(_file('lib/my-addon/app/components/x-foo/component.js.js')).to.not.exist;
-          expect(_file('lib/my-addon/addon/components/x-foo/component.js')).to.equal(
+          expect(_file('lib/my-addon/addon/components/x-foo/component.ts.ts')).to.not.exist;
+          expect(_file('lib/my-addon/app/components/x-foo/component.ts.ts')).to.not.exist;
+          expect(_file('lib/my-addon/addon/components/x-foo/component.ts')).to.equal(
             fixture('component/component-addon-dash-pod.ts')
           );
-          expect(_file('lib/my-addon/app/components/x-foo/component.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/x-foo/component.ts')).to.contain(
             "export { default } from 'my-addon/components/x-foo/component';"
           );
         }
@@ -676,10 +676,10 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo/x-foo', '--in-repo-addon=my-addon', '--pod'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/foo/x-foo/component.js')).to.equal(
+          expect(_file('lib/my-addon/addon/components/foo/x-foo/component.ts')).to.equal(
             fixture('component/component-addon-nested-pod.ts')
           );
-          expect(_file('lib/my-addon/app/components/foo/x-foo/component.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/foo/x-foo/component.ts')).to.contain(
             "export { default } from 'my-addon/components/foo/x-foo/component';"
           );
         }
@@ -705,8 +705,8 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'foo', '--in-repo-addon=my-addon'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/foo.js')).to.equal(glimmerComponentContents);
-          expect(_file('lib/my-addon/app/components/foo.js')).to.contain(
+          expect(_file('lib/my-addon/addon/components/foo.ts')).to.equal(glimmerComponentContents);
+          expect(_file('lib/my-addon/app/components/foo.ts')).to.contain(
             "export { default } from 'my-addon/components/foo';"
           );
         }
@@ -717,10 +717,10 @@ describe('Blueprint: component-class', function () {
       return emberGenerateDestroy(
         ['component-class', 'x-foo', '--in-repo-addon=my-addon'],
         (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo.js')).to.equal(
+          expect(_file('lib/my-addon/addon/components/x-foo.ts')).to.equal(
             glimmerComponentContents.replace('FooComponent', 'XFooComponent')
           );
-          expect(_file('lib/my-addon/app/components/x-foo.js')).to.contain(
+          expect(_file('lib/my-addon/app/components/x-foo.ts')).to.contain(
             "export { default } from 'my-addon/components/x-foo';"
           );
         }

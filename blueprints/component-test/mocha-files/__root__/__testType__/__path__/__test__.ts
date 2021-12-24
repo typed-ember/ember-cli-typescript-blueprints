@@ -1,27 +1,34 @@
 import { expect } from 'chai';
-import { describe, it } from 'mocha';
-import { setupRenderingTest } from 'ember-mocha';
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import { describeComponent, it } from 'ember-mocha';<% if (testType === 'integration') { %>
+import hbs from 'htmlbars-inline-precompile';<% } %>
 
-describe('<%= friendlyTestDescription %>', function() {
-  setupRenderingTest();
+describeComponent('<%= componentPathName %>', '<%= friendlyTestDescription %>',
+  {
+    <% if (testType === 'integration' ) { %>integration: true<% } else if(testType === 'unit') { %>// Specify the other units that are required for this test
+    // needs: ['component:foo', 'helper:bar'],
+    unit: true<% } %>
+  },
+  function() {
+    it('renders', function() {
+      <% if (testType === 'integration' ) { %>// Set any properties with this.set('myProperty', 'value');
+      // Handle any actions with this.on('myAction', function(val) { ... });
 
-  it('renders', async function() {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+      this.render(hbs`<%= selfCloseComponent(componentName) %>`);
+      expect(this.$()).to.have.length(1);
 
-    await render(hbs`<%= selfCloseComponent(componentName) %>`);
+      // Template block usage:
+      this.render(hbs`
+        <%= openComponent(componentName) %>
+          template block text
+        <%= closeComponent(componentName) %>
+      `);
 
-    expect(this.element.textContent.trim()).to.equal('');
-
-    // Template block usage:
-    await render(hbs`
-      <%= openComponent(componentName) %>
-        template block text
-      <%= closeComponent(componentName) %>
-    `);
-
-    expect(this.element.textContent.trim()).to.equal('template block text');
-  });
-});
+      expect(this.$().text().trim()).to.equal('template block text');<% } else if(testType === 'unit') { %>// creates the component instance
+      let component = this.subject();
+      // renders the component on the page
+      this.render();
+      expect(component).to.be.ok;
+      expect(this.$()).to.have.length(1);<% } %>
+    });
+  }
+);
