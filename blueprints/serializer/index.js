@@ -1,15 +1,14 @@
-'use strict';
-
 const extendFromApplicationEntity = require('../../lib/utilities/extend-from-application-entity');
+const useEditionDetector = require('../edition-detector');
 
-module.exports = {
+module.exports = useEditionDetector({
   description: 'Generates an ember-data serializer.',
 
-  availableOptions: [
-    { name: 'base-class', type: String }
-  ],
+  availableOptions: [{ name: 'base-class', type: String }],
 
-  locals: function(options) {
-    return extendFromApplicationEntity('serializer', 'DS.JSONAPISerializer', options);
-  }
-};
+  root: __dirname,
+
+  locals(options) {
+    return extendFromApplicationEntity('serializer', 'JSONAPISerializer', options);
+  },
+});

@@ -1,14 +1,27 @@
-/* eslint-env node */
+const path = require('path');
 
-var testInfo = require('ember-cli-test-info');
-var useTestFrameworkDetector = require('../test-framework-detector');
+const testInfo = require('ember-cli-test-info');
+const useTestFrameworkDetector = require('@ember-data/private-build-infra/src/utilities/test-framework-detector');
 
 module.exports = useTestFrameworkDetector({
   description: 'Generates a transform unit test.',
 
-  locals: function(options) {
+  root: __dirname,
+
+  fileMapTokens(options) {
     return {
-      friendlyTestDescription: testInfo.description(options.entity.name, "Unit", "Transform")
+      __root__() {
+        return 'tests';
+      },
+      __path__() {
+        return path.join('unit', 'transforms');
+      },
     };
-  }
+  },
+
+  locals(options) {
+    return {
+      friendlyTestDescription: testInfo.description(options.entity.name, 'Unit', 'Transform'),
+    };
+  },
 });
