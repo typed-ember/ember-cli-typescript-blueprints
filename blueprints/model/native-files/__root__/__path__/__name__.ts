@@ -1,14 +1,7 @@
 import Model<%= importedModules.length ? `, { ${importedModules} }` : '' %> from '@ember-data/model';
 
-export default Model.extend({
+export default class <%= classifiedModuleName %>Model extends Model {
 <%= attrs.length ? attrs : '' %>
-});
-
-
-export default class <%= classifiedModuleName %> extends DS.Model.extend({
-<%= attrs.length ? '  ' + attrs : '' %>
-}) {
-  // normal class body definition here
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your models.

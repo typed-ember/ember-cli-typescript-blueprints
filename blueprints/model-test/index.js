@@ -1,17 +1,31 @@
-/* eslint-env node */
+const path = require('path');
 
-var ModelBlueprint = require('../model');
-var testInfo = require('ember-cli-test-info');
-var useTestFrameworkDetector = require('../test-framework-detector');
+const testInfo = require('ember-cli-test-info');
+const useTestFrameworkDetector = require('@ember-data/private-build-infra/src/utilities/test-framework-detector');
+
+const ModelBlueprint = require('../model');
 
 module.exports = useTestFrameworkDetector({
   description: 'Generates a model unit test.',
 
-  locals: function(options) {
-    var result = ModelBlueprint.locals.apply(this, arguments);
+  root: __dirname,
 
-    result.friendlyTestDescription = testInfo.description(options.entity.name, "Unit", "Model");
+  fileMapTokens(options) {
+    return {
+      __root__() {
+        return 'tests';
+      },
+      __path__() {
+        return path.join('unit', 'models');
+      },
+    };
+  },
+
+  locals(options) {
+    const result = ModelBlueprint.locals.apply(this, arguments);
+
+    result.friendlyTestDescription = testInfo.description(options.entity.name, 'Unit', 'Model');
 
     return result;
-  }
+  },
 });
