@@ -19,7 +19,7 @@ describe('<%= friendlyTestName %>', function() {
     <% if (destroyAppExists) { %>destroyApp(application);<% } else { %>run(application, 'destroy');<% } %>
   });
 
-  // TODO: Replace this with your real tests.
+  // Replace this with your real tests.
   it('works', function() {
     initialize(application);
 
