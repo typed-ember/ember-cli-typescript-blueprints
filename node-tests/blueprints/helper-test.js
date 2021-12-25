@@ -4,21 +4,204 @@ const blueprintHelpers = require('ember-cli-blueprint-test-helpers/helpers');
 const setupTestHooks = blueprintHelpers.setupTestHooks;
 const emberNew = blueprintHelpers.emberNew;
 const emberGenerateDestroy = blueprintHelpers.emberGenerateDestroy;
+const setupPodConfig = blueprintHelpers.setupPodConfig;
+const modifyPackages = blueprintHelpers.modifyPackages;
 
-const expect = require('ember-cli-blueprint-test-helpers/chai').expect;
+const chai = require('ember-cli-blueprint-test-helpers/chai');
+const expect = chai.expect;
 
-describe('Acceptance: ember generate and destroy helper', function() {
+const generateFakePackageManifest = require('../helpers/generate-fake-package-manifest');
+const fixture = require('../helpers/fixture');
+
+describe('Blueprint: helper', function () {
   setupTestHooks(this);
 
-  it('helper foo', function() {
-    let args = ['helper', 'foo'];
+  describe('in app', function () {
+    beforeEach(function () {
+      return emberNew().then(() => {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-qunit', dev: true },
+        ]);
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+    });
 
-    // pass any additional command line options in the arguments array
-    return emberNew()
-      .then(() => emberGenerateDestroy(args, (file) => {
-        const generated = file('app/helpers/foo.ts');
-        expect(generated).to.contain('export function foo');
-        expect(generated).to.contain('export default helper(foo)');
-    }));
+    it('helper foo/bar-baz', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz'], (_file) => {
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+          fixture('helper-test/integration.ts')
+        );
+      });
+    });
+
+    it('helper foo/bar-baz.ts', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz.ts'], (_file) => {
+        expect(_file('app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+        expect(_file('tests/integration/helpers/foo/bar-baz.ts-test.ts')).to.not.exist;
+
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+          fixture('helper-test/integration.ts')
+        );
+      });
+    });
+
+    it('helper foo/bar-baz --pod', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz', '--pod'], (_file) => {
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+          fixture('helper-test/integration.ts')
+        );
+      });
+    });
+
+    it('helper foo/bar-baz.ts --pod', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz.ts', '--pod'], (_file) => {
+        expect(_file('app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+        expect(_file('tests/integration/helpers/foo/bar-baz.ts-test.ts')).to.not.exist;
+
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+          fixture('helper-test/integration.ts')
+        );
+      });
+    });
+
+    describe('with podModulePrefix', function () {
+      beforeEach(function () {
+        setupPodConfig({ podModulePrefix: true });
+      });
+
+      it('helper foo/bar-baz --pod', function () {
+        return emberGenerateDestroy(['helper', 'foo/bar-baz', '--pod'], (_file) => {
+          expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+          expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+            fixture('helper-test/integration.ts')
+          );
+        });
+      });
+
+      it('helper foo/bar-baz.ts --pod', function () {
+        return emberGenerateDestroy(['helper', 'foo/bar-baz.ts', '--pod'], (_file) => {
+          expect(_file('app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+          expect(_file('tests/integration/helpers/foo/bar-baz.ts-test.ts')).to.not.exist;
+
+          expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+          expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+            fixture('helper-test/integration.ts')
+          );
+        });
+      });
+    });
+  });
+
+  describe('in addon', function () {
+    beforeEach(function () {
+      return emberNew({ target: 'addon' }).then(() => {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-qunit', dev: true },
+        ]);
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+    });
+
+    it('helper foo/bar-baz', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz'], (_file) => {
+        expect(_file('addon/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper-addon.ts'));
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+          fixture('helper-test/integration.ts')
+        );
+      });
+    });
+
+    it('helper foo/bar-baz.ts', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz.ts'], (_file) => {
+        expect(_file('addon/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+        expect(_file('app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+        expect(_file('tests/integration/helpers/foo/bar-baz.ts-test.ts')).to.not.exist;
+
+        expect(_file('addon/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper-addon.ts'));
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+          fixture('helper-test/integration.ts')
+        );
+      });
+    });
+
+    it('helper foo/bar-baz --dummy', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz', '--dummy'], (_file) => {
+        expect(_file('tests/dummy/app/helpers/foo/bar-baz.ts')).to.equal(
+          fixture('helper/helper.ts')
+        );
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.not.exist;
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.not.exist;
+      });
+    });
+
+    it('helper foo/bar-baz.ts --dummy', function () {
+      return emberGenerateDestroy(['helper', 'foo/bar-baz.ts', '--dummy'], (_file) => {
+        expect(_file('tests/dummy/app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+
+        expect(_file('tests/dummy/app/helpers/foo/bar-baz.ts')).to.equal(
+          fixture('helper/helper.ts')
+        );
+        expect(_file('app/helpers/foo/bar-baz.ts')).to.not.exist;
+        expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.not.exist;
+      });
+    });
+  });
+
+  describe('in in-repo-addon', function () {
+    beforeEach(function () {
+      return emberNew({ target: 'in-repo-addon' }).then(() => {
+        modifyPackages([
+          { name: 'ember-qunit', delete: true },
+          { name: 'ember-cli-qunit', dev: true },
+        ]);
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+      });
+    });
+
+    it('helper foo/bar-baz --in-repo-addon=my-addon', function () {
+      return emberGenerateDestroy(
+        ['helper', 'foo/bar-baz', '--in-repo-addon=my-addon'],
+        (_file) => {
+          expect(_file('lib/my-addon/addon/helpers/foo/bar-baz.ts')).to.equal(
+            fixture('helper/helper.ts')
+          );
+          expect(_file('lib/my-addon/app/helpers/foo/bar-baz.ts')).to.equal(
+            fixture('helper/helper-addon.ts')
+          );
+          expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+            fixture('helper-test/integration.ts')
+          );
+        }
+      );
+    });
+
+    it('helper foo/bar-baz.ts --in-repo-addon=my-addon', function () {
+      return emberGenerateDestroy(
+        ['helper', 'foo/bar-baz.ts', '--in-repo-addon=my-addon'],
+        (_file) => {
+          expect(_file('lib/my-addon/addon/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+          expect(_file('lib/my-addon/app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+          expect(_file('tests/integration/helpers/foo/bar-baz.ts-test.ts')).to.not.exist;
+
+          expect(_file('lib/my-addon/addon/helpers/foo/bar-baz.ts')).to.equal(
+            fixture('helper/helper.ts')
+          );
+          expect(_file('lib/my-addon/app/helpers/foo/bar-baz.ts')).to.equal(
+            fixture('helper/helper-addon.ts')
+          );
+          expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
+            fixture('helper-test/integration.ts')
+          );
+        }
+      );
+    });
   });
 });

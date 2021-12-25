@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { describeComponent, it } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 
-describeComponent('foo/bar-baz', 'helper:foo/bar-baz',
+describeComponent('<%= dasherizedModuleName %>', 'helper:<%= dasherizedModuleName %>',
   {
     integration: true
   },
@@ -12,13 +12,13 @@ describeComponent('foo/bar-baz', 'helper:foo/bar-baz',
       // Handle any actions with this.on('myAction', function(val) { ... });
       // Template block usage:
       // this.render(hbs`
-      //   {{#foo/bar-baz}}
+      //   {{#<%= dasherizedModuleName %>}}
       //     template content
-      //   {{/foo/bar-baz}}
+      //   {{/<%= dasherizedModuleName %>}}
       // `);
       this.set('inputValue', '1234');
 
-      this.render(hbs`{{foo/bar-baz this.inputValue}}`);
+      this.render(hbs`{{<%= dasherizedModuleName %> this.inputValue}}`);
 
       expect(this.$().text().trim()).to.equal('1234');
     });

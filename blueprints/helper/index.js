@@ -2,9 +2,27 @@
 
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
 
+const path = require('path');
+
 module.exports = {
   description: 'Generates a helper function.',
-  normalizeEntityName: function(entityName) {
-    return normalizeEntityName(entityName);
-  }
+
+  filesPath() {
+    let rootPath = 'files';
+    return path.join(this.path, rootPath);
+  },
+
+  fileMapTokens() {
+    return {
+      __collection__() {
+        return 'helpers';
+      },
+    };
+  },
+
+  normalizeEntityName: function (entityName) {
+    return normalizeEntityName(
+      entityName.replace(/\.ts$/, '') //Prevent generation of ".ts.ts" files
+    );
+  },
 };
