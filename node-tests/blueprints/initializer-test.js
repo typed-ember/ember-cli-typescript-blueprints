@@ -88,7 +88,7 @@ describe('Blueprint: initializer', function() {
       return emberGenerateDestroy(['initializer', 'foo'], _file => {
         expect(_file('addon/initializers/foo.ts')).to.equal(fixture('initializer/initializer.ts'));
 
-        expect(_file('app/initializers/foo.js')).to.contain(
+        expect(_file('app/initializers/foo.ts')).to.contain(
           "export { default, initialize } from 'my-addon/initializers/foo';"
         );
 
@@ -102,7 +102,7 @@ describe('Blueprint: initializer', function() {
           fixture('initializer/initializer-nested.ts')
         );
 
-        expect(_file('app/initializers/foo/bar.js')).to.contain(
+        expect(_file('app/initializers/foo/bar.ts')).to.contain(
           "export { default, initialize } from 'my-addon/initializers/foo/bar';"
         );
 
@@ -116,7 +116,7 @@ describe('Blueprint: initializer', function() {
           fixture('initializer/initializer.ts')
         );
 
-        expect(_file('app/initializers/foo.js')).to.not.exist;
+        expect(_file('app/initializers/foo.ts')).to.not.exist;
 
         expect(_file('tests/unit/initializers/foo-test.ts')).to.not.exist;
       });
@@ -128,7 +128,7 @@ describe('Blueprint: initializer', function() {
           fixture('initializer/initializer-nested.ts')
         );
 
-        expect(_file('app/initializers/foo/bar.js')).to.not.exist;
+        expect(_file('app/initializers/foo/bar.ts')).to.not.exist;
 
         expect(_file('tests/unit/initializers/foo/bar-test.ts')).to.not.exist;
       });
@@ -148,7 +148,7 @@ describe('Blueprint: initializer', function() {
           fixture('initializer/initializer.ts')
         );
 
-        expect(_file('lib/my-addon/app/initializers/foo.js')).to.contain(
+        expect(_file('lib/my-addon/app/initializers/foo.ts')).to.contain(
           "export { default, initialize } from 'my-addon/initializers/foo';"
         );
 
@@ -162,7 +162,7 @@ describe('Blueprint: initializer', function() {
           fixture('initializer/initializer-nested.ts')
         );
 
-        expect(_file('lib/my-addon/app/initializers/foo/bar.js')).to.contain(
+        expect(_file('lib/my-addon/app/initializers/foo/bar.ts')).to.contain(
           "export { default, initialize } from 'my-addon/initializers/foo/bar';"
         );
 
