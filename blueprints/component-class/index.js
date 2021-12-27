@@ -128,6 +128,7 @@ module.exports = {
     let templatePath = '';
     let importComponent = '';
     let importTemplate = '';
+    let argsInterface = '';
     let defaultExport = '';
 
     // if we're in an addon, build import statement
@@ -156,7 +157,8 @@ module.exports = {
         break;
       case '@glimmer/component':
         importComponent = `import Component from '@glimmer/component';`;
-        defaultExport = `class ${classifiedModuleName}Component extends Component {\n}`;
+        argsInterface = `${EOL}interface ${classifiedModuleName}ComponentArgs {${EOL}}${EOL}`;
+        defaultExport = `class ${classifiedModuleName}Component extends Component<${classifiedModuleName}ComponentArgs> {${EOL}}`;
         break;
       case '@ember/component/template-only':
         importComponent = `import templateOnly from '@ember/component/template-only';`;
@@ -165,6 +167,7 @@ module.exports = {
     }
 
     return {
+      argsInterface,
       importTemplate,
       importComponent,
       defaultExport,

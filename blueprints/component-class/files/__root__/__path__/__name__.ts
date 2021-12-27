@@ -1,3 +1,3 @@
 <%= importComponent %>
-<%= importTemplate %>
+<%= importTemplate %><%= argsInterface %>
 export default <%= defaultExport %>
