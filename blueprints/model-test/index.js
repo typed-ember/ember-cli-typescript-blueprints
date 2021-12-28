@@ -1,7 +1,7 @@
 const path = require('path');
 
 const testInfo = require('ember-cli-test-info');
-const useTestFrameworkDetector = require('@ember-data/private-build-infra/src/utilities/test-framework-detector');
+const useTestFrameworkDetector = require('../test-framework-detector');
 
 const ModelBlueprint = require('../model');
 
