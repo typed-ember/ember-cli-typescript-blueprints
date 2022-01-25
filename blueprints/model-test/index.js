@@ -10,7 +10,7 @@ module.exports = useTestFrameworkDetector({
 
   root: __dirname,
 
-  fileMapTokens(options) {
+  fileMapTokens() {
     return {
       __root__() {
         return 'tests';
