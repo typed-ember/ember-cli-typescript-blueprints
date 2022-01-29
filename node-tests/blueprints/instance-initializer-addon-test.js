@@ -18,7 +18,7 @@ describe('Blueprint: instance-initializer-addon', function () {
 
     it('instance-initializer-addon foo', function () {
       return emberGenerateDestroy(['instance-initializer-addon', 'foo'], (_file) => {
-        expect(_file('app/instance-initializers/foo.ts')).to.contain(
+        expect(_file('app/instance-initializers/foo.js')).to.contain(
           "export { default, initialize } from 'my-addon/instance-initializers/foo';"
         );
       });
@@ -26,7 +26,7 @@ describe('Blueprint: instance-initializer-addon', function () {
 
     it('instance-initializer-addon foo --pod', function () {
       return emberGenerateDestroy(['instance-initializer-addon', 'foo', '--pod'], (_file) => {
-        expect(_file('app/instance-initializers/foo.ts')).to.contain(
+        expect(_file('app/instance-initializers/foo.js')).to.contain(
           "export { default, initialize } from 'my-addon/instance-initializers/foo';"
         );
       });

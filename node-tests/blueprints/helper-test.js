@@ -13,6 +13,8 @@ const expect = chai.expect;
 const generateFakePackageManifest = require('../helpers/generate-fake-package-manifest');
 const fixture = require('../helpers/fixture');
 
+const helperAddonAppExportContents = `export { default } from 'my-addon/helpers/foo/bar-baz';\n`;
+
 describe('Blueprint: helper', function () {
   setupTestHooks(this);
 
@@ -111,7 +113,7 @@ describe('Blueprint: helper', function () {
     it('helper foo/bar-baz', function () {
       return emberGenerateDestroy(['helper', 'foo/bar-baz'], (_file) => {
         expect(_file('addon/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
-        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper-addon.ts'));
+        expect(_file('app/helpers/foo/bar-baz.js')).to.equal(helperAddonAppExportContents);
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
           fixture('helper-test/integration.ts')
         );
@@ -121,11 +123,11 @@ describe('Blueprint: helper', function () {
     it('helper foo/bar-baz.ts', function () {
       return emberGenerateDestroy(['helper', 'foo/bar-baz.ts'], (_file) => {
         expect(_file('addon/helpers/foo/bar-baz.ts.ts')).to.not.exist;
-        expect(_file('app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+        expect(_file('app/helpers/foo/bar-baz.js.js')).to.not.exist;
         expect(_file('tests/integration/helpers/foo/bar-baz.ts-test.ts')).to.not.exist;
 
         expect(_file('addon/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper.ts'));
-        expect(_file('app/helpers/foo/bar-baz.ts')).to.equal(fixture('helper/helper-addon.ts'));
+        expect(_file('app/helpers/foo/bar-baz.js')).to.equal(helperAddonAppExportContents);
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
           fixture('helper-test/integration.ts')
         );
@@ -137,19 +139,19 @@ describe('Blueprint: helper', function () {
         expect(_file('tests/dummy/app/helpers/foo/bar-baz.ts')).to.equal(
           fixture('helper/helper.ts')
         );
-        expect(_file('app/helpers/foo/bar-baz.ts')).to.not.exist;
+        expect(_file('app/helpers/foo/bar-baz.js')).to.not.exist;
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.not.exist;
       });
     });
 
     it('helper foo/bar-baz.ts --dummy', function () {
       return emberGenerateDestroy(['helper', 'foo/bar-baz.ts', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/helpers/foo/bar-baz.ts.ts')).to.not.exist;
+        expect(_file('tests/dummy/app/helpers/foo/bar-baz.js.js')).to.not.exist;
 
         expect(_file('tests/dummy/app/helpers/foo/bar-baz.ts')).to.equal(
           fixture('helper/helper.ts')
         );
-        expect(_file('app/helpers/foo/bar-baz.ts')).to.not.exist;
+        expect(_file('app/helpers/foo/bar-baz.js')).to.not.exist;
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.not.exist;
       });
     });
@@ -173,8 +175,8 @@ describe('Blueprint: helper', function () {
           expect(_file('lib/my-addon/addon/helpers/foo/bar-baz.ts')).to.equal(
             fixture('helper/helper.ts')
           );
-          expect(_file('lib/my-addon/app/helpers/foo/bar-baz.ts')).to.equal(
-            fixture('helper/helper-addon.ts')
+          expect(_file('lib/my-addon/app/helpers/foo/bar-baz.js')).to.equal(
+            helperAddonAppExportContents
           );
           expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
             fixture('helper-test/integration.ts')
@@ -194,8 +196,8 @@ describe('Blueprint: helper', function () {
           expect(_file('lib/my-addon/addon/helpers/foo/bar-baz.ts')).to.equal(
             fixture('helper/helper.ts')
           );
-          expect(_file('lib/my-addon/app/helpers/foo/bar-baz.ts')).to.equal(
-            fixture('helper/helper-addon.ts')
+          expect(_file('lib/my-addon/app/helpers/foo/bar-baz.js')).to.equal(
+            helperAddonAppExportContents
           );
           expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
             fixture('helper-test/integration.ts')

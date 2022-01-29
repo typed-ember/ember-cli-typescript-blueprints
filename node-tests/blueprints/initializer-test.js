@@ -12,16 +12,16 @@ const expect = chai.expect;
 const generateFakePackageManifest = require('../helpers/generate-fake-package-manifest');
 const fixture = require('../helpers/fixture');
 
-describe('Blueprint: initializer', function() {
+describe('Blueprint: initializer', function () {
   setupTestHooks(this);
 
-  describe('in app', function() {
-    beforeEach(function() {
+  describe('in app', function () {
+    beforeEach(function () {
       return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
-    it('initializer foo', function() {
-      return emberGenerateDestroy(['initializer', 'foo'], _file => {
+    it('initializer foo', function () {
+      return emberGenerateDestroy(['initializer', 'foo'], (_file) => {
         expect(_file('app/initializers/foo.ts')).to.equal(fixture('initializer/initializer.ts'));
 
         expect(_file('tests/unit/initializers/foo-test.ts')).to.contain(
@@ -30,8 +30,8 @@ describe('Blueprint: initializer', function() {
       });
     });
 
-    it('initializer foo/bar', function() {
-      return emberGenerateDestroy(['initializer', 'foo/bar'], _file => {
+    it('initializer foo/bar', function () {
+      return emberGenerateDestroy(['initializer', 'foo/bar'], (_file) => {
         expect(_file('app/initializers/foo/bar.ts')).to.equal(
           fixture('initializer/initializer-nested.ts')
         );
@@ -42,33 +42,33 @@ describe('Blueprint: initializer', function() {
       });
     });
 
-    it('initializer foo --pod', function() {
-      return emberGenerateDestroy(['initializer', 'foo', '--pod'], _file => {
+    it('initializer foo --pod', function () {
+      return emberGenerateDestroy(['initializer', 'foo', '--pod'], (_file) => {
         expect(_file('app/initializers/foo.ts')).to.equal(fixture('initializer/initializer.ts'));
       });
     });
 
-    it('initializer foo/bar --pod', function() {
-      return emberGenerateDestroy(['initializer', 'foo/bar', '--pod'], _file => {
+    it('initializer foo/bar --pod', function () {
+      return emberGenerateDestroy(['initializer', 'foo/bar', '--pod'], (_file) => {
         expect(_file('app/initializers/foo/bar.ts')).to.equal(
           fixture('initializer/initializer-nested.ts')
         );
       });
     });
 
-    describe('with podModulePrefix', function() {
-      beforeEach(function() {
+    describe('with podModulePrefix', function () {
+      beforeEach(function () {
         setupPodConfig({ podModulePrefix: true });
       });
 
-      it('initializer foo --pod', function() {
-        return emberGenerateDestroy(['initializer', 'foo', '--pod'], _file => {
+      it('initializer foo --pod', function () {
+        return emberGenerateDestroy(['initializer', 'foo', '--pod'], (_file) => {
           expect(_file('app/initializers/foo.ts')).to.equal(fixture('initializer/initializer.ts'));
         });
       });
 
-      it('initializer foo/bar --pod', function() {
-        return emberGenerateDestroy(['initializer', 'foo/bar', '--pod'], _file => {
+      it('initializer foo/bar --pod', function () {
+        return emberGenerateDestroy(['initializer', 'foo/bar', '--pod'], (_file) => {
           expect(_file('app/initializers/foo/bar.ts')).to.equal(
             fixture('initializer/initializer-nested.ts')
           );
@@ -77,18 +77,18 @@ describe('Blueprint: initializer', function() {
     });
   });
 
-  describe('in addon', function() {
-    beforeEach(function() {
+  describe('in addon', function () {
+    beforeEach(function () {
       return emberNew({ target: 'addon' }).then(() =>
         generateFakePackageManifest('ember-cli-qunit', '4.1.0')
       );
     });
 
-    it('initializer foo', function() {
-      return emberGenerateDestroy(['initializer', 'foo'], _file => {
+    it('initializer foo', function () {
+      return emberGenerateDestroy(['initializer', 'foo'], (_file) => {
         expect(_file('addon/initializers/foo.ts')).to.equal(fixture('initializer/initializer.ts'));
 
-        expect(_file('app/initializers/foo.ts')).to.contain(
+        expect(_file('app/initializers/foo.js')).to.contain(
           "export { default, initialize } from 'my-addon/initializers/foo';"
         );
 
@@ -96,13 +96,13 @@ describe('Blueprint: initializer', function() {
       });
     });
 
-    it('initializer foo/bar', function() {
-      return emberGenerateDestroy(['initializer', 'foo/bar'], _file => {
+    it('initializer foo/bar', function () {
+      return emberGenerateDestroy(['initializer', 'foo/bar'], (_file) => {
         expect(_file('addon/initializers/foo/bar.ts')).to.equal(
           fixture('initializer/initializer-nested.ts')
         );
 
-        expect(_file('app/initializers/foo/bar.ts')).to.contain(
+        expect(_file('app/initializers/foo/bar.js')).to.contain(
           "export { default, initialize } from 'my-addon/initializers/foo/bar';"
         );
 
@@ -110,8 +110,8 @@ describe('Blueprint: initializer', function() {
       });
     });
 
-    it('initializer foo --dummy', function() {
-      return emberGenerateDestroy(['initializer', 'foo', '--dummy'], _file => {
+    it('initializer foo --dummy', function () {
+      return emberGenerateDestroy(['initializer', 'foo', '--dummy'], (_file) => {
         expect(_file('tests/dummy/app/initializers/foo.ts')).to.equal(
           fixture('initializer/initializer.ts')
         );
@@ -122,33 +122,33 @@ describe('Blueprint: initializer', function() {
       });
     });
 
-    it('initializer foo/bar --dummy', function() {
-      return emberGenerateDestroy(['initializer', 'foo/bar', '--dummy'], _file => {
+    it('initializer foo/bar --dummy', function () {
+      return emberGenerateDestroy(['initializer', 'foo/bar', '--dummy'], (_file) => {
         expect(_file('tests/dummy/app/initializers/foo/bar.ts')).to.equal(
           fixture('initializer/initializer-nested.ts')
         );
 
-        expect(_file('app/initializers/foo/bar.ts')).to.not.exist;
+        expect(_file('app/initializers/foo/bar.js')).to.not.exist;
 
         expect(_file('tests/unit/initializers/foo/bar-test.ts')).to.not.exist;
       });
     });
   });
 
-  describe('in in-repo-addon', function() {
-    beforeEach(function() {
+  describe('in in-repo-addon', function () {
+    beforeEach(function () {
       return emberNew({ target: 'in-repo-addon' }).then(() =>
         generateFakePackageManifest('ember-cli-qunit', '4.1.0')
       );
     });
 
-    it('initializer foo --in-repo-addon=my-addon', function() {
-      return emberGenerateDestroy(['initializer', 'foo', '--in-repo-addon=my-addon'], _file => {
+    it('initializer foo --in-repo-addon=my-addon', function () {
+      return emberGenerateDestroy(['initializer', 'foo', '--in-repo-addon=my-addon'], (_file) => {
         expect(_file('lib/my-addon/addon/initializers/foo.ts')).to.equal(
           fixture('initializer/initializer.ts')
         );
 
-        expect(_file('lib/my-addon/app/initializers/foo.ts')).to.contain(
+        expect(_file('lib/my-addon/app/initializers/foo.js')).to.contain(
           "export { default, initialize } from 'my-addon/initializers/foo';"
         );
 
@@ -156,18 +156,21 @@ describe('Blueprint: initializer', function() {
       });
     });
 
-    it('initializer foo/bar --in-repo-addon=my-addon', function() {
-      return emberGenerateDestroy(['initializer', 'foo/bar', '--in-repo-addon=my-addon'], _file => {
-        expect(_file('lib/my-addon/addon/initializers/foo/bar.ts')).to.equal(
-          fixture('initializer/initializer-nested.ts')
-        );
+    it('initializer foo/bar --in-repo-addon=my-addon', function () {
+      return emberGenerateDestroy(
+        ['initializer', 'foo/bar', '--in-repo-addon=my-addon'],
+        (_file) => {
+          expect(_file('lib/my-addon/addon/initializers/foo/bar.ts')).to.equal(
+            fixture('initializer/initializer-nested.ts')
+          );
 
-        expect(_file('lib/my-addon/app/initializers/foo/bar.ts')).to.contain(
-          "export { default, initialize } from 'my-addon/initializers/foo/bar';"
-        );
+          expect(_file('lib/my-addon/app/initializers/foo/bar.js')).to.contain(
+            "export { default, initialize } from 'my-addon/initializers/foo/bar';"
+          );
 
-        expect(_file('tests/unit/initializers/foo/bar-test.ts')).to.exist;
-      });
+          expect(_file('tests/unit/initializers/foo/bar-test.ts')).to.exist;
+        }
+      );
     });
   });
 });

@@ -109,7 +109,7 @@ describe('Blueprint: instance-initializer', function () {
           fixture('instance-initializer/instance-initializer.ts')
         );
 
-        expect(_file('app/instance-initializers/foo.ts')).to.contain(
+        expect(_file('app/instance-initializers/foo.js')).to.contain(
           "export { default, initialize } from 'my-addon/instance-initializers/foo';"
         );
 
@@ -123,7 +123,7 @@ describe('Blueprint: instance-initializer', function () {
           fixture('instance-initializer/instance-initializer-nested.ts')
         );
 
-        expect(_file('app/instance-initializers/foo/bar.ts')).to.contain(
+        expect(_file('app/instance-initializers/foo/bar.js')).to.contain(
           "export { default, initialize } from 'my-addon/instance-initializers/foo/bar';"
         );
 
@@ -137,7 +137,7 @@ describe('Blueprint: instance-initializer', function () {
           fixture('instance-initializer/instance-initializer.ts')
         );
 
-        expect(_file('app/instance-initializers/foo.ts')).to.not.exist;
+        expect(_file('app/instance-initializers/foo.js')).to.not.exist;
 
         expect(_file('tests/unit/instance-initializers/foo-test.ts')).to.not.exist;
       });
@@ -149,7 +149,7 @@ describe('Blueprint: instance-initializer', function () {
           fixture('instance-initializer/instance-initializer-nested.ts')
         );
 
-        expect(_file('app/instance-initializers/foo/bar.ts')).to.not.exist;
+        expect(_file('app/instance-initializers/foo/bar.js')).to.not.exist;
 
         expect(_file('tests/unit/instance-initializers/foo/bar-test.ts')).to.not.exist;
       });
@@ -176,7 +176,7 @@ describe('Blueprint: instance-initializer', function () {
             fixture('instance-initializer/instance-initializer.ts')
           );
 
-          expect(_file('lib/my-addon/app/instance-initializers/foo.ts')).to.contain(
+          expect(_file('lib/my-addon/app/instance-initializers/foo.js')).to.contain(
             "export { default, initialize } from 'my-addon/instance-initializers/foo';"
           );
 
@@ -193,7 +193,7 @@ describe('Blueprint: instance-initializer', function () {
             fixture('instance-initializer/instance-initializer.ts')
           );
 
-          expect(_file('lib/my-addon/app/instance-initializers/foo/bar.ts')).to.contain(
+          expect(_file('lib/my-addon/app/instance-initializers/foo/bar.js')).to.contain(
             "export { default, initialize } from 'my-addon/instance-initializers/foo/bar';"
           );
 
