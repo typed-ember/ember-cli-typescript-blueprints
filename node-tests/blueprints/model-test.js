@@ -29,7 +29,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       let args = ['model', 'foo'];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('app/models/foo.ts'))
+        expect(_file('app/models/foo.js'))
           .to.contain(`import Model from '@ember-data/model';`)
           .to.contain('export default Model.extend(');
 
@@ -52,7 +52,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       ];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('app/models/foo.ts'))
+        expect(_file('app/models/foo.js'))
           .to.contain(`import Model, { attr } from '@ember-data/model';`)
           .to.contain('export default Model.extend(')
           .to.contain('  misc: attr(),')
@@ -72,7 +72,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       let args = ['model', 'comment', 'post:belongs-to', 'author:belongs-to:user'];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('app/models/comment.ts'))
+        expect(_file('app/models/comment.js'))
           .to.contain(`import Model, { belongsTo } from '@ember-data/model';`)
           .to.contain('export default Model.extend(')
           .to.contain("  post: belongsTo('post'),")
@@ -88,13 +88,15 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       let args = ['model', 'post', 'comments:has-many', 'otherComments:has-many:comment'];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('app/models/post.ts'))
+        expect(_file('app/models/post.js'))
           .to.contain(`import Model, { hasMany } from '@ember-data/model';`)
           .to.contain('export default Model.extend(')
           .to.contain("  comments: hasMany('comment')")
           .to.contain("  otherComments: hasMany('comment')");
 
-        expect(_file('tests/unit/models/post-test.ts')).to.equal(fixture('model-test/post-default.ts'));
+        expect(_file('tests/unit/models/post-test.ts')).to.equal(
+          fixture('model-test/post-default.ts')
+        );
       });
     });
 
@@ -117,7 +119,9 @@ describe('Acceptance: generate and destroy model blueprints', function () {
 
       it('model-test-test foo', function () {
         return emberGenerateDestroy(['model-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/foo-default.ts'));
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/foo-default.ts')
+          );
         });
       });
     });
@@ -135,7 +139,9 @@ describe('Acceptance: generate and destroy model blueprints', function () {
         let args = ['model-test', 'foo'];
 
         return emberGenerateDestroy(args, (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/foo-mocha-0.12.ts'));
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/foo-mocha-0.12.ts')
+          );
         });
       });
     });
@@ -153,7 +159,9 @@ describe('Acceptance: generate and destroy model blueprints', function () {
         let args = ['model-test', 'foo'];
 
         return emberGenerateDestroy(args, (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/mocha-rfc232.ts'));
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/mocha-rfc232.ts')
+          );
         });
       });
     });
@@ -178,6 +186,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       });
     });
 
+    // TODO: Replace with fixture octane-foo-attrs.ts
     it('model with attrs', function () {
       let args = [
         'model',
@@ -209,6 +218,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       });
     });
 
+    // TODO: Replace with fixture octane-comment-belongs-to.ts
     it('model with belongsTo', function () {
       let args = ['model', 'comment', 'post:belongs-to', 'author:belongs-to:user'];
 
@@ -225,6 +235,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       });
     });
 
+    // TODO: Replace with fixture octane-post-has-many.ts
     it('model with hasMany', function () {
       let args = ['model', 'post', 'comments:has-many', 'otherComments:has-many:comment'];
 
@@ -235,7 +246,9 @@ describe('Acceptance: generate and destroy model blueprints', function () {
           .to.contain('  @hasMany comments;')
           .to.contain("  @hasMany('comment') otherComments;");
 
-        expect(_file('tests/unit/models/post-test.ts')).to.equal(fixture('model-test/post-default.ts'));
+        expect(_file('tests/unit/models/post-test.ts')).to.equal(
+          fixture('model-test/post-default.ts')
+        );
       });
     });
 
@@ -258,7 +271,9 @@ describe('Acceptance: generate and destroy model blueprints', function () {
 
       it('model-test-test foo', function () {
         return emberGenerateDestroy(['model-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/foo-default.ts'));
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/foo-default.ts')
+          );
         });
       });
     });
@@ -276,7 +291,9 @@ describe('Acceptance: generate and destroy model blueprints', function () {
         let args = ['model-test', 'foo'];
 
         return emberGenerateDestroy(args, (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/foo-mocha-0.12.ts'));
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/foo-mocha-0.12.ts')
+          );
         });
       });
     });
@@ -294,7 +311,9 @@ describe('Acceptance: generate and destroy model blueprints', function () {
         let args = ['model-test', 'foo'];
 
         return emberGenerateDestroy(args, (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/mocha-rfc232.ts'));
+          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
+            fixture('model-test/mocha-rfc232.ts')
+          );
         });
       });
     });

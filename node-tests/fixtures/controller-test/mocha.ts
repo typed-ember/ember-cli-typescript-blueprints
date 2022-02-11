@@ -1,13 +1,18 @@
 import { expect } from 'chai';
-import { describe, it } from 'mocha';
-import { setupTest } from 'ember-mocha';
+import { describeModule, it } from 'ember-mocha';
 
-describe('Unit | Controller | foo', function() {
-  setupTest();
-
-  // TODO: Replace this with your real tests.
-  it('exists', function() {
-    let controller = this.owner.lookup('controller:foo');
-    expect(controller).to.be.ok;
-  });
-});
+describeModule(
+  'controller:foo',
+  'Unit | Controller | foo',
+  {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  },
+  function () {
+    // TODO: Replace this with your real tests.
+    it('exists', function () {
+      let controller = this.subject();
+      expect(controller).to.be.ok;
+    });
+  }
+);

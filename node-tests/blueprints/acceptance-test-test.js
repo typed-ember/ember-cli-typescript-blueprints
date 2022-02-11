@@ -112,7 +112,7 @@ describe('Blueprint: acceptance-test', function () {
             fixture('acceptance-test/addon-default.ts')
           );
 
-          expect(_file('app/acceptance-tests/foo.ts')).to.not.exist;
+          expect(_file('app/acceptance-tests/foo.js')).to.not.exist;
         });
       });
 
@@ -122,7 +122,7 @@ describe('Blueprint: acceptance-test', function () {
             fixture('acceptance-test/addon-nested.ts')
           );
 
-          expect(_file('app/acceptance-tests/foo/bar.ts')).to.not.exist;
+          expect(_file('app/acceptance-tests/foo/bar.js')).to.not.exist;
         });
       });
     });

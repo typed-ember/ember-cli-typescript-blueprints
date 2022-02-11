@@ -16,21 +16,11 @@ const fixture = require('../helpers/fixture');
 const setupTestEnvironment = require('../helpers/setup-test-environment');
 const enableOctane = setupTestEnvironment.enableOctane;
 
-const { EMBER_SET_COMPONENT_TEMPLATE } = require('../../blueprints/component');
-
 const glimmerComponentContents = `import Component from '@glimmer/component';
 
-interface FooComponentArgs {
-}
+interface FooComponentArgs {}
 
-export default class FooComponent extends Component<FooComponentArgs> {
-}
-`;
-
-const emberComponentContents = `import Component from '@ember/component';
-
-export default Component.extend({
-});
+export default class FooComponent extends Component<FooComponentArgs> {}
 `;
 
 const templateOnlyContents = `import templateOnly from '@ember/component/template-only';
@@ -38,680 +28,13 @@ const templateOnlyContents = `import templateOnly from '@ember/component/templat
 export default templateOnly();
 `;
 
-describe('Blueprint: component', function() {
+describe('Blueprint: component', function () {
   setupTestHooks(this);
 
-  describe('in app', function() {
-    beforeEach(function() {
-      return emberNew()
-        .then(() =>
-          modifyPackages([
-            { name: 'ember-qunit', delete: true },
-            { name: 'ember-cli-qunit', dev: true },
-          ])
-        )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
-    });
-
-    it('component foo', function() {
-      return emberGenerateDestroy(['component', 'foo'], (_file) => {
-        expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
-
-        expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo',
-              componentInvocation: 'Foo',
-            },
-          })
-        );
-      });
-    });
-
-    if (EMBER_SET_COMPONENT_TEMPLATE) {
-      // classic default
-      it('component foo --component-structure=classic --component-class=@ember/component', function() {
-        return emberGenerateDestroy(
-          [
-            'component',
-            'foo',
-            '--component-structure',
-            'classic',
-            '--component-class',
-            '@ember/component',
-          ],
-          (_file) => {
-            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
-
-            expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      // Octane default
-      it('component foo --component-structure=flat --component-class=@glimmer/component', function() {
-        return emberGenerateDestroy(
-          [
-            'component',
-            '--component-structure',
-            'flat',
-            '--component-class',
-            '@glimmer/component',
-            'foo',
-          ],
-          (_file) => {
-            expect(_file('app/components/foo.ts')).to.equal(glimmerComponentContents);
-
-            expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo --component-structure=flat', function() {
-        return emberGenerateDestroy(
-          ['component', '--component-structure', 'flat', 'foo'],
-          (_file) => {
-            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
-
-            expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo --component-structure=nested', function() {
-        return emberGenerateDestroy(
-          ['component', '--component-structure', 'nested', 'foo'],
-          (_file) => {
-            expect(_file('app/components/foo/index.ts')).to.equal(emberComponentContents);
-
-            expect(_file('app/components/foo/index.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo --component-structure=classic', function() {
-        return emberGenerateDestroy(
-          ['component', '--component-structure', 'classic', 'foo'],
-          (_file) => {
-            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
-
-            expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo --component-class=@ember/component', function() {
-        return emberGenerateDestroy(
-          ['component', '--component-class', '@ember/component', 'foo'],
-          (_file) => {
-            expect(_file('app/components/foo.ts')).to.equal(emberComponentContents);
-
-            expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo --component-class=@glimmer/component', function() {
-        return emberGenerateDestroy(
-          ['component', '--component-class', '@glimmer/component', 'foo'],
-          (_file) => {
-            expect(_file('app/components/foo.ts')).to.equal(glimmerComponentContents);
-
-            expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo --component-class=@ember/component/template-only', function() {
-        return emberGenerateDestroy(
-          ['component', '--component-class', '@ember/component/template-only', 'foo'],
-          (_file) => {
-            expect(_file('app/components/foo.ts')).to.equal(templateOnlyContents);
-
-            expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo',
-                  componentInvocation: 'Foo',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo --no-component-class', function() {
-        return emberGenerateDestroy(['component', '--no-component-class', 'foo'], (_file) => {
-          expect(_file('app/components/foo.ts')).to.not.exist;
-
-          expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'foo',
-                componentInvocation: 'Foo',
-              },
-            })
-          );
-        });
-      });
-    }
-    it('component x-foo', function() {
-      return emberGenerateDestroy(['component', 'x-foo'], (_file) => {
-        expect(_file('app/components/x-foo.ts')).to.equal(fixture('component/component-dash.ts'));
-
-        expect(_file('app/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component foo/x-foo', function() {
-      return emberGenerateDestroy(['component', 'foo/x-foo'], (_file) => {
-        expect(_file('app/components/foo/x-foo.ts')).to.equal(
-          fixture('component/component-nested.ts')
-        );
-
-        expect(_file('app/templates/components/foo/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/foo/x-foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo/x-foo',
-              componentInvocation: 'Foo::XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo --path foo', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--path', 'foo'], (_file) => {
-        expect(_file('app/components/x-foo.ts')).to.equal(fixture('component/component-dash.ts'));
-
-        expect(_file('app/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component foo.ts', function() {
-      return emberGenerateDestroy(['component', 'foo.ts'], (_file) => {
-        expect(_file('app/components/foo.js.ts')).to.not.exist;
-        expect(_file('app/templates/components/foo.js.hbs')).to.not.exist;
-        expect(_file('tests/integration/components/foo.js-test.ts')).to.not.exist;
-
-        expect(_file('app/components/foo.ts')).to.equal(fixture('component/component.ts'));
-
-        expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo',
-              componentInvocation: 'Foo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo --pod', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--pod'], (_file) => {
-        expect(_file('app/components/x-foo/component.ts')).to.equal(
-          fixture('component/component-dash.ts')
-        );
-
-        expect(_file('app/components/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component foo/x-foo --pod', function() {
-      return emberGenerateDestroy(['component', 'foo/x-foo', '--pod'], (_file) => {
-        expect(_file('app/components/foo/x-foo/component.ts')).to.equal(
-          fixture('component/component-nested.ts')
-        );
-
-        expect(_file('app/components/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/foo/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo/x-foo',
-              componentInvocation: 'Foo::XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo --pod --path foo', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--pod', '--path', 'foo'], (_file) => {
-        expect(_file('app/foo/x-foo/component.ts')).to.equal(
-          fixture('component/component-dash.ts')
-        );
-
-        expect(_file('app/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/foo/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-              path: 'foo/',
-            },
-          })
-        );
-      });
-    });
-
-    it('component foo/x-foo --pod --path bar', function() {
-      return emberGenerateDestroy(['component', 'foo/x-foo', '--pod', '--path', 'bar'], (_file) => {
-        expect(_file('app/bar/foo/x-foo/component.ts')).to.equal(
-          fixture('component/component-nested.ts')
-        );
-
-        expect(_file('app/bar/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/bar/foo/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo/x-foo',
-              componentInvocation: 'Foo::XFoo',
-              path: 'bar/',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo --pod --path bar/foo', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--pod', '--path', 'bar/foo'], (_file) => {
-        expect(_file('app/bar/foo/x-foo/component.ts')).to.equal(
-          fixture('component/component-dash.ts')
-        );
-
-        expect(_file('app/bar/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/bar/foo/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-              path: 'bar/foo/',
-            },
-          })
-        );
-      });
-    });
-
-    it('component foo/x-foo --pod --path bar/baz', function() {
-      return emberGenerateDestroy(
-        ['component', 'foo/x-foo', '--pod', '--path', 'bar/baz'],
-        (_file) => {
-          expect(_file('app/bar/baz/foo/x-foo/component.ts')).to.equal(
-            fixture('component/component-nested.ts')
-          );
-
-          expect(_file('app/bar/baz/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/bar/baz/foo/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'foo/x-foo',
-                componentInvocation: 'Foo::XFoo',
-                path: 'bar/baz/',
-              },
-            })
-          );
-        }
-      );
-    });
-
-    it('component x-foo --pod -no-path', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--pod', '-no-path'], (_file) => {
-        expect(_file('app/x-foo/component.ts')).to.equal(fixture('component/component-dash.ts'));
-
-        expect(_file('app/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component foo/x-foo --pod -no-path', function() {
-      return emberGenerateDestroy(['component', 'foo/x-foo', '--pod', '-no-path'], (_file) => {
-        expect(_file('app/foo/x-foo/component.ts')).to.equal(
-          fixture('component/component-nested.ts')
-        );
-
-        expect(_file('app/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/foo/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo/x-foo',
-              componentInvocation: 'Foo::XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo.js --pod', function() {
-      return emberGenerateDestroy(['component', 'x-foo.ts', '--pod'], (_file) => {
-        expect(_file('app/components/x-foo.js/component.ts')).to.not.exist;
-        expect(_file('app/components/x-foo.js/template.hbs')).to.not.exist;
-        expect(_file('tests/integration/components/x-foo.js/component-test.ts')).to.not.exist;
-
-        expect(_file('app/components/x-foo/component.ts')).to.equal(
-          fixture('component/component-dash.ts')
-        );
-
-        expect(_file('app/components/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('tests/integration/components/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    describe('with podModulePrefix', function() {
-      beforeEach(function() {
-        setupPodConfig({ podModulePrefix: true });
-      });
-
-      it('component foo --pod', function() {
-        return emberGenerateDestroy(['component', 'foo', '--pod'], (_file) => {
-          expect(_file('app/pods/components/foo/component.ts')).to.equal(
-            fixture('component/component.ts')
-          );
-
-          expect(_file('app/pods/components/foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/pods/components/foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'foo',
-                componentInvocation: 'Foo',
-              },
-            })
-          );
-        });
-      });
-
-      it('component x-foo --pod', function() {
-        return emberGenerateDestroy(['component', 'x-foo', '--pod'], (_file) => {
-          expect(_file('app/pods/components/x-foo/component.ts')).to.equal(
-            fixture('component/component-dash.ts')
-          );
-
-          expect(_file('app/pods/components/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/pods/components/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'x-foo',
-                componentInvocation: 'XFoo',
-              },
-            })
-          );
-        });
-      });
-
-      it('component foo/x-foo --pod', function() {
-        return emberGenerateDestroy(['component', 'foo/x-foo', '--pod'], (_file) => {
-          expect(_file('app/pods/components/foo/x-foo/component.ts')).to.equal(
-            fixture('component/component-nested.ts')
-          );
-
-          expect(_file('app/pods/components/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/pods/components/foo/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'foo/x-foo',
-                componentInvocation: 'Foo::XFoo',
-              },
-            })
-          );
-        });
-      });
-
-      it('component x-foo --pod --path foo', function() {
-        return emberGenerateDestroy(['component', 'x-foo', '--pod', '--path', 'foo'], (_file) => {
-          expect(_file('app/pods/foo/x-foo/component.ts')).to.equal(
-            fixture('component/component-dash.ts')
-          );
-
-          expect(_file('app/pods/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/pods/foo/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'x-foo',
-                componentInvocation: 'XFoo',
-                path: 'foo/',
-              },
-            })
-          );
-        });
-      });
-
-      it('component foo/x-foo --pod --path bar', function() {
-        return emberGenerateDestroy(
-          ['component', 'foo/x-foo', '--pod', '--path', 'bar'],
-          (_file) => {
-            expect(_file('app/pods/bar/foo/x-foo/component.ts')).to.equal(
-              fixture('component/component-nested.ts')
-            );
-
-            expect(_file('app/pods/bar/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/pods/bar/foo/x-foo/component-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo/x-foo',
-                  componentInvocation: 'Foo::XFoo',
-                  path: 'bar/',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component x-foo --pod --path bar/foo', function() {
-        return emberGenerateDestroy(
-          ['component', 'x-foo', '--pod', '--path', 'bar/foo'],
-          (_file) => {
-            expect(_file('app/pods/bar/foo/x-foo/component.ts')).to.equal(
-              fixture('component/component-dash.ts')
-            );
-
-            expect(_file('app/pods/bar/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-            expect(_file('tests/integration/pods/bar/foo/x-foo/component-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'x-foo',
-                  componentInvocation: 'XFoo',
-                  path: 'bar/foo/',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component foo/x-foo --pod --path bar/baz', function() {
-        return emberGenerateDestroy(
-          ['component', 'foo/x-foo', '--pod', '--path', 'bar/baz'],
-          (_file) => {
-            expect(_file('app/pods/bar/baz/foo/x-foo/component.ts')).to.equal(
-              fixture('component/component-nested.ts')
-            );
-
-            expect(_file('app/pods/bar/baz/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-            expect(_file('tests/integration/pods/bar/baz/foo/x-foo/component-test.ts')).to.equal(
-              fixture('component-test/default-template.ts', {
-                replace: {
-                  component: 'foo/x-foo',
-                  componentInvocation: 'Foo::XFoo',
-                  path: 'bar/baz/',
-                },
-              })
-            );
-          }
-        );
-      });
-
-      it('component x-foo --pod -no-path', function() {
-        return emberGenerateDestroy(['component', 'x-foo', '--pod', '-no-path'], (_file) => {
-          expect(_file('app/pods/x-foo/component.ts')).to.equal(
-            fixture('component/component-dash.ts')
-          );
-
-          expect(_file('app/pods/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/pods/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'x-foo',
-                componentInvocation: 'XFoo',
-              },
-            })
-          );
-        });
-      });
-
-      it('component foo/x-foo --pod -no-path', function() {
-        return emberGenerateDestroy(['component', 'foo/x-foo', '--pod', '-no-path'], (_file) => {
-          expect(_file('app/pods/foo/x-foo/component.ts')).to.equal(
-            fixture('component/component-nested.ts')
-          );
-
-          expect(_file('app/pods/foo/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('tests/integration/pods/foo/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'foo/x-foo',
-                componentInvocation: 'Foo::XFoo',
-              },
-            })
-          );
-        });
-      });
-    });
-  });
-
-  describe('in app - octane', function() {
+  describe('in app - octane', function () {
     enableOctane();
 
-    beforeEach(function() {
+    beforeEach(function () {
       return emberNew()
         .then(() =>
           modifyPackages([
@@ -722,7 +45,7 @@ describe('Blueprint: component', function() {
         .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
-    it('component foo', function() {
+    it('component foo', function () {
       return emberGenerateDestroy(['component', 'foo'], (_file) => {
         expect(_file('app/components/foo.ts')).to.not.exist;
         expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
@@ -738,7 +61,199 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component x-foo', function() {
+    // classic default
+    it('component foo --component-structure=classic --component-class=@ember/component', function () {
+      return emberGenerateDestroy(
+        [
+          'component',
+          'foo',
+          '--component-structure',
+          'classic',
+          '--component-class',
+          '@ember/component',
+        ],
+        (_file) => {
+          expect(_file('app/components/foo.ts')).to.equal(
+            glimmerComponentContents.replace(/@glimmer\//g, '@ember/')
+          );
+
+          expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    // Octane default
+    it('component foo --component-structure=flat --component-class=@glimmer/component', function () {
+      return emberGenerateDestroy(
+        [
+          'component',
+          '--component-structure',
+          'flat',
+          '--component-class',
+          '@glimmer/component',
+          'foo',
+        ],
+        (_file) => {
+          expect(_file('app/components/foo.ts')).to.equal(glimmerComponentContents);
+
+          expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    it('component foo --component-structure=flat', function () {
+      return emberGenerateDestroy(
+        ['component', '--component-structure', 'flat', 'foo'],
+        (_file) => {
+          expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    it('component foo --component-structure=nested', function () {
+      return emberGenerateDestroy(
+        ['component', '--component-structure', 'nested', 'foo'],
+        (_file) => {
+          expect(_file('app/components/foo/index.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    it('component foo --component-structure=classic', function () {
+      return emberGenerateDestroy(
+        ['component', '--component-structure', 'classic', 'foo'],
+        (_file) => {
+          expect(_file('app/templates/components/foo.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    it('component foo --component-class=@ember/component', function () {
+      return emberGenerateDestroy(
+        ['component', '--component-class', '@ember/component', 'foo'],
+        (_file) => {
+          expect(_file('app/components/foo.ts')).to.equal(
+            glimmerComponentContents.replace(/@glimmer\//g, '@ember/')
+          );
+
+          expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    it('component foo --component-class=@glimmer/component', function () {
+      return emberGenerateDestroy(
+        ['component', '--component-class', '@glimmer/component', 'foo'],
+        (_file) => {
+          expect(_file('app/components/foo.ts')).to.equal(glimmerComponentContents);
+
+          expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    it('component foo --component-class=@ember/component/template-only', function () {
+      return emberGenerateDestroy(
+        ['component', '--component-class', '@ember/component/template-only', 'foo'],
+        (_file) => {
+          expect(_file('app/components/foo.ts')).to.equal(templateOnlyContents);
+
+          expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        }
+      );
+    });
+
+    it('component foo --no-component-class', function () {
+      return emberGenerateDestroy(['component', '--no-component-class', 'foo'], (_file) => {
+        expect(_file('app/components/foo.js')).to.not.exist;
+        expect(_file('app/components/foo.ts')).to.not.exist;
+
+        expect(_file('app/components/foo.hbs')).to.equal('{{yield}}');
+
+        expect(_file('tests/integration/components/foo-test.ts')).to.equal(
+          fixture('component-test/default-template.ts', {
+            replace: {
+              component: 'foo',
+              componentInvocation: 'Foo',
+            },
+          })
+        );
+      });
+    });
+
+    it('component x-foo', function () {
       return emberGenerateDestroy(['component', 'x-foo'], (_file) => {
         expect(_file('app/components/x-foo.ts')).to.not.exist;
         expect(_file('app/components/x-foo.hbs')).to.equal('{{yield}}');
@@ -754,7 +269,7 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component x-foo.ts', function() {
+    it('component x-foo.ts', function () {
       return emberGenerateDestroy(['component', 'x-foo.ts'], (_file) => {
         expect(_file('app/components/x-foo.ts')).to.not.exist;
         expect(_file('app/components/x-foo.ts.ts')).to.not.exist;
@@ -774,7 +289,7 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component foo/x-foo', function() {
+    it('component foo/x-foo', function () {
       return emberGenerateDestroy(['component', 'foo/x-foo'], (_file) => {
         expect(_file('app/components/foo/x-foo.ts')).to.not.exist;
         expect(_file('app/components/foo/x-foo.hbs')).to.equal('{{yield}}');
@@ -790,11 +305,13 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component foo/x-foo --component-class="@glimmer/component"', function() {
+    it('component foo/x-foo --component-class="@glimmer/component"', function () {
       return emberGenerateDestroy(
         ['component', 'foo/x-foo', '--component-class', '@glimmer/component'],
         (_file) => {
-          expect(_file('app/components/foo/x-foo.ts')).to.equal(fixture('component/native-component-nested.ts'));
+          expect(_file('app/components/foo/x-foo.ts')).to.equal(
+            glimmerComponentContents.replace(/FooComponent/g, 'FooXFooComponent')
+          );
           expect(_file('app/components/foo/x-foo.hbs')).to.equal('{{yield}}');
 
           expect(_file('tests/integration/components/foo/x-foo-test.ts')).to.equal(
@@ -808,190 +325,165 @@ describe('Blueprint: component', function() {
         }
       );
     });
-  });
 
-  describe('in addon', function() {
-    beforeEach(function() {
-      return emberNew({ target: 'addon' })
-        .then(() =>
-          modifyPackages([
-            { name: 'ember-qunit', delete: true },
-            { name: 'ember-cli-qunit', dev: true },
-          ])
-        )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
-    });
+    describe('with podModulePrefix', function () {
+      beforeEach(function () {
+        setupPodConfig({ podModulePrefix: true });
+      });
 
-    it('component foo', function() {
-      return emberGenerateDestroy(['component', 'foo'], (_file) => {
-        expect(_file('addon/components/foo.ts')).to.equal(fixture('component/component-addon.ts'));
+      it('component foo --pod', function () {
+        return emberGenerateDestroy(['component', 'foo', '--pod'], (_file) => {
+          expect(_file('app/pods/components/foo/template.hbs')).to.equal('{{yield}}');
 
-        expect(_file('addon/templates/components/foo.hbs')).to.equal('{{yield}}');
+          expect(_file('tests/integration/pods/components/foo/component-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo',
+                componentInvocation: 'Foo',
+              },
+            })
+          );
+        });
+      });
 
-        expect(_file('app/components/foo.js')).to.contain(
-          "export { default } from 'my-addon/components/foo';"
-        );
+      it('component x-foo --pod', function () {
+        return emberGenerateDestroy(['component', 'x-foo', '--pod'], (_file) => {
+          expect(_file('app/pods/components/x-foo/template.hbs')).to.equal('{{yield}}');
 
-        expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo',
-              componentInvocation: 'Foo',
-            },
-          })
+          expect(_file('tests/integration/pods/components/x-foo/component-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'x-foo',
+                componentInvocation: 'XFoo',
+              },
+            })
+          );
+        });
+      });
+
+      it('component foo/x-foo --pod', function () {
+        return emberGenerateDestroy(['component', 'foo/x-foo', '--pod'], (_file) => {
+          expect(_file('app/pods/components/foo/x-foo/template.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/pods/components/foo/x-foo/component-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo/x-foo',
+                componentInvocation: 'Foo::XFoo',
+              },
+            })
+          );
+        });
+      });
+
+      it('component x-foo --pod --path foo', function () {
+        return emberGenerateDestroy(['component', 'x-foo', '--pod', '--path', 'foo'], (_file) => {
+          expect(_file('app/pods/foo/x-foo/template.hbs')).to.equal('{{yield}}');
+
+          expect(_file('tests/integration/pods/foo/x-foo/component-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'x-foo',
+                componentInvocation: 'XFoo',
+                path: 'foo/',
+              },
+            })
+          );
+        });
+      });
+
+      it('component foo/x-foo --pod --path bar', function () {
+        return emberGenerateDestroy(
+          ['component', 'foo/x-foo', '--pod', '--path', 'bar'],
+          (_file) => {
+            expect(_file('app/pods/bar/foo/x-foo/template.hbs')).to.equal('{{yield}}');
+
+            expect(_file('tests/integration/pods/bar/foo/x-foo/component-test.ts')).to.equal(
+              fixture('component-test/default-template.ts', {
+                replace: {
+                  component: 'foo/x-foo',
+                  componentInvocation: 'Foo::XFoo',
+                  path: 'bar/',
+                },
+              })
+            );
+          }
         );
       });
-    });
 
-    it('component x-foo', function() {
-      return emberGenerateDestroy(['component', 'x-foo'], (_file) => {
-        expect(_file('addon/components/x-foo.ts')).to.equal(
-          fixture('component/component-addon-dash.ts')
-        );
-
-        expect(_file('addon/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('app/components/x-foo.js')).to.contain(
-          "export { default } from 'my-addon/components/x-foo';"
-        );
-
-        expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
+      it('component x-foo --pod --path bar/foo', function () {
+        return emberGenerateDestroy(
+          ['component', 'x-foo', '--pod', '--path', 'bar/foo'],
+          (_file) => {
+            expect(_file('app/pods/bar/foo/x-foo/template.hbs')).to.equal('{{yield}}');
+            expect(_file('tests/integration/pods/bar/foo/x-foo/component-test.ts')).to.equal(
+              fixture('component-test/default-template.ts', {
+                replace: {
+                  component: 'x-foo',
+                  componentInvocation: 'XFoo',
+                  path: 'bar/foo/',
+                },
+              })
+            );
+          }
         );
       });
-    });
 
-    it('component x-foo.ts', function() {
-      return emberGenerateDestroy(['component', 'x-foo.ts'], (_file) => {
-        expect(_file('addon/components/x-foo.js.ts')).to.not.exist;
-        expect(_file('addon/templates/components/x-foo.js.hbs')).to.not.exist;
-        expect(_file('app/components/x-foo.js.js')).to.not.exist;
-        expect(_file('tests/integration/components/x-foo.js-test.ts')).to.not.exist;
+      it('component foo/x-foo --pod --path bar/baz', function () {
+        return emberGenerateDestroy(
+          ['component', 'foo/x-foo', '--pod', '--path', 'bar/baz'],
+          (_file) => {
+            expect(_file('app/pods/bar/baz/foo/x-foo/template.hbs')).to.equal('{{yield}}');
 
-        expect(_file('addon/components/x-foo.ts')).to.equal(
-          fixture('component/component-addon-dash.ts')
-        );
-
-        expect(_file('addon/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('app/components/x-foo.js')).to.contain(
-          "export { default } from 'my-addon/components/x-foo';"
-        );
-
-        expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
+            expect(_file('tests/integration/pods/bar/baz/foo/x-foo/component-test.ts')).to.equal(
+              fixture('component-test/default-template.ts', {
+                replace: {
+                  component: 'foo/x-foo',
+                  componentInvocation: 'Foo::XFoo',
+                  path: 'bar/baz/',
+                },
+              })
+            );
+          }
         );
       });
-    });
 
-    it('component foo/x-foo', function() {
-      return emberGenerateDestroy(['component', 'foo/x-foo'], (_file) => {
-        expect(_file('addon/components/foo/x-foo.ts')).to.equal(
-          fixture('component/component-addon-nested.ts')
-        );
+      it('component x-foo --pod -no-path', function () {
+        return emberGenerateDestroy(['component', 'x-foo', '--pod', '-no-path'], (_file) => {
+          expect(_file('app/pods/x-foo/template.hbs')).to.equal('{{yield}}');
 
-        expect(_file('addon/templates/components/foo/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('app/components/foo/x-foo.js')).to.contain(
-          "export { default } from 'my-addon/components/foo/x-foo';"
-        );
-
-        expect(_file('tests/integration/components/foo/x-foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo/x-foo',
-              componentInvocation: 'Foo::XFoo',
-            },
-          })
-        );
+          expect(_file('tests/integration/pods/x-foo/component-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'x-foo',
+                componentInvocation: 'XFoo',
+              },
+            })
+          );
+        });
       });
-    });
 
-    it('component x-foo --dummy', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/x-foo.ts')).to.equal(
-          fixture('component/component-addon-dash.ts')
-        );
+      it('component foo/x-foo --pod -no-path', function () {
+        return emberGenerateDestroy(['component', 'foo/x-foo', '--pod', '-no-path'], (_file) => {
+          expect(_file('app/pods/foo/x-foo/template.hbs')).to.equal('{{yield}}');
 
-        expect(_file('tests/dummy/app/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('app/components/x-foo.js')).to.not.exist;
-
-        expect(_file('tests/unit/components/x-foo-test.ts')).to.not.exist;
-      });
-    });
-
-    it('component foo/x-foo --dummy', function() {
-      return emberGenerateDestroy(['component', 'foo/x-foo', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/foo/x-foo.ts')).to.equal(
-          fixture('component/component-addon-nested.ts')
-        );
-
-        expect(_file('tests/dummy/app/templates/components/foo/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('app/components/foo/x-foo.js')).to.not.exist;
-
-        expect(_file('tests/unit/components/foo/x-foo-test.ts')).to.not.exist;
-      });
-    });
-
-    it('component x-foo.js --dummy', function() {
-      return emberGenerateDestroy(['component', 'x-foo.ts', '--dummy'], (_file) => {
-        expect(_file('tests/dummy/app/components/x-foo.js.ts')).to.not.exist;
-        expect(_file('tests/dummy/app/templates/components/x-foo.js.hbs')).to.not.exist;
-        expect(_file('app/components/x-foo.js.js')).to.not.exist;
-        expect(_file('tests/unit/components/x-foo.js-test.ts')).to.not.exist;
-
-        expect(_file('tests/dummy/app/components/x-foo.ts')).to.equal(
-          fixture('component/component-addon-dash.ts')
-        );
-
-        expect(_file('tests/dummy/app/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('app/components/x-foo.js')).to.not.exist;
-
-        expect(_file('tests/unit/components/x-foo-test.ts')).to.not.exist;
-      });
-    });
-
-    it('component x-foo --pod', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--pod'], (_file) => {
-        expect(_file('addon/components/x-foo/component.ts')).to.equal(
-          fixture('component/component-addon-dash-pod.ts')
-        );
-
-        expect(_file('addon/components/x-foo/template.hbs')).to.equal('{{yield}}');
-
-        expect(_file('app/components/x-foo/component.js')).to.contain(
-          "export { default } from 'my-addon/components/x-foo/component';"
-        );
-
-        expect(_file('tests/integration/components/x-foo/component-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
-        );
+          expect(_file('tests/integration/pods/foo/x-foo/component-test.ts')).to.equal(
+            fixture('component-test/default-template.ts', {
+              replace: {
+                component: 'foo/x-foo',
+                componentInvocation: 'Foo::XFoo',
+              },
+            })
+          );
+        });
       });
     });
   });
 
-  describe('in addon - octane', function() {
+  describe('in addon - octane', function () {
     enableOctane();
 
-    beforeEach(function() {
+    beforeEach(function () {
       return emberNew({ target: 'addon' })
         .then(() =>
           modifyPackages([
@@ -1002,7 +494,7 @@ describe('Blueprint: component', function() {
         .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
-    it('component foo', function() {
+    it('component foo', function () {
       return emberGenerateDestroy(['component', 'foo'], (_file) => {
         expect(_file('addon/components/foo.ts')).to.not.exist;
 
@@ -1012,7 +504,7 @@ describe('Blueprint: component', function() {
           "export { default } from 'my-addon/components/foo';"
         );
 
-        expect(_file('app/templates/components/foo.ts')).to.not.exist;
+        expect(_file('app/templates/components/foo.js')).to.not.exist;
 
         expect(_file('tests/integration/components/foo-test.ts')).to.equal(
           fixture('component-test/default-template.ts', {
@@ -1025,7 +517,7 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component x-foo', function() {
+    it('component x-foo', function () {
       return emberGenerateDestroy(['component', 'x-foo'], (_file) => {
         expect(_file('addon/components/x-foo.ts')).to.not.exist;
 
@@ -1035,7 +527,7 @@ describe('Blueprint: component', function() {
           "export { default } from 'my-addon/components/x-foo';"
         );
 
-        expect(_file('app/templates/components/x-foo.ts')).to.not.exist;
+        expect(_file('app/templates/components/x-foo.js')).to.not.exist;
         expect(_file('app/components/x-foo.hbs')).to.not.exist;
 
         expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
@@ -1049,7 +541,7 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component foo/x-foo', function() {
+    it('component foo/x-foo', function () {
       return emberGenerateDestroy(['component', 'foo/x-foo'], (_file) => {
         expect(_file('addon/components/foo/x-foo.ts')).to.not.exist;
 
@@ -1059,7 +551,7 @@ describe('Blueprint: component', function() {
           "export { default } from 'my-addon/components/foo/x-foo';"
         );
 
-        expect(_file('app/templates/components/foo/x-foo.ts')).to.not.exist;
+        expect(_file('app/templates/components/foo/x-foo.js')).to.not.exist;
 
         expect(_file('tests/integration/components/foo/x-foo-test.ts')).to.equal(
           fixture('component-test/default-template.ts', {
@@ -1072,7 +564,7 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component x-foo --dummy', function() {
+    it('component x-foo --dummy', function () {
       return emberGenerateDestroy(['component', 'x-foo', '--dummy'], (_file) => {
         expect(_file('tests/dummy/app/components/x-foo.ts')).to.not.exist;
 
@@ -1080,13 +572,13 @@ describe('Blueprint: component', function() {
 
         expect(_file('app/components/x-foo.js')).to.not.exist;
         expect(_file('app/components/x-foo.hbs')).to.not.exist;
-        expect(_file('app/templates/components/x-foo.ts')).to.not.exist;
+        expect(_file('app/templates/components/x-foo.js')).to.not.exist;
 
         expect(_file('tests/integration/components/x-foo-test.ts')).to.not.exist;
       });
     });
 
-    it('component foo/x-foo --dummy', function() {
+    it('component foo/x-foo --dummy', function () {
       return emberGenerateDestroy(['component', 'foo/x-foo', '--dummy'], (_file) => {
         expect(_file('tests/dummy/app/components/foo/x-foo.ts')).to.not.exist;
 
@@ -1102,213 +594,10 @@ describe('Blueprint: component', function() {
     });
   });
 
-  describe('in in-repo-addon', function() {
-    beforeEach(function() {
-      return emberNew({ target: 'in-repo-addon' })
-        .then(() =>
-          modifyPackages([
-            { name: 'ember-qunit', delete: true },
-            { name: 'ember-cli-qunit', dev: true },
-          ])
-        )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
-    });
-
-    it('component foo --in-repo-addon=my-addon', function() {
-      return emberGenerateDestroy(['component', 'foo', '--in-repo-addon=my-addon'], (_file) => {
-        expect(_file('lib/my-addon/addon/components/foo.ts')).to.equal(
-          fixture('component/component-addon.ts')
-        );
-
-        expect(_file('lib/my-addon/addon/templates/components/foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('lib/my-addon/app/components/foo.js')).to.contain(
-          "export { default } from 'my-addon/components/foo';"
-        );
-
-        expect(_file('tests/integration/components/foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'foo',
-              componentInvocation: 'Foo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo --in-repo-addon=my-addon', function() {
-      return emberGenerateDestroy(['component', 'x-foo', '--in-repo-addon=my-addon'], (_file) => {
-        expect(_file('lib/my-addon/addon/components/x-foo.ts')).to.equal(
-          fixture('component/component-addon-dash.ts')
-        );
-
-        expect(_file('lib/my-addon/addon/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-        expect(_file('lib/my-addon/app/components/x-foo.js')).to.contain(
-          "export { default } from 'my-addon/components/x-foo';"
-        );
-
-        expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
-          fixture('component-test/default-template.ts', {
-            replace: {
-              component: 'x-foo',
-              componentInvocation: 'XFoo',
-            },
-          })
-        );
-      });
-    });
-
-    it('component x-foo.ts --in-repo-addon=my-addon', function() {
-      return emberGenerateDestroy(
-        ['component', 'x-foo.ts', '--in-repo-addon=my-addon'],
-        (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo.ts.ts')).to.not.exist;
-          expect(_file('lib/my-addon/addon/templates/components/x-foo.ts.hbs')).to.not.exist;
-          expect(_file('lib/my-addon/app/components/x-foo.js.js')).to.not.exist;
-          expect(_file('tests/integration/components/x-foo-test.ts.ts')).to.not.exist;
-
-          expect(_file('lib/my-addon/addon/components/x-foo.ts')).to.equal(
-            fixture('component/component-addon-dash.ts')
-          );
-
-          expect(_file('lib/my-addon/addon/templates/components/x-foo.hbs')).to.equal('{{yield}}');
-
-          expect(_file('lib/my-addon/app/components/x-foo.js')).to.contain(
-            "export { default } from 'my-addon/components/x-foo';"
-          );
-
-          expect(_file('tests/integration/components/x-foo-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'x-foo',
-                componentInvocation: 'XFoo',
-              },
-            })
-          );
-        }
-      );
-    });
-
-    it('component foo/x-foo --in-repo-addon=my-addon', function() {
-      return emberGenerateDestroy(
-        ['component', 'foo/x-foo', '--in-repo-addon=my-addon'],
-        (_file) => {
-          expect(_file('lib/my-addon/addon/components/foo/x-foo.ts')).to.equal(
-            fixture('component/component-addon-nested.ts')
-          );
-
-          expect(_file('lib/my-addon/addon/templates/components/foo/x-foo.hbs')).to.equal(
-            '{{yield}}'
-          );
-
-          expect(_file('lib/my-addon/app/components/foo/x-foo.js')).to.contain(
-            "export { default } from 'my-addon/components/foo/x-foo';"
-          );
-
-          expect(_file('tests/integration/components/foo/x-foo-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'foo/x-foo',
-                componentInvocation: 'Foo::XFoo',
-              },
-            })
-          );
-        }
-      );
-    });
-
-    it('component x-foo --in-repo-addon=my-addon --pod', function() {
-      return emberGenerateDestroy(
-        ['component', 'x-foo', '--in-repo-addon=my-addon', '--pod'],
-        (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo/component.ts')).to.equal(
-            fixture('component/component-addon-dash-pod.ts')
-          );
-
-          expect(_file('lib/my-addon/addon/components/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('lib/my-addon/app/components/x-foo/component.js')).to.contain(
-            "export { default } from 'my-addon/components/x-foo/component';"
-          );
-
-          expect(_file('tests/integration/components/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'x-foo',
-                componentInvocation: 'XFoo',
-              },
-            })
-          );
-        }
-      );
-    });
-
-    it('component x-foo.ts --in-repo-addon=my-addon --pod', function() {
-      return emberGenerateDestroy(
-        ['component', 'x-foo.ts', '--in-repo-addon=my-addon', '--pod'],
-        (_file) => {
-          expect(_file('lib/my-addon/addon/components/x-foo/component.ts.ts')).to.not.exist;
-          expect(_file('lib/my-addon/addon/components/x-foo/template.ts.hbs')).to.not.exist;
-          expect(_file('lib/my-addon/app/components/x-foo/component.js.js')).to.not.exist;
-          expect(_file('tests/integration/components/x-foo/component-test.ts.ts')).to.not.exist;
-
-          expect(_file('lib/my-addon/addon/components/x-foo/component.ts')).to.equal(
-            fixture('component/component-addon-dash-pod.ts')
-          );
-
-          expect(_file('lib/my-addon/addon/components/x-foo/template.hbs')).to.equal('{{yield}}');
-
-          expect(_file('lib/my-addon/app/components/x-foo/component.js')).to.contain(
-            "export { default } from 'my-addon/components/x-foo/component';"
-          );
-
-          expect(_file('tests/integration/components/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'x-foo',
-                componentInvocation: 'XFoo',
-              },
-            })
-          );
-        }
-      );
-    });
-
-    it('component foo/x-foo --in-repo-addon=my-addon --pod', function() {
-      return emberGenerateDestroy(
-        ['component', 'foo/x-foo', '--in-repo-addon=my-addon', '--pod'],
-        (_file) => {
-          expect(_file('lib/my-addon/addon/components/foo/x-foo/component.ts')).to.equal(
-            fixture('component/component-addon-nested-pod.ts')
-          );
-
-          expect(_file('lib/my-addon/addon/components/foo/x-foo/template.hbs')).to.equal(
-            '{{yield}}'
-          );
-
-          expect(_file('lib/my-addon/app/components/foo/x-foo/component.js')).to.contain(
-            "export { default } from 'my-addon/components/foo/x-foo/component';"
-          );
-
-          expect(_file('tests/integration/components/foo/x-foo/component-test.ts')).to.equal(
-            fixture('component-test/default-template.ts', {
-              replace: {
-                component: 'foo/x-foo',
-                componentInvocation: 'Foo::XFoo',
-              },
-            })
-          );
-        }
-      );
-    });
-  });
-
-  describe('in in-repo-addon - octane', function() {
+  describe('in in-repo-addon - octane', function () {
     enableOctane();
 
-    beforeEach(function() {
+    beforeEach(function () {
       return emberNew({ target: 'in-repo-addon' })
         .then(() =>
           modifyPackages([
@@ -1319,7 +608,7 @@ describe('Blueprint: component', function() {
         .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
-    it('component foo --in-repo-addon=my-addon', function() {
+    it('component foo --in-repo-addon=my-addon', function () {
       return emberGenerateDestroy(['component', 'foo', '--in-repo-addon=my-addon'], (_file) => {
         expect(_file('lib/my-addon/addon/components/foo.ts')).to.not.exist;
         expect(_file('lib/my-addon/addon/components/foo.hbs')).to.equal('{{yield}}');
@@ -1343,7 +632,7 @@ describe('Blueprint: component', function() {
       });
     });
 
-    it('component x-foo --in-repo-addon=my-addon', function() {
+    it('component x-foo --in-repo-addon=my-addon', function () {
       return emberGenerateDestroy(['component', 'x-foo', '--in-repo-addon=my-addon'], (_file) => {
         expect(_file('lib/my-addon/addon/components/x-foo.ts')).to.not.exist;
         expect(_file('lib/my-addon/addon/components/x-foo.hbs')).to.equal('{{yield}}');

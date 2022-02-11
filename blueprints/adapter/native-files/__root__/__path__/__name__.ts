@@ -1,4 +1,3 @@
 <%= importStatement %>
 
-export default class <%= classifiedModuleName %>Adapter extends <%= baseClass %> {
-}
+export default class <%= classifiedModuleName %>Adapter extends <%= baseClass %> {}

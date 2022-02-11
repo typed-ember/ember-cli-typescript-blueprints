@@ -1,4 +1,5 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-});
+interface XFooComponentArgs {}
+
+export default class XFooComponent extends Component<XFooComponentArgs> {}

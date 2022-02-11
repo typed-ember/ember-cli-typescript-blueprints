@@ -22,7 +22,7 @@ module.exports = {
 
   normalizeEntityName: function (entityName) {
     return normalizeEntityName(
-      entityName.replace(/\.ts$/, '') //Prevent generation of ".ts.ts" files
+      entityName.replace(/\.[jt]s$/, '') //Prevent generation of ".js.js" files
     );
   },
 };

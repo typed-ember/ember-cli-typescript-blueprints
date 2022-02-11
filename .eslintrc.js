@@ -18,6 +18,24 @@ module.exports = {
     ],
   },
   overrides: [
+    // blueprint generators
+    {
+      files: [
+        'blueprints/*.js',
+        'blueprints/**/index.js',
+        'lib/utilities/extend-from-application-entity.js',
+      ],
+      rules: {
+        'ember/no-string-prototype-extensions': 'off',
+      },
+    },
+    // dummy files
+    {
+      files: ['tests/dummy/app/*.js'],
+      rules: {
+        'ember/no-classic-classes': 'off',
+      },
+    },
     // node files
     {
       files: [
@@ -32,7 +50,13 @@ module.exports = {
         'lib/**/*.js',
         'node-tests/**/*.js',
       ],
-      excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
+      excludedFiles: [
+        'addon/**',
+        'addon-test-support/**',
+        'app/**',
+        'tests/dummy/app/**',
+        'node-tests/fixtures/**',
+      ],
       parserOptions: {
         sourceType: 'script',
         ecmaVersion: 2015,

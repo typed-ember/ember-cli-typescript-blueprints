@@ -1,13 +1,18 @@
 import { expect } from 'chai';
-import { describe, it } from 'mocha';
-import { setupTest } from 'ember-mocha';
+import { describeModule, it } from 'ember-mocha';
 
-describe('Unit | Service | foo', function() {
-  setupTest();
-
-  // TODO: Replace this with your real tests.
-  it('exists', function() {
-    let service = this.owner.lookup('service:foo');
-    expect(service).to.be.ok;
-  });
-});
+describeModule(
+  'service:foo',
+  'Unit | Service | foo',
+  {
+    // Specify the other units that are required for this test.
+    // needs: ['service:foo']
+  },
+  function () {
+    // TODO: Replace this with your real tests.
+    it('exists', function () {
+      let service = this.subject();
+      expect(service).to.be.ok;
+    });
+  }
+);

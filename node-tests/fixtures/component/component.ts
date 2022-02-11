@@ -1,4 +1,5 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-});
+interface FooComponentArgs {}
+
+export default class FooComponent extends Component<FooComponentArgs> {}

@@ -209,7 +209,7 @@ describe('Blueprint: component-test', function () {
           fixture('component-test/default.ts')
         );
 
-        expect(_file('app/component-test/x-foo.ts')).to.not.exist;
+        expect(_file('app/component-test/x-foo.js')).to.not.exist;
       });
     });
 
@@ -219,7 +219,7 @@ describe('Blueprint: component-test', function () {
           fixture('component-test/unit.ts')
         );
 
-        expect(_file('app/component-test/x-foo.ts')).to.not.exist;
+        expect(_file('app/component-test/x-foo.js')).to.not.exist;
       });
     });
 
@@ -229,7 +229,7 @@ describe('Blueprint: component-test', function () {
           fixture('component-test/default.ts')
         );
 
-        expect(_file('app/component-test/x-foo.ts')).to.not.exist;
+        expect(_file('app/component-test/x-foo.js')).to.not.exist;
       });
     });
   });

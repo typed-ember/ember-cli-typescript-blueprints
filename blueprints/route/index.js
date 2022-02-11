@@ -26,7 +26,7 @@ module.exports = {
     },
   ],
 
-  fileMapTokens: function() {
+  fileMapTokens: function () {
     return {
       __name__(options) {
         if (options.pod) {
@@ -70,19 +70,25 @@ module.exports = {
     };
   },
 
-  locals: function(options) {
+  locals: function (options) {
     let moduleName = options.entity.name;
+    let rawRouteName = moduleName.split('/').pop();
+    let emberPageTitleExists = 'ember-page-title' in options.project.dependencies();
+    let hasDynamicSegment = options.path && options.path.includes(':');
 
     if (options.resetNamespace) {
-      moduleName = moduleName.split('/').pop();
+      moduleName = rawRouteName;
     }
 
     return {
       moduleName: stringUtil.dasherize(moduleName),
+      routeName: stringUtil.classify(rawRouteName),
+      addTitle: emberPageTitleExists,
+      hasDynamicSegment,
     };
   },
 
-  shouldEntityTouchRouter: function(name) {
+  shouldEntityTouchRouter: function (name) {
     let isIndex = name === 'index';
     let isBasic = name === 'basic';
     let isApplication = name === 'application';
@@ -90,10 +96,10 @@ module.exports = {
     return !isBasic && !isIndex && !isApplication;
   },
 
-  shouldTouchRouter: function(name, options) {
+  shouldTouchRouter: function (name, options) {
     let entityTouchesRouter = this.shouldEntityTouchRouter(name);
-    let isDummy = !!options.dummy;
-    let isAddon = !!options.project.isEmberCLIAddon();
+    let isDummy = Boolean(options.dummy);
+    let isAddon = Boolean(options.project.isEmberCLIAddon());
     let isAddonDummyOrApp = isDummy === isAddon;
 
     return (
@@ -105,12 +111,15 @@ module.exports = {
     );
   },
 
-  afterInstall: function(options) {
+  afterInstall: function (options) {
     updateRouter.call(this, 'add', options);
   },
 
-  afterUninstall: function(options) {
+  afterUninstall: function (options) {
     updateRouter.call(this, 'remove', options);
+  },
+  normalizeEntityName: function (entityName) {
+    return entityName.replace(/\.[jt]s$/, ''); //Prevent generation of ".js.js" files
   },
 };
 

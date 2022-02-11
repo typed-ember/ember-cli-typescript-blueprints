@@ -82,6 +82,12 @@ module.exports = {
     return this._super.install.apply(this, arguments);
   },
 
+  filesPath() {
+    let rootPath = OCTANE ? 'native-files' : 'files';
+
+    return path.join(this.path, rootPath);
+  },
+
   fileMapTokens(options) {
     let commandOptions = this.options;
 
@@ -117,7 +123,7 @@ module.exports = {
 
   normalizeEntityName(entityName) {
     return normalizeEntityName(
-      entityName.replace(/\.ts$/, '') //Prevent generation of ".ts.ts" files
+      entityName.replace(/\.[jt]s$/, '') //Prevent generation of ".js.js" files
     );
   },
 
@@ -128,8 +134,10 @@ module.exports = {
     let templatePath = '';
     let importComponent = '';
     let importTemplate = '';
-    let argsInterface = '';
     let defaultExport = '';
+    let componentArgs = '';
+    const typescriptComponentArgs = `${EOL}interface ${classifiedModuleName}ComponentArgs {}${EOL}`;
+    const typescriptDefaultExport = `class ${classifiedModuleName}Component extends Component<${classifiedModuleName}ComponentArgs> {}`;
 
     // if we're in an addon, build import statement
     if (options.project.isEmberCLIAddon() || (options.inRepoAddon && !options.inDummy)) {
@@ -152,13 +160,17 @@ module.exports = {
           importTemplate = `import layout from '${templatePath}';${EOL}`;
           defaultExport = `Component.extend({${EOL}  layout${EOL}});`;
         } else {
-          defaultExport = `Component.extend({${EOL}});`;
+          defaultExport = `Component.extend({});`;
+        }
+        if (OCTANE) {
+          componentArgs = typescriptComponentArgs;
+          defaultExport = typescriptDefaultExport;
         }
         break;
       case '@glimmer/component':
         importComponent = `import Component from '@glimmer/component';`;
-        argsInterface = `${EOL}interface ${classifiedModuleName}ComponentArgs {${EOL}}${EOL}`;
-        defaultExport = `class ${classifiedModuleName}Component extends Component<${classifiedModuleName}ComponentArgs> {${EOL}}`;
+        componentArgs = typescriptComponentArgs;
+        defaultExport = typescriptDefaultExport;
         break;
       case '@ember/component/template-only':
         importComponent = `import templateOnly from '@ember/component/template-only';`;
@@ -167,9 +179,9 @@ module.exports = {
     }
 
     return {
-      argsInterface,
       importTemplate,
       importComponent,
+      componentArgs,
       defaultExport,
       path: getPathOption(options),
       componentClass,
