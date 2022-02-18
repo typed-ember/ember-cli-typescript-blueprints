@@ -20,7 +20,7 @@ jobs:
       - name: install dependencies
         run: yarn install --frozen-lockfile --non-interactive
       - name: linting
-        run: yarn lint
+        run: yarn lint:js
 
   tests:
     name: 'Tests: ${{ matrix.os }}'
