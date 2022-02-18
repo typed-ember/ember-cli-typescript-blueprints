@@ -16,9 +16,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12.x
-
-      - run: yarn install --frozen-lockfile --non-interactive
-      - run: yarn lint
+          cache: yarn
+      - name: install dependencies
+        run: yarn install --frozen-lockfile --non-interactive
+      - name: linting
+        run: yarn lint
 
   tests:
     name: 'Tests: ${{ matrix.os }}'
@@ -26,7 +28,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu, macOS, windows]
+        os: [ubuntu, macOS]
 
     steps:
       - uses: actions/checkout@v2
