@@ -4,7 +4,7 @@ import Post from '../post';
 import User from '../user';
 
 export default class CommentModel extends Model {
-  @belongsTo('post') declare post: DS.PromiseObject<Post>
-  @belongsTo('user') declare author: DS.PromiseObject<User>
+  @belongsTo('post') declare post: AsyncBelongsTo<Post>
+  @belongsTo('user') declare author: AsyncBelongsTo<User>
 }
 
