@@ -1,4 +1,4 @@
-import Model, { belongsTo } from '@ember-data/model';
+import Model, { belongsTo, type AsyncBelongsTo } from '@ember-data/model';
 import DS from 'ember-data';
 import Post from '../post';
 import User from '../user';
