@@ -32,9 +32,11 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
       return emberGenerateDestroy(args, (_file) => {
         expect(_file('app/serializers/foo.ts'))
           .to.contain(`import JSONAPISerializer from '@ember-data/serializer/json-api';`)
-          .to.contain('export default JSONAPISerializer.extend(');
+          .to.contain('export default class FooSerializer extends JSONAPISerializer {}');
 
-        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+          fixture('serializer-test/rfc232.ts')
+        );
       });
     });
 
@@ -45,9 +47,11 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
         emberGenerateDestroy(args, (_file) => {
           expect(_file('app/serializers/foo.ts'))
             .to.contain("import ApplicationSerializer from './application';")
-            .to.contain('export default ApplicationSerializer.extend({');
+            .to.contain('export default class FooSerializer extends ApplicationSerializer {}');
 
-          expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+          expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+            fixture('serializer-test/rfc232.ts')
+          );
         })
       );
     });
@@ -58,16 +62,21 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
       return emberGenerateDestroy(args, (_file) => {
         expect(_file('app/serializers/foo.ts'))
           .to.contain("import BarSerializer from './bar';")
-          .to.contain('export default BarSerializer.extend({');
+          .to.contain('export default class FooSerializer extends BarSerializer {}');
 
-        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+          fixture('serializer-test/rfc232.ts')
+        );
       });
     });
 
     xit('serializer throws when --base-class is same as name', function () {
       let args = ['serializer', 'foo', '--base-class=foo'];
 
-      return expect(emberGenerate(args)).to.be.rejectedWith(SilentError, /Serializers cannot extend from themself/);
+      return expect(emberGenerate(args)).to.be.rejectedWith(
+        SilentError,
+        /Serializers cannot extend from themself/
+      );
     });
 
     it('serializer when is named "application"', function () {
@@ -76,7 +85,7 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
       return emberGenerateDestroy(args, (_file) => {
         expect(_file('app/serializers/application.ts'))
           .to.contain(`import JSONAPISerializer from '@ember-data/serializer/json-api';`)
-          .to.contain('export default JSONAPISerializer.extend({');
+          .to.contain('export default class ApplicationSerializer extends JSONAPISerializer {}');
 
         expect(_file('tests/unit/serializers/application-test.ts')).to.equal(
           fixture('serializer-test/application-default.ts')
@@ -88,7 +97,9 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
       let args = ['serializer-test', 'foo'];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+          fixture('serializer-test/rfc232.ts')
+        );
       });
     });
 
@@ -166,7 +177,9 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
           .to.contain(`import JSONAPISerializer from '@ember-data/serializer/json-api';`)
           .to.contain('export default class FooSerializer extends JSONAPISerializer');
 
-        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+          fixture('serializer-test/rfc232.ts')
+        );
       });
     });
 
@@ -179,7 +192,9 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
             .to.contain("import ApplicationSerializer from './application';")
             .to.contain('export default class FooSerializer extends ApplicationSerializer');
 
-          expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+          expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+            fixture('serializer-test/rfc232.ts')
+          );
         })
       );
     });
@@ -192,14 +207,19 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
           .to.contain("import BarSerializer from './bar';")
           .to.contain('export default class FooSerializer extends BarSerializer');
 
-        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+          fixture('serializer-test/rfc232.ts')
+        );
       });
     });
 
     xit('serializer throws when --base-class is same as name', function () {
       let args = ['serializer', 'foo', '--base-class=foo'];
 
-      return expect(emberGenerate(args)).to.be.rejectedWith(SilentError, /Serializers cannot extend from themself/);
+      return expect(emberGenerate(args)).to.be.rejectedWith(
+        SilentError,
+        /Serializers cannot extend from themself/
+      );
     });
 
     it('serializer when is named "application"', function () {
@@ -220,7 +240,9 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
       let args = ['serializer-test', 'foo'];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(fixture('serializer-test/rfc232.ts'));
+        expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
+          fixture('serializer-test/rfc232.ts')
+        );
       });
     });
 
