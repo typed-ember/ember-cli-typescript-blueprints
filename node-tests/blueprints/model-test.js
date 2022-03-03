@@ -186,7 +186,6 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       });
     });
 
-    // TODO: Replace with fixture octane-foo-attrs.ts
     it('model with attrs', function () {
       let args = [
         'model',
@@ -202,50 +201,29 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       ];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('app/models/foo.ts'))
-          .to.contain(`import Model, { attr } from '@ember-data/model';`)
-          .to.contain('export default class FooModel extends Model {')
-          .to.contain('  @attr() misc;')
-          .to.contain("  @attr('array') skills;")
-          .to.contain("  @attr('boolean') isActive;")
-          .to.contain("  @attr('date') birthday;")
-          .to.contain("  @attr('object') someObject;")
-          .to.contain("  @attr('number') age;")
-          .to.contain("  @attr('string') name;")
-          .to.contain("  @attr('custom-transform') customAttr;");
-
+        expect(_file('app/models/foo.ts')).to.equal(fixture('model-test/octane-foo-attrs.ts'));
         expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/rfc232.ts'));
       });
     });
 
-    // TODO: Replace with fixture octane-comment-belongs-to.ts
     it('model with belongsTo', function () {
       let args = ['model', 'comment', 'post:belongs-to', 'author:belongs-to:user'];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('app/models/comment.ts'))
-          .to.contain(`import Model, { belongsTo } from '@ember-data/model';`)
-          .to.contain('export default class CommentModel extends Model {')
-          .to.contain('  @belongsTo post;')
-          .to.contain("  @belongsTo('user') author;");
-
+        expect(_file('app/models/comment.ts')).to.equal(
+          fixture('model-test/octane-comment-belongs-to.ts')
+        );
         expect(_file('tests/unit/models/comment-test.ts')).to.equal(
           fixture('model-test/comment-default.ts')
         );
       });
     });
 
-    // TODO: Replace with fixture octane-post-has-many.ts
     it('model with hasMany', function () {
       let args = ['model', 'post', 'comments:has-many', 'otherComments:has-many:comment'];
 
       return emberGenerateDestroy(args, (_file) => {
-        expect(_file('app/models/post.ts'))
-          .to.contain(`import Model, { hasMany } from '@ember-data/model';`)
-          .to.contain('export default class PostModel extends Model {')
-          .to.contain('  @hasMany comments;')
-          .to.contain("  @hasMany('comment') otherComments;");
-
+        expect(_file('app/models/post.ts')).to.equal(fixture('model-test/octane-post-has-many.ts'));
         expect(_file('tests/unit/models/post-test.ts')).to.equal(
           fixture('model-test/post-default.ts')
         );

@@ -13,23 +13,26 @@ module.exports = useEditionDetector({
   root: __dirname,
 
   locals(options) {
+    let hasOctane = has('octane');
     let attrs = [];
     let needs = [];
+    let importedTypes = [];
     let entityOptions = options.entity.options;
     let includeHasMany = false;
     let includeBelongsTo = false;
     let includeAttr = false;
 
     for (let name in entityOptions) {
-      let type = entityOptions[name] || '';
+      let attrType = entityOptions[name] || '';
       let foreignModel = name;
-      if (type.indexOf(':') > -1) {
-        foreignModel = type.split(':')[1];
-        type = type.split(':')[0];
+      if (attrType.indexOf(':') > -1) {
+        foreignModel = attrType.split(':')[1];
+        attrType = attrType.split(':')[0];
       }
       let dasherizedName = stringUtils.dasherize(name);
+      let classifiedName = stringUtils.classify(inflection.singularize(foreignModel));
       let camelizedName = stringUtils.camelize(name);
-      let dasherizedType = stringUtils.dasherize(type);
+      let dasherizedType = stringUtils.dasherize(attrType);
       let dasherizedForeignModel = stringUtils.dasherize(foreignModel);
       let dasherizedForeignModelSingular = inflection.singularize(dasherizedForeignModel);
 
@@ -39,24 +42,40 @@ module.exports = useEditionDetector({
         let camelizedNamePlural = inflection.pluralize(camelizedName);
         attr = {
           name: dasherizedForeignModelSingular,
-          type: dasherizedType,
+          attrType: dasherizedType,
           propertyName: camelizedNamePlural,
+          type: classifiedName,
         };
+        importedTypes.push(importedType(attr));
       } else if (/belongs-to/.test(dasherizedType)) {
         includeBelongsTo = true;
         attr = {
           name: dasherizedForeignModel,
-          type: dasherizedType,
+          attrType: dasherizedType,
           propertyName: camelizedName,
+          type: classifiedName,
         };
+        importedTypes.push(importedType(attr));
       } else {
         includeAttr = true;
+
+        let type = dasherizedType;
+
         attr = {
           name: dasherizedName,
-          type: dasherizedType,
+          attrType: dasherizedType,
           propertyName: camelizedName,
+          type,
         };
       }
+
+      if (customAttrType(attr)) {
+        attr.type = stringUtils.classify(attr.attrType);
+        if (!/^(Array|Date|Object||)$/.test(attr.type)) {
+          importedTypes.push(importedTransformType(attr));
+        }
+      }
+
       attrs.push(attr);
 
       if (/has-many|belongs-to/.test(dasherizedType)) {
@@ -67,7 +86,6 @@ module.exports = useEditionDetector({
     if (attrs.length) {
       let attrTransformer, attrSeparator;
 
-      let hasOctane = has('octane');
       if (hasOctane && process.env.EMBER_EDITION === 'classic') {
         hasOctane = false; //forcible override
       }
@@ -80,9 +98,11 @@ module.exports = useEditionDetector({
       }
 
       attrs = attrs.map(attrTransformer);
-      attrs = '  ' + attrs.join(attrSeparator + EOL + '  ');
+      attrs = attrs.map((attr) => `  ${attr}${attrSeparator}`);
       if (hasOctane) {
-        attrs = attrs + attrSeparator;
+        attrs = attrs.join(EOL + EOL);
+      } else {
+        attrs = attrs.join(EOL);
       }
     }
 
@@ -92,18 +112,28 @@ module.exports = useEditionDetector({
     needs = '  needs: [' + needsDeduplicated.join(', ') + ']';
 
     let importedModules = [];
+
     if (includeAttr) {
       importedModules.push('attr');
     }
     if (includeBelongsTo) {
       importedModules.push('belongsTo');
+      if (hasOctane) {
+        importedModules.push('type AsyncBelongsTo');
+      }
     }
     if (includeHasMany) {
       importedModules.push('hasMany');
+      if (hasOctane) {
+        importedModules.push('type AsyncHasMany');
+      }
     }
     importedModules = importedModules.join(', ');
 
+    importedTypes = [...new Set(importedTypes)];
+
     return {
+      importedTypes,
       importedModules,
       attrs,
       needs,
@@ -111,35 +141,47 @@ module.exports = useEditionDetector({
   },
 });
 
+function importedTransformType({ attrType, type }) {
+  return `import type ${type} from '../transforms/${attrType}';`;
+}
+
+function importedType({ name, type }) {
+  return `import type ${type} from './${name}';`;
+}
+
+function customAttrType({ attrType }) {
+  // Ember data has a built in "date" type as well, but that
+  // corresponds to the type Date.
+  return !/(string|number|boolean|has-many|belongs-to)/.test(attrType);
+}
+
 function nativeAttr(attr) {
   let name = attr.name,
-    type = attr.type,
+    attrType = attr.attrType,
     propertyName = attr.propertyName,
+    type = attr.type,
+    tail,
     result;
 
-  if (type === 'belongs-to') {
-    if (name === propertyName) {
-      result = '@belongsTo';
-    } else {
-      result = "@belongsTo('" + name + "')";
-    }
-  } else if (type === 'has-many') {
-    if (inflection.pluralize(name) === propertyName) {
-      result = '@hasMany';
-    } else {
-      result = "@hasMany('" + name + "')";
-    }
-  } else if (type === '') {
-    result = '@attr()';
+  if (attrType === 'belongs-to') {
+    result = `@belongsTo('${name}')\n  declare`;
+    tail = `: AsyncBelongsTo<${type}>`;
+  } else if (attrType === 'has-many') {
+    result = `@hasMany('${name}')\n  declare`;
+    tail = `: AsyncHasMany<${type}>`;
+  } else if (attrType === '') {
+    result = `@attr('string')\n  declare`;
+    tail = '?: string';
   } else {
-    result = "@attr('" + type + "')";
+    result = `@attr('${attrType}')\n  declare`;
+    tail = `?: ${type}`;
   }
-  return result + ' ' + propertyName;
+  return `${result} ${propertyName}${tail}`;
 }
 
 function classicAttr(attr) {
   let name = attr.name,
-    type = attr.type,
+    type = attr.attrType,
     propertyName = attr.propertyName,
     result;
 
