@@ -12,16 +12,18 @@
 
 For instance: <green>\`ember generate model taco filling:belongs-to:protein toppings:has-many:toppings name:string price:number misc\`</green> would result in the following model:
 
-```js
-import DS from 'ember-data';
+```ts
+import Model, { belongsTo, hasMany, attr, type AsyncHasMany, type AsyncBelongsTo } from '@ember-data/model';
+import type Protein from './protein';
+import type Topping from './topping';
 
-export default class Taco extends DS.Model.extend({
-  filling: DS.belongsTo('protein'),
-  toppings: DS.hasMany('topping'),
-  name: DS.attr('string'),
-  price: DS.attr('number'),
-  misc: DS.attr(),
-}) {}
+export default class TacoModel extends Model {
+  @belongsTo('protein') declare filling: AsyncBelongsTo<Protein>;
+  @hasMany('topping') declare toppings: AsyncHasMany<Topping>;
+  @attr('string') declare name?: string;
+  @attr('number') declare price?: number;
+  @attr declare misc?: string;
+}
 
 declare module 'ember-data/types/registries/model' {
   export default interface ModelRegistry {
