@@ -27,7 +27,7 @@ export default class TacoModel extends Model {
 
 declare module 'ember-data/types/registries/model' {
   export default interface ModelRegistry {
-    taco: Taco;
+    taco: TacoModel;
   }
 }
 ```
