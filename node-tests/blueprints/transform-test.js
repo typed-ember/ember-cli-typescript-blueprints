@@ -35,7 +35,9 @@ describe('Acceptance: generate and destroy transform blueprints', function () {
             .to.contain('deserialize(serialized) {')
             .to.contain('serialize(deserialized) {');
 
-          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(fixture('transform-test/rfc232.ts'));
+          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(
+            fixture('transform-test/rfc232.ts')
+          );
         });
       });
 
@@ -43,25 +45,9 @@ describe('Acceptance: generate and destroy transform blueprints', function () {
         let args = ['transform-test', 'foo'];
 
         return emberGenerateDestroy(args, (_file) => {
-          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(fixture('transform-test/rfc232.ts'));
-        });
-      });
-
-      describe('transform-test with ember-cli-qunit@4.1.0', function () {
-        beforeEach(function () {
-          modifyPackages([
-            { name: 'ember-qunit', delete: true },
-            { name: 'ember-cli-qunit', delete: true },
-          ]);
-          generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-        });
-
-        it('transform-test-test foo', function () {
-          return emberGenerateDestroy(['transform-test', 'foo'], (_file) => {
-            expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(
-              fixture('transform-test/default.ts')
-            );
-          });
+          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(
+            fixture('transform-test/rfc232.ts')
+          );
         });
       });
 
@@ -125,7 +111,9 @@ describe('Acceptance: generate and destroy transform blueprints', function () {
             .to.contain('deserialize(serialized) {')
             .to.contain('serialize(deserialized) {');
 
-          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(fixture('transform-test/rfc232.ts'));
+          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(
+            fixture('transform-test/rfc232.ts')
+          );
         });
       });
 
@@ -133,25 +121,9 @@ describe('Acceptance: generate and destroy transform blueprints', function () {
         let args = ['transform-test', 'foo'];
 
         return emberGenerateDestroy(args, (_file) => {
-          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(fixture('transform-test/rfc232.ts'));
-        });
-      });
-
-      describe('transform-test with ember-cli-qunit@4.1.0', function () {
-        beforeEach(function () {
-          modifyPackages([
-            { name: 'ember-qunit', delete: true },
-            { name: 'ember-cli-qunit', delete: true },
-          ]);
-          generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-        });
-
-        it('transform-test-test foo', function () {
-          return emberGenerateDestroy(['transform-test', 'foo'], (_file) => {
-            expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(
-              fixture('transform-test/default.ts')
-            );
-          });
+          expect(_file('tests/unit/transforms/foo-test.ts')).to.equal(
+            fixture('transform-test/rfc232.ts')
+          );
         });
       });
 

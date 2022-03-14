@@ -23,7 +23,7 @@ describe('Blueprint: helper', function () {
           { name: 'ember-qunit', delete: true },
           { name: 'ember-cli-qunit', dev: true },
         ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
       });
     });
 
@@ -31,7 +31,7 @@ describe('Blueprint: helper', function () {
       return emberGenerateDestroy(['helper', 'foo/bar-baz'], (_file) => {
         expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-          fixture('helper-test/integration.ts')
+          fixture('helper-test/rfc232.ts')
         );
       });
     });
@@ -43,7 +43,7 @@ describe('Blueprint: helper', function () {
 
         expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-          fixture('helper-test/integration.ts')
+          fixture('helper-test/rfc232.ts')
         );
       });
     });
@@ -52,7 +52,7 @@ describe('Blueprint: helper', function () {
       return emberGenerateDestroy(['helper', 'foo/bar-baz', '--pod'], (_file) => {
         expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-          fixture('helper-test/integration.ts')
+          fixture('helper-test/rfc232.ts')
         );
       });
     });
@@ -64,7 +64,7 @@ describe('Blueprint: helper', function () {
 
         expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-          fixture('helper-test/integration.ts')
+          fixture('helper-test/rfc232.ts')
         );
       });
     });
@@ -78,7 +78,7 @@ describe('Blueprint: helper', function () {
         return emberGenerateDestroy(['helper', 'foo/bar-baz', '--pod'], (_file) => {
           expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
           expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-            fixture('helper-test/integration.ts')
+            fixture('helper-test/rfc232.ts')
           );
         });
       });
@@ -90,7 +90,7 @@ describe('Blueprint: helper', function () {
 
           expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
           expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-            fixture('helper-test/integration.ts')
+            fixture('helper-test/rfc232.ts')
           );
         });
       });
@@ -104,7 +104,7 @@ describe('Blueprint: helper', function () {
           { name: 'ember-qunit', delete: true },
           { name: 'ember-cli-qunit', dev: true },
         ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
       });
     });
 
@@ -113,7 +113,7 @@ describe('Blueprint: helper', function () {
         expect(_file('addon/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
         expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper-addon.js'));
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-          fixture('helper-test/integration.ts')
+          fixture('helper-test/rfc232.ts')
         );
       });
     });
@@ -127,7 +127,7 @@ describe('Blueprint: helper', function () {
         expect(_file('addon/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper.ts'));
         expect(_file('app/helpers/foo/bar-baz.js')).to.equal(fixture('helper/helper-addon.js'));
         expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-          fixture('helper-test/integration.ts')
+          fixture('helper-test/rfc232.ts')
         );
       });
     });
@@ -162,7 +162,7 @@ describe('Blueprint: helper', function () {
           { name: 'ember-qunit', delete: true },
           { name: 'ember-cli-qunit', dev: true },
         ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
       });
     });
 
@@ -177,7 +177,7 @@ describe('Blueprint: helper', function () {
             fixture('helper/helper-addon.js')
           );
           expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-            fixture('helper-test/integration.ts')
+            fixture('helper-test/rfc232.ts')
           );
         }
       );
@@ -198,7 +198,7 @@ describe('Blueprint: helper', function () {
             fixture('helper/helper-addon.js')
           );
           expect(_file('tests/integration/helpers/foo/bar-baz-test.ts')).to.equal(
-            fixture('helper-test/integration.ts')
+            fixture('helper-test/rfc232.ts')
           );
         }
       );

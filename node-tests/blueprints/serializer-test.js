@@ -88,7 +88,7 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
           .to.contain('export default class ApplicationSerializer extends JSONAPISerializer {}');
 
         expect(_file('tests/unit/serializers/application-test.ts')).to.equal(
-          fixture('serializer-test/application-default.ts')
+          fixture('serializer-test/application-rfc232.ts')
         );
       });
     });
@@ -100,24 +100,6 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
         expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
           fixture('serializer-test/rfc232.ts')
         );
-      });
-    });
-
-    describe('serializer-test with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', delete: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('serializer-test-test foo', function () {
-        return emberGenerateDestroy(['serializer-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
-            fixture('serializer-test/foo-default.ts')
-          );
-        });
       });
     });
 
@@ -231,7 +213,7 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
           .to.contain('export default class ApplicationSerializer extends JSONAPISerializer');
 
         expect(_file('tests/unit/serializers/application-test.ts')).to.equal(
-          fixture('serializer-test/application-default.ts')
+          fixture('serializer-test/application-rfc232.ts')
         );
       });
     });
@@ -243,24 +225,6 @@ describe('Acceptance: generate and destroy serializer blueprints', function () {
         expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
           fixture('serializer-test/rfc232.ts')
         );
-      });
-    });
-
-    describe('serializer-test with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', delete: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('serializer-test-test foo', function () {
-        return emberGenerateDestroy(['serializer-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/serializers/foo-test.ts')).to.equal(
-            fixture('serializer-test/foo-default.ts')
-          );
-        });
       });
     });
 

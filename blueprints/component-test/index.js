@@ -14,19 +14,14 @@ function invocationFor(options) {
 }
 
 module.exports = useTestFrameworkDetector({
-  description: 'Generates a component integration or unit test.',
+  description: 'Generates a component integration test.',
 
   availableOptions: [
     {
       name: 'test-type',
-      type: ['integration', 'unit'],
+      type: ['integration'],
       default: 'integration',
-      aliases: [
-        { i: 'integration' },
-        { u: 'unit' },
-        { integration: 'integration' },
-        { unit: 'unit' },
-      ],
+      aliases: [{ i: 'integration' }, { integration: 'integration' }],
     },
   ],
 
@@ -52,11 +47,7 @@ module.exports = useTestFrameworkDetector({
     let componentPathName = dasherizedModuleName;
     let testType = options.testType || 'integration';
 
-    let friendlyTestDescription = [
-      testType === 'unit' ? 'Unit' : 'Integration',
-      'Component',
-      dasherizedModuleName,
-    ].join(' | ');
+    let friendlyTestDescription = ['Integration', 'Component', dasherizedModuleName].join(' | ');
 
     if (options.pod && options.path !== 'components' && options.path !== '') {
       componentPathName = [options.path, dasherizedModuleName].filter(Boolean).join('/');

@@ -20,24 +20,6 @@ describe('Blueprint: util-test', function () {
       return emberNew();
     });
 
-    describe('with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', dev: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('util-test foo-bar', function () {
-        return emberGenerateDestroy(['util-test', 'foo-bar'], (_file) => {
-          expect(_file('tests/unit/utils/foo-bar-test.ts')).to.equal(
-            fixture('util-test/default.ts')
-          );
-        });
-      });
-    });
-
     describe('with ember-cli-qunit@4.2.0', function () {
       beforeEach(function () {
         modifyPackages([
@@ -95,18 +77,20 @@ describe('Blueprint: util-test', function () {
       return emberNew({ target: 'addon' });
     });
 
-    describe('with ember-cli-qunit@4.1.0', function () {
+    describe('with ember-cli-qunit@4.2.0', function () {
       beforeEach(function () {
         modifyPackages([
           { name: 'ember-qunit', delete: true },
           { name: 'ember-cli-qunit', dev: true },
         ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
+        generateFakePackageManifest('ember-cli-qunit', '4.2.0');
       });
 
       it('util-test foo-bar', function () {
         return emberGenerateDestroy(['util-test', 'foo-bar'], (_file) => {
-          expect(_file('tests/unit/utils/foo-bar-test.ts')).to.equal(fixture('util-test/dummy.ts'));
+          expect(_file('tests/unit/utils/foo-bar-test.ts')).to.equal(
+            fixture('util-test/rfc232-dummy.ts')
+          );
         });
       });
     });

@@ -30,7 +30,7 @@ describe('Blueprint: controller', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('controller foo', function () {
@@ -38,7 +38,7 @@ describe('Blueprint: controller', function () {
         expect(_file('app/controllers/foo.ts')).to.equal(fixture('controller/controller.ts'));
 
         expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -51,7 +51,7 @@ describe('Blueprint: controller', function () {
         expect(_file('app/controllers/foo.ts')).to.equal(fixture('controller/controller.ts'));
 
         expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -63,7 +63,7 @@ describe('Blueprint: controller', function () {
         );
 
         expect(_file('tests/unit/controllers/foo/bar-test.ts')).to.equal(
-          fixture('controller-test/default-nested.ts')
+          fixture('controller-test/rfc232-nested.ts')
         );
       });
     });
@@ -73,7 +73,7 @@ describe('Blueprint: controller', function () {
         expect(_file('app/foo/controller.ts')).to.equal(fixture('controller/controller.ts'));
 
         expect(_file('tests/unit/foo/controller-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -86,7 +86,7 @@ describe('Blueprint: controller', function () {
         expect(_file('app/foo/controller.ts')).to.equal(fixture('controller/controller.ts'));
 
         expect(_file('tests/unit/foo/controller-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -98,7 +98,7 @@ describe('Blueprint: controller', function () {
         );
 
         expect(_file('tests/unit/foo/bar/controller-test.ts')).to.equal(
-          fixture('controller-test/default-nested.ts')
+          fixture('controller-test/rfc232-nested.ts')
         );
       });
     });
@@ -114,7 +114,7 @@ describe('Blueprint: controller', function () {
           expect(_file('app/pods/foo/controller.ts')).to.equal(fixture('controller/controller.ts'));
 
           expect(_file('tests/unit/pods/foo/controller-test.ts')).to.equal(
-            fixture('controller-test/default.ts')
+            fixture('controller-test/rfc232.ts')
           );
         });
       });
@@ -126,7 +126,7 @@ describe('Blueprint: controller', function () {
           expect(_file('app/pods/foo/controller.ts')).to.equal(fixture('controller/controller.ts'));
 
           expect(_file('tests/unit/pods/foo/controller-test.ts')).to.equal(
-            fixture('controller-test/default.ts')
+            fixture('controller-test/rfc232.ts')
           );
         });
       });
@@ -138,7 +138,7 @@ describe('Blueprint: controller', function () {
           );
 
           expect(_file('tests/unit/pods/foo/bar/controller-test.ts')).to.equal(
-            fixture('controller-test/default-nested.ts')
+            fixture('controller-test/rfc232-nested.ts')
           );
         });
       });
@@ -156,7 +156,7 @@ describe('Blueprint: controller', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('controller foo', function () {
@@ -168,7 +168,7 @@ describe('Blueprint: controller', function () {
         );
 
         expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -186,7 +186,7 @@ describe('Blueprint: controller', function () {
         );
 
         expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -202,7 +202,7 @@ describe('Blueprint: controller', function () {
         );
 
         expect(_file('tests/unit/controllers/foo/bar-test.ts')).to.equal(
-          fixture('controller-test/default-nested.ts')
+          fixture('controller-test/rfc232-nested.ts')
         );
       });
     });
@@ -256,7 +256,7 @@ describe('Blueprint: controller', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('controller foo --in-repo-addon=my-addon', function () {
@@ -270,7 +270,7 @@ describe('Blueprint: controller', function () {
         );
 
         expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -290,7 +290,7 @@ describe('Blueprint: controller', function () {
         );
 
         expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -308,7 +308,7 @@ describe('Blueprint: controller', function () {
           );
 
           expect(_file('tests/unit/controllers/foo/bar-test.ts')).to.equal(
-            fixture('controller-test/default-nested.ts')
+            fixture('controller-test/rfc232-nested.ts')
           );
         }
       );

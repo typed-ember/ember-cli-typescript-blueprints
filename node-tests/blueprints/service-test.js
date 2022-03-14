@@ -30,7 +30,7 @@ describe('Blueprint: service', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('service foo', function () {
@@ -38,7 +38,7 @@ describe('Blueprint: service', function () {
         expect(_file('app/services/foo.ts')).to.equal(fixture('service/service.ts'));
 
         expect(_file('tests/unit/services/foo-test.ts')).to.equal(
-          fixture('service-test/default.ts')
+          fixture('service-test/rfc232.ts')
         );
       });
     });
@@ -51,7 +51,7 @@ describe('Blueprint: service', function () {
         expect(_file('app/services/foo.ts')).to.equal(fixture('service/service.ts'));
 
         expect(_file('tests/unit/services/foo-test.ts')).to.equal(
-          fixture('service-test/default.ts')
+          fixture('service-test/rfc232.ts')
         );
       });
     });
@@ -61,7 +61,7 @@ describe('Blueprint: service', function () {
         expect(_file('app/services/foo/bar.ts')).to.equal(fixture('service/service-nested.ts'));
 
         expect(_file('tests/unit/services/foo/bar-test.ts')).to.equal(
-          fixture('service-test/default-nested.ts')
+          fixture('service-test/rfc232-nested.ts')
         );
       });
     });
@@ -70,9 +70,7 @@ describe('Blueprint: service', function () {
       return emberGenerateDestroy(['service', 'foo', '--pod'], (_file) => {
         expect(_file('app/foo/service.ts')).to.equal(fixture('service/service.ts'));
 
-        expect(_file('tests/unit/foo/service-test.ts')).to.equal(
-          fixture('service-test/default.ts')
-        );
+        expect(_file('tests/unit/foo/service-test.ts')).to.equal(fixture('service-test/rfc232.ts'));
       });
     });
 
@@ -83,9 +81,7 @@ describe('Blueprint: service', function () {
 
         expect(_file('app/foo/service.ts')).to.equal(fixture('service/service.ts'));
 
-        expect(_file('tests/unit/foo/service-test.ts')).to.equal(
-          fixture('service-test/default.ts')
-        );
+        expect(_file('tests/unit/foo/service-test.ts')).to.equal(fixture('service-test/rfc232.ts'));
       });
     });
 
@@ -94,7 +90,7 @@ describe('Blueprint: service', function () {
         expect(_file('app/foo/bar/service.ts')).to.equal(fixture('service/service-nested.ts'));
 
         expect(_file('tests/unit/foo/bar/service-test.ts')).to.equal(
-          fixture('service-test/default-nested.ts')
+          fixture('service-test/rfc232-nested.ts')
         );
       });
     });
@@ -111,7 +107,7 @@ describe('Blueprint: service', function () {
           expect(_file('app/pods/foo/service.ts')).to.equal(fixture('service/service.ts'));
 
           expect(_file('tests/unit/pods/foo/service-test.ts')).to.equal(
-            fixture('service-test/default.ts')
+            fixture('service-test/rfc232.ts')
           );
         });
       });
@@ -124,7 +120,7 @@ describe('Blueprint: service', function () {
           expect(_file('app/pods/foo/service.ts')).to.equal(fixture('service/service.ts'));
 
           expect(_file('tests/unit/pods/foo/service-test.ts')).to.equal(
-            fixture('service-test/default.ts')
+            fixture('service-test/rfc232.ts')
           );
         });
       });
@@ -136,7 +132,7 @@ describe('Blueprint: service', function () {
           );
 
           expect(_file('tests/unit/pods/foo/bar/service-test.ts')).to.equal(
-            fixture('service-test/default-nested.ts')
+            fixture('service-test/rfc232-nested.ts')
           );
         });
       });
@@ -154,7 +150,7 @@ describe('Blueprint: service', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('service foo', function () {
@@ -166,7 +162,7 @@ describe('Blueprint: service', function () {
         );
 
         expect(_file('tests/unit/services/foo-test.ts')).to.equal(
-          fixture('service-test/default.ts')
+          fixture('service-test/rfc232.ts')
         );
       });
     });
@@ -184,7 +180,7 @@ describe('Blueprint: service', function () {
         );
 
         expect(_file('tests/unit/services/foo-test.ts')).to.equal(
-          fixture('service-test/default.ts')
+          fixture('service-test/rfc232.ts')
         );
       });
     });
@@ -198,7 +194,7 @@ describe('Blueprint: service', function () {
         );
 
         expect(_file('tests/unit/services/foo/bar-test.ts')).to.equal(
-          fixture('service-test/default-nested.ts')
+          fixture('service-test/rfc232-nested.ts')
         );
       });
     });
@@ -235,7 +231,7 @@ describe('Blueprint: service', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('service foo --in-repo-addon=my-addon', function () {
@@ -247,7 +243,7 @@ describe('Blueprint: service', function () {
         );
 
         expect(_file('tests/unit/services/foo-test.ts')).to.equal(
-          fixture('service-test/default.ts')
+          fixture('service-test/rfc232.ts')
         );
       });
     });
@@ -265,7 +261,7 @@ describe('Blueprint: service', function () {
         );
 
         expect(_file('tests/unit/services/foo-test.ts')).to.equal(
-          fixture('service-test/default.ts')
+          fixture('service-test/rfc232.ts')
         );
       });
     });
@@ -281,7 +277,7 @@ describe('Blueprint: service', function () {
         );
 
         expect(_file('tests/unit/services/foo/bar-test.ts')).to.equal(
-          fixture('service-test/default-nested.ts')
+          fixture('service-test/rfc232-nested.ts')
         );
       });
     });

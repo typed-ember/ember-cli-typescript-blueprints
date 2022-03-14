@@ -20,32 +20,6 @@ describe('Blueprint: controller-test', function () {
       return emberNew();
     });
 
-    describe('with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', dev: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('controller-test foo', function () {
-        return emberGenerateDestroy(['controller-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-            fixture('controller-test/default.ts')
-          );
-        });
-      });
-
-      it('controller-test foo/bar', function () {
-        return emberGenerateDestroy(['controller-test', 'foo/bar'], (_file) => {
-          expect(_file('tests/unit/controllers/foo/bar-test.ts')).to.equal(
-            fixture('controller-test/default-nested.ts')
-          );
-        });
-      });
-    });
-
     describe('with ember-cli-qunit@4.2.0', function () {
       beforeEach(function () {
         modifyPackages([
@@ -160,13 +134,13 @@ describe('Blueprint: controller-test', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('controller-test foo', function () {
       return emberGenerateDestroy(['controller-test', 'foo'], (_file) => {
         expect(_file('tests/unit/controllers/foo-test.ts')).to.equal(
-          fixture('controller-test/default.ts')
+          fixture('controller-test/rfc232.ts')
         );
       });
     });
@@ -174,7 +148,7 @@ describe('Blueprint: controller-test', function () {
     it('controller-test foo/bar', function () {
       return emberGenerateDestroy(['controller-test', 'foo/bar'], (_file) => {
         expect(_file('tests/unit/controllers/foo/bar-test.ts')).to.equal(
-          fixture('controller-test/default-nested.ts')
+          fixture('controller-test/rfc232-nested.ts')
         );
       });
     });

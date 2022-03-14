@@ -42,7 +42,7 @@ describe('Blueprint: component-class', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('component-class foo', function () {
@@ -284,7 +284,7 @@ describe('Blueprint: component-class', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('component-class foo', function () {
@@ -348,7 +348,7 @@ describe('Blueprint: component-class', function () {
             { name: 'ember-cli-qunit', dev: true },
           ])
         )
-        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.2.0'));
     });
 
     it('component-class foo --in-repo-addon=my-addon', function () {

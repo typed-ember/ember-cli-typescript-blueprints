@@ -26,7 +26,8 @@ module.exports = function (blueprint) {
       ) {
         type = qunitRfcVersion;
       } else {
-        type = 'qunit';
+        this.ui.writeLine('Test environment seems to be pre-RFC232. Cannot use TypeScript.');
+        return false;
       }
     } else if ('ember-mocha' in dependencies) {
       let checker = new VersionChecker(this.project);
@@ -50,7 +51,7 @@ module.exports = function (blueprint) {
       }
     } else {
       this.ui.writeLine("Couldn't determine test style - using QUnit");
-      type = 'qunit';
+      type = qunitRfcVersion;
     }
 
     return path.join(this.path, type + '-files');

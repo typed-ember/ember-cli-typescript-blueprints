@@ -89,7 +89,7 @@ describe('Acceptance: generate and destroy adapter blueprints', function () {
           .to.contain('export default JSONAPIAdapter.extend({})');
 
         expect(_file('tests/unit/adapters/application-test.ts')).to.equal(
-          fixture('adapter-test/application-default.ts')
+          fixture('adapter-test/application-rfc232.ts')
         );
       });
     });
@@ -101,24 +101,6 @@ describe('Acceptance: generate and destroy adapter blueprints', function () {
         expect(_file('tests/unit/adapters/foo-test.ts')).to.equal(
           fixture('adapter-test/rfc232.ts')
         );
-      });
-    });
-
-    describe('adapter-test with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', delete: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('adapter-test-test foo', function () {
-        return emberGenerateDestroy(['adapter-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/adapters/foo-test.ts')).to.equal(
-            fixture('adapter-test/foo-default.ts')
-          );
-        });
       });
     });
 
@@ -221,7 +203,7 @@ describe('Acceptance: generate and destroy adapter blueprints', function () {
           .to.contain('export default class ApplicationAdapter extends JSONAPIAdapter {');
 
         expect(_file('tests/unit/adapters/application-test.ts')).to.equal(
-          fixture('adapter-test/application-default.ts')
+          fixture('adapter-test/application-rfc232.ts')
         );
       });
     });
@@ -233,24 +215,6 @@ describe('Acceptance: generate and destroy adapter blueprints', function () {
         expect(_file('tests/unit/adapters/foo-test.ts')).to.equal(
           fixture('adapter-test/rfc232.ts')
         );
-      });
-    });
-
-    describe('adapter-test with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', delete: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('adapter-test-test foo', function () {
-        return emberGenerateDestroy(['adapter-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/adapters/foo-test.ts')).to.equal(
-            fixture('adapter-test/foo-default.ts')
-          );
-        });
       });
     });
 

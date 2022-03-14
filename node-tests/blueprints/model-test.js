@@ -79,7 +79,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
           .to.contain("  author: belongsTo('user')");
 
         expect(_file('tests/unit/models/comment-test.ts')).to.equal(
-          fixture('model-test/comment-default.ts')
+          fixture('model-test/comment-rfc232.ts')
         );
       });
     });
@@ -95,7 +95,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
           .to.contain("  otherComments: hasMany('comment')");
 
         expect(_file('tests/unit/models/post-test.ts')).to.equal(
-          fixture('model-test/post-default.ts')
+          fixture('model-test/post-rfc232.ts')
         );
       });
     });
@@ -105,24 +105,6 @@ describe('Acceptance: generate and destroy model blueprints', function () {
 
       return emberGenerateDestroy(args, (_file) => {
         expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/rfc232.ts'));
-      });
-    });
-
-    describe('model-test with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', delete: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('model-test-test foo', function () {
-        return emberGenerateDestroy(['model-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
-            fixture('model-test/foo-default.ts')
-          );
-        });
       });
     });
 
@@ -214,7 +196,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
           fixture('model-test/octane-comment-belongs-to.ts')
         );
         expect(_file('tests/unit/models/comment-test.ts')).to.equal(
-          fixture('model-test/comment-default.ts')
+          fixture('model-test/comment-rfc232.ts')
         );
       });
     });
@@ -225,7 +207,7 @@ describe('Acceptance: generate and destroy model blueprints', function () {
       return emberGenerateDestroy(args, (_file) => {
         expect(_file('app/models/post.ts')).to.equal(fixture('model-test/octane-post-has-many.ts'));
         expect(_file('tests/unit/models/post-test.ts')).to.equal(
-          fixture('model-test/post-default.ts')
+          fixture('model-test/post-rfc232.ts')
         );
       });
     });
@@ -235,24 +217,6 @@ describe('Acceptance: generate and destroy model blueprints', function () {
 
       return emberGenerateDestroy(args, (_file) => {
         expect(_file('tests/unit/models/foo-test.ts')).to.equal(fixture('model-test/rfc232.ts'));
-      });
-    });
-
-    describe('model-test with ember-cli-qunit@4.1.0', function () {
-      beforeEach(function () {
-        modifyPackages([
-          { name: 'ember-qunit', delete: true },
-          { name: 'ember-cli-qunit', delete: true },
-        ]);
-        generateFakePackageManifest('ember-cli-qunit', '4.1.0');
-      });
-
-      it('model-test-test foo', function () {
-        return emberGenerateDestroy(['model-test', 'foo'], (_file) => {
-          expect(_file('tests/unit/models/foo-test.ts')).to.equal(
-            fixture('model-test/foo-default.ts')
-          );
-        });
       });
     });
 
