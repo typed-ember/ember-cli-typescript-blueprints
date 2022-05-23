@@ -22,6 +22,13 @@ module.exports = {
         'ember/no-string-prototype-extensions': 'off',
       },
     },
+    // dummy files
+    {
+      files: ['tests/dummy/app/*.js'],
+      rules: {
+        'ember/no-classic-classes': 'off',
+      },
+    },
     // node files
     {
       files: [
