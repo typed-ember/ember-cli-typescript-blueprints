@@ -19,18 +19,22 @@
     "test": "mocha --recursive node-tests"
   },
   "dependencies": {
+    "@ember/edition-utils": "^1.2.0",
     "chalk": "^4.0.0",
-    "ember-cli-babel": "^7.0.0",
+    "ember-cli-babel": "^7.23.0",
     "ember-cli-get-component-path-option": "^1.0.0",
+    "ember-cli-is-package-missing": "^1.0.0",
     "ember-cli-normalize-entity-name": "^1.0.0",
     "ember-cli-path-utils": "^1.0.0",
     "ember-cli-string-utils": "^1.1.0",
     "ember-cli-test-info": "^1.0.0",
     "ember-cli-valid-component-name": "^1.0.0",
-    "ember-cli-version-checker": "^5.0.0",
+    "ember-cli-version-checker": "^5.1.1",
     "ember-router-generator": "^2.0.0",
-    "fs-extra": "^8.0.0",
+    "exists-sync": "^0.1.0",
+    "fs-extra": "^10.0.0",
     "inflection": "^1.12.0",
+    "semver": "^7.3.5",
     "silent-error": "^1.1.0"
   },
   "devDependencies": {
@@ -41,7 +45,6 @@
     "ember-cli-blueprint-test-helpers": "0.19.2",
     "ember-cli-dependency-checker": "3.2.0",
     "ember-cli-eslint": "5.1.0",
-    "ember-cli-htmlbars": "5.3.1",
     "ember-cli-inject-live-reload": "2.0.2",
     "ember-cli-shims": "1.2.0",
     "ember-cli-sri": "2.1.1",
@@ -52,18 +55,21 @@
     "ember-maybe-import-regenerator": "0.1.6",
     "ember-qunit": "4.6.0",
     "ember-resolver": "8.0.2",
-    "ember-source": "3.23.0",
+    "ember-source": "3.28.8",
     "ember-source-channel-url": "3.0.0",
     "ember-try": "1.4.0",
-    "eslint-plugin-ember": "9.6.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-ember": "10.6.1",
     "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "loader.js": "4.7.0",
-    "mocha": "8.2.1",
-    "qunit-dom": "1.6.0",
+    "mocha": "7.1.2",
+    "qunit-dom": "2.0.0",
     "testdouble": "3.16.1"
   },
   "engines": {
-    "node": "10.* || 12.* || >= 14.*"
+    "node": "12.* || 14.* || >= 16"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
@@ -82,6 +88,6 @@
     "proseWrap": "never"
   },
   "volta": {
-    "node": "10.23.0"
+    "node": "14.18.0"
   }
 }
